@@ -18,11 +18,13 @@ public class Edge {
     @Column
     private double distance;
 
-    public Edge(int routeId, String source, String destination, double distance) {
+
+    private Edge(int routeId, String source, String destination, double distance) {
         this.routeId = routeId;
         this.source = source;
         this.destination = destination;
         this.distance = distance;
+
     }
 
     public int getRouteId() {
@@ -40,4 +42,6 @@ public class Edge {
     public double getDistance() {
         return distance;
     }
+
+
 }

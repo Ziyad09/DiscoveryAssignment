@@ -1,5 +1,6 @@
 package za.co.discovery;
 
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +18,6 @@ public class DataSourceConfig {
 
     @Autowired
     private Environment env;
-
 
     @Bean
     @Profile({"default"})
@@ -41,5 +41,4 @@ public class DataSourceConfig {
 
         return properties;
     }
-
 }
