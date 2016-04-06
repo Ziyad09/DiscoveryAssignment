@@ -34,4 +34,8 @@ public class Vertex {
     public void setPlanetName(String planetName) {
         this.planetName = planetName;
     }
+
+    public long getVertexId() {
+        return vertexId;
+    }
 }

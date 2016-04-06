@@ -1,15 +1,18 @@
 package za.co.discovery.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity(name = "Edge")
 @Table
 public class Edge {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private int edgeId;
-    @Column
+//    private int edgeId;
+//    @Column
     private int routeId;
     @Column
     private String source;
@@ -18,6 +21,9 @@ public class Edge {
     @Column
     private double distance;
 
+    protected Edge() {
+
+    }
 
     public Edge(int routeId, String source, String destination, double distance) {
         this.routeId = routeId;
