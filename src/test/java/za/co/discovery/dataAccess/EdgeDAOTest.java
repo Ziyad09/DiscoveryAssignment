@@ -1,30 +1,28 @@
 package za.co.discovery.dataAccess;
 
-import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 import za.co.discovery.DAOConfig;
+import za.co.discovery.DataSourceConfig;
 import za.co.discovery.PersistenceConfig;
-import za.co.discovery.TestDataSourceConfig;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {PersistenceConfig.class, TestDataSourceConfig.class, DAOConfig.class},
+        classes = {PersistenceConfig.class, DataSourceConfig.class, DAOConfig.class},
         loader = AnnotationConfigContextLoader.class)
 @ActiveProfiles("test")
 public class EdgeDAOTest {
 
-    @Autowired
-    private SessionFactory sessionFactory;
-    @Autowired
-    private EdgeDAO edgeDAO;
+//    @Autowired
+//    private SessionFactory sessionFactory;
+//    @Autowired
+//    private EdgeDAO edgeDAO;
 
     @Test
     public void testSave() throws Exception {

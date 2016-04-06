@@ -23,7 +23,7 @@ public class VertexDAO {
 
     public Vertex save(Vertex vertex) {
         Session session = sessionFactory.getCurrentSession();
-        return (Vertex) session.merge(vertex);
+        return (Vertex) session.save(vertex);
     }
 
     public List<Vertex> retrieveVertex() {

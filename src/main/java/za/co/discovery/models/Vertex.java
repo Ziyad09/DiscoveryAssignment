@@ -22,9 +22,12 @@ public class Vertex {
         return node;
     }
 
-    public String getPlanetName(String planetName) {
+    public String getPlanetName(String node) {
         // Select planetName from 1st DB where planetName = 'planetName';
         return planetName;
     }
 
+    public void setPlanetName(String planetName) {
+        this.planetName = planetName;
+    }
 }
