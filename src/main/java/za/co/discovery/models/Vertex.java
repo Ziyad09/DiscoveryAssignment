@@ -2,7 +2,7 @@ package za.co.discovery.models;
 
 import javax.persistence.*;
 
-@Entity(name = "VertexInformation")
+@Entity(name = "Vertex")
 @Table
 public class Vertex {
     @Id

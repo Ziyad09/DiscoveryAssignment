@@ -2,7 +2,7 @@ package za.co.discovery.models;
 
 import javax.persistence.*;
 
-@Entity(name = "EdgeInformation")
+@Entity(name = "Edge")
 @Table
 public class Edge {
     @Id
@@ -19,7 +19,7 @@ public class Edge {
     private double distance;
 
 
-    private Edge(int routeId, String source, String destination, double distance) {
+    public Edge(int routeId, String source, String destination, double distance) {
         this.routeId = routeId;
         this.source = source;
         this.destination = destination;
