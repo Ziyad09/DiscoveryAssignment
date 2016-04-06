@@ -14,6 +14,10 @@ public class Vertex {
     @Column
     private String planetName;
 
+    protected Vertex() {
+
+    }
+
     public Vertex(String node) {
         this.node = node;
     }

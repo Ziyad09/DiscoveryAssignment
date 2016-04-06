@@ -3,10 +3,10 @@ package za.co.discovery.dataAccess;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -24,15 +24,21 @@ import static za.co.discovery.models.VertexBuilder.aVertex;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {PersistenceConfig.class, DataSourceConfig.class, DAOConfig.class},
+        classes = {PersistenceConfig.class, DataSourceConfig.class, DAOConfig.class, VertexDAO.class},
         loader = AnnotationConfigContextLoader.class)
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 public class VertexDAOTest {
 
     @Autowired
     private SessionFactory sessionFactory;
-    @Autowired
+
+    //@Autowired
     private VertexDAO vertexDAO;
+
+    @Before
+    public void init() {
+        vertexDAO = new VertexDAO(sessionFactory);
+    }
 
     @Test
     public void testSave() throws Exception {
@@ -50,6 +56,6 @@ public class VertexDAOTest {
 
     @Test
     public void testRetrieveVertex() throws Exception {
-
+        
     }
 }

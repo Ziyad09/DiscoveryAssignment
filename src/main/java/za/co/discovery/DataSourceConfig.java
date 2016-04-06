@@ -1,12 +1,11 @@
 package za.co.discovery;
 
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.derby.jdbc.BasicEmbeddedDataSource40;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
@@ -20,24 +19,23 @@ public class DataSourceConfig {
     private Environment env;
 
     @Bean
-    @Profile({"default"})
+    //@Profile({"default"})
     public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl(env.getProperty("jdbc.url"));
-        dataSource.setUsername(env.getProperty("jdbc.user"));
-        dataSource.setPassword(env.getProperty("jdbc.pass"));
+        BasicEmbeddedDataSource40 dataSource = new BasicEmbeddedDataSource40();
+        dataSource.setConnectionAttributes("create=true");
+        dataSource.setDatabaseName("PlanetTravel");
 
         return dataSource;
     }
 
     @Bean
-    @Profile({"default"})
+    //@Profile({"default"})
     @Qualifier("hibernateProperties")
     public Properties HibernateProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-        properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-        properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect");
+        properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
 
         return properties;
     }

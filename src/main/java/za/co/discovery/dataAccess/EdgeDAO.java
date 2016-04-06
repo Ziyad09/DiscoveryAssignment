@@ -24,7 +24,7 @@ public class EdgeDAO {
 
     public Edge save(Edge edge) {
         Session session = sessionFactory.getCurrentSession();
-        return (Edge) session.save(edge);
+        return (Edge) session.merge(edge);
     }
 
     public List<Edge> retrieveEdge() {
