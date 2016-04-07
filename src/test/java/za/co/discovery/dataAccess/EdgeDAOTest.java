@@ -1,6 +1,5 @@
 package za.co.discovery.dataAccess;
 
-import com.shazam.shazamcrest.MatcherAssert;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +33,7 @@ public class EdgeDAOTest {
 
     //@Autowired
     private EdgeDAO edgeDAO;
+    private Edge firstEdge;
 
     @Before
     public void init() {
@@ -42,35 +42,65 @@ public class EdgeDAOTest {
 
     @Test
     public void testSave() throws Exception {
-        Edge expectedEdge = anEdge()
-                .withSource("A")
-                .withDestination("B")
-                .withRouteId(1)
-                .withDistance(1.0)
-                .build();
+        // Set up Fixture
+        getEdge();
         Session session = sessionFactory.getCurrentSession();
-        edgeDAO.save(expectedEdge);
+        // Exercise SUT
+        edgeDAO.save(firstEdge);
         Criteria criteria = session.createCriteria(Edge.class);
-
         Edge actualEdge = (Edge) criteria.uniqueResult();
-        assertThat(actualEdge, is(sameBeanAs(expectedEdge)
+        // Verify Behaviour
+        assertThat(actualEdge, is(sameBeanAs(firstEdge)
                 .ignoring("edgeId")));
     }
 
     @Test
+    public void testUpdateEdge() throws Exception {
+        // Set up Fixture
+        getEdge();
+        // Exercise SUT
+        edgeDAO.save(firstEdge);
+        Edge expectedEdge = anEdge()
+                .withRouteId(1)
+                .withSource("C")
+                .withDestination("D")
+                .withDistance(5.0)
+                .build();
+        edgeDAO.update(expectedEdge);
+        Edge actualEdge = edgeDAO.retrieveEdge(1);
+        // Verify Behaviour
+        assertThat(actualEdge, is(sameBeanAs(expectedEdge)));
+    }
+
+    @Test
+    public void testDeleteEdge() throws Exception {
+        // Set up Fixture
+        getEdge();
+        // Exercise SUT
+        edgeDAO.save(firstEdge);
+        int result = edgeDAO.delete(firstEdge.getRouteId());
+        // Verify Behaviour
+        assertThat(result, is(1));
+    }
+
+    @Test
     public void testRetrieveEdge() throws Exception {
-        Edge edge = anEdge()
+        // Set up Fixture
+        getEdge();
+        // Exercise SUT
+        Edge returnedEdge = edgeDAO.save(firstEdge);
+        Edge actualEdge = edgeDAO.retrieveEdge(returnedEdge.getRouteId());
+        // Verify Behaviour
+        assertThat(actualEdge, is(sameBeanAs(firstEdge)
+                .ignoring("routeId")));
+    }
+
+    public void getEdge() {
+        firstEdge = anEdge()
                 .withRouteId(1)
                 .withSource("A")
                 .withDestination("B")
                 .withDistance(1.0)
                 .build();
-        Edge returnedEdge = edgeDAO.save(edge);
-//        System.out.print(returnedEdge.getDestination()+"\n\n\n" + returnedEdge.getDistance()+"\n\n\n");
-        Edge actualEdge = edgeDAO.retrieveEdge(returnedEdge.getRouteId());
-//        System.out.print(actualEdge.getDestination()+"\n\n\n" + actualEdge.getDistance()+"\n\n\n");
-
-        MatcherAssert.assertThat(actualEdge, is(sameBeanAs(edge)
-                .ignoring("routeId")));
     }
 }

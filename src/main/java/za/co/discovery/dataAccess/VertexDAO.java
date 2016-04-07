@@ -1,6 +1,7 @@
 package za.co.discovery.dataAccess;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,21 @@ public class VertexDAO {
         return (Vertex) session.merge(vertex);
     }
 
+    public Vertex update(Vertex vertex) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Vertex) session.merge(vertex);
+    }
+
+    public int delete(String node) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete Vertex AS v where v.node = :nodeS");
+        query.setParameter("nodeS", node);
+        int result = query.executeUpdate();
+        return result;
+    }
+
+
+
     //    public List<Vertex> retrieveVertex() {
 //        Session session = sessionFactory.getCurrentSession();
 ////        String hql =
@@ -37,10 +53,10 @@ public class VertexDAO {
 //        return (List<Vertex>) criteria.list();
 ////        return query.list();
 //    }
-    public Vertex retrieveVertex(int id) {
+    public Vertex retrieveVertex(String nodeId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Vertex.class);
-        criteria.add(eq("vertexId", id));
+        criteria.add(eq("node", nodeId));
         return (Vertex) criteria.uniqueResult();
     }
 }

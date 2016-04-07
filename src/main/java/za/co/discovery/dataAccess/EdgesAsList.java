@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Ziyad.Jappie on 2016/04/06.
  */
-public class readExcel2 {
+public class EdgesAsList {
     @Autowired
     private EdgeDAO edgeDAO;
 

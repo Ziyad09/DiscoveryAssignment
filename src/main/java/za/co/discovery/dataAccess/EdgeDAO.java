@@ -1,6 +1,7 @@
 package za.co.discovery.dataAccess;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,26 @@ public class EdgeDAO {
     public Edge save(Edge edge) {
         Session session = sessionFactory.getCurrentSession();
         return (Edge) session.merge(edge);
+    }
+
+    public Edge update(Edge edge) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Edge) session.merge(edge);
+    }
+
+    public int delete(int routeId) {
+        Session session = sessionFactory.getCurrentSession();
+//        session.delete(edge);
+        Query query = session.createQuery("delete Edge AS e where e.routeId = :routeNumber");
+        query.setParameter("routeNumber", routeId);
+        int result = query.executeUpdate();
+        return result;
+
+//        String hql =
+//                "delete Edge AS e WHERE e.routeId = :routeId";
+//        Query query = session.createQuery(hql);
+//        query.setParameter("routeId", new Long(18));
+//        return query.list();
     }
 
     public Edge retrieveEdge(int routeId) {

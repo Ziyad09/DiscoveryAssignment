@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-public class readExcel {
+public class VerticiesAsList {
 
     //    @Autowired
     private VertexDAO vertexDAO;
@@ -40,10 +40,10 @@ public class readExcel {
                     String planetNode = row.getCell(0).getStringCellValue();
                     String planetName = row.getCell(1).getStringCellValue();
 //                    System.out.print(planetNode + " " + planetName + "\n\n");
-                    Vertex vertex = new Vertex(planetNode);
-                    vertex.setPlanetName(planetName);
-                    vertexList.add(vertex);
-                    vertexDAO.save(vertex);
+//                    Vertex vertex = new Vertex(planetNode);
+//                    vertex.setPlanetName(planetName);
+//                    vertexList.add(vertex);
+//                    vertexDAO.save(vertex);
                     break;
                 }
                 System.out.println("");

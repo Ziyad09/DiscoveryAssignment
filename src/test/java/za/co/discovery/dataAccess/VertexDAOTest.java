@@ -1,6 +1,5 @@
 package za.co.discovery.dataAccess;
 
-import com.shazam.shazamcrest.MatcherAssert;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,14 +25,13 @@ import static za.co.discovery.models.VertexBuilder.aVertex;
 @ContextConfiguration(
         classes = {PersistenceConfig.class, DataSourceConfig.class, VertexDAO.class},
         loader = AnnotationConfigContextLoader.class)
-//@ActiveProfiles("test")
 public class VertexDAOTest {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    //@Autowired
     private VertexDAO vertexDAO;
+    private Vertex firstVertex;
 
     @Before
     public void init() {
@@ -41,32 +39,52 @@ public class VertexDAOTest {
     }
 
     @Test
-    public void testSave() throws Exception {
+    public void testUpdateVertex() throws Exception {
+        getVertex();
+        vertexDAO.save(firstVertex);
         Vertex expectedVertex = aVertex()
+                .withPlanetName("Pluto")
                 .withNode("A")
                 .build();
-        Session session = sessionFactory.getCurrentSession();
-        vertexDAO.save(expectedVertex);
-        Criteria criteria = session.createCriteria(Vertex.class);
-
-        Vertex actualEdge = (Vertex) criteria.uniqueResult();
-        assertThat(actualEdge, is(sameBeanAs(expectedVertex)
-                .ignoring("vertexId")));
+        Vertex actualVertexUpdate = vertexDAO.update(expectedVertex);
+        assertThat(actualVertexUpdate, is(sameBeanAs(expectedVertex)));
     }
 
     @Test
+    public void testSave() throws Exception {
+        getVertex();
+        Session session = sessionFactory.getCurrentSession();
+        vertexDAO.save(firstVertex);
+        Criteria criteria = session.createCriteria(Vertex.class);
+
+        Vertex actualEdge = (Vertex) criteria.uniqueResult();
+        assertThat(actualEdge, is(sameBeanAs(firstVertex)));
+    }
+
+    @Test
+    public void testDeleteVertex() throws Exception {
+        // Set up Fixture
+        getVertex();
+        // Exercise SUT
+        vertexDAO.save(firstVertex);
+        int result = vertexDAO.delete(firstVertex.getNode());
+        // Verify Behaviour
+        assertThat(result, is(1));
+    }
+
+
+    @Test
     public void testRetrieveVertex() throws Exception {
-        Vertex vertex = aVertex()
+        getVertex();
+        Vertex returnedVertex = vertexDAO.save(firstVertex);
+        Vertex actualVertex = vertexDAO.retrieveVertex(returnedVertex.getNode());
+        assertThat(actualVertex, is(sameBeanAs(firstVertex)));
+    }
+
+    public void getVertex() {
+        firstVertex = aVertex()
                 .withNode("A")
                 .withPlanetName("Earth")
                 .build();
-        Vertex returnedVertex = vertexDAO.save(vertex);
-        System.out.print(returnedVertex.getPlanetName(returnedVertex.getNode()) + "\n\n\n" + returnedVertex.getVertexId() + "\n\n\n");
-        Vertex actualVertex = vertexDAO.retrieveVertex(((Long) returnedVertex.getVertexId()).intValue());
-        System.out.print(actualVertex.getPlanetName(returnedVertex.getNode()) + "\n\n\n" + actualVertex.getVertexId() + "\n\n\n");
-
-        MatcherAssert.assertThat(actualVertex, is(sameBeanAs(vertex)
-                .ignoring("vertexId")));
-
     }
 }
