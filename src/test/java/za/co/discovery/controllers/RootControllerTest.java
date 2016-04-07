@@ -24,7 +24,8 @@ public class RootControllerTest {
 
     public void setUpFixture() {
         mockMvc = standaloneSetup(
-                new RootController(
+                new RootController(null
+                        , null
                 ) {
                 })
                 .setViewResolvers(getInternalResourceViewResolver())

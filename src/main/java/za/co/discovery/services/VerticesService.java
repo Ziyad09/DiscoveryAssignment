@@ -1,9 +1,12 @@
-package za.co.discovery.dataAccess;
+package za.co.discovery.services;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import za.co.discovery.dataAccess.VertexDAO;
 import za.co.discovery.models.Vertex;
 
 import java.io.File;
@@ -14,16 +17,40 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-public class VerticiesAsList {
-
-    //    @Autowired
-    private VertexDAO vertexDAO;
+@Service
+public class VerticesService {
 
     private final int numberOfVertices = 37;
     List<Vertex> vertexList = new Vector<>(numberOfVertices);
+    private VertexDAO vertexDAO;
 
-    public List<Vertex> readExcel() {
+    @Autowired
+    public VerticesService(VertexDAO vertexDAO) {
+        this.vertexDAO = vertexDAO;
+    }
 
+    public Vertex getVertexByNode(String node) {
+        return vertexDAO.retrieveVertex(node);
+    }
+
+    public List<Vertex> getVertexList() {
+        return readVerticies();
+    }
+
+    public void updateVertex(Vertex vertex) {
+        vertexDAO.update(vertex);
+    }
+
+    public void deleteVertex(String node) {
+        vertexDAO.delete(node);
+    }
+
+    public void persistVertex(String node, String planetName) {
+        Vertex vertex = new Vertex(node, planetName);
+        vertexDAO.save(vertex);
+    }
+
+    public List<Vertex> readVerticies() {
         try {
 //            ClassLoader classLoader = this.getClass().getClassLoader();
 //            File fileEx = new File(classLoader.getResource("PlanetData.xlsx").getFile());
@@ -39,10 +66,9 @@ public class VerticiesAsList {
                 while (cellIterator.hasNext()) {
                     String planetNode = row.getCell(0).getStringCellValue();
                     String planetName = row.getCell(1).getStringCellValue();
-//                    System.out.print(planetNode + " " + planetName + "\n\n");
-//                    Vertex vertex = new Vertex(planetNode);
-//                    vertex.setPlanetName(planetName);
-//                    vertexList.add(vertex);
+                    System.out.print(planetNode + " " + planetName + "\n\n");
+                    Vertex vertex = new Vertex(planetNode);
+                    vertexList.add(vertex);
 //                    vertexDAO.save(vertex);
                     break;
                 }
