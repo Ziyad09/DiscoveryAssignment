@@ -76,6 +76,7 @@ public class VertexDAOTest {
     @Test
     public void testRetrieveVertex() throws Exception {
         getVertex();
+//        firstVertex.minDistance = 0;
         Vertex returnedVertex = vertexDAO.save(firstVertex);
         Vertex actualVertex = vertexDAO.retrieveVertex(returnedVertex.getNode());
         assertThat(actualVertex, is(sameBeanAs(firstVertex)));

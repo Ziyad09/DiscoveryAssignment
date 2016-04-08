@@ -1,21 +1,48 @@
 package za.co.discovery.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity(name = "Vertex")
 @Table
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
     @Id
     @Column(nullable = false)
     private String node;
     @Column
     private String planetName;
 
+    @Transient
+    public double minDistance = 1000000;//Double.POSITIVE_INFINITY;
+    @Transient
+    public Vertex previous = null;
+    @Transient
+    Map<Vertex, Double> neighbours = new HashMap<>();
+
+    //    public Edge[] adjacency;
+//    public String toString() { return node; }
+//    public int compareTo(Vertex other)
+//    {
+//        return Double.compare(minDistance, other.minDistance);
+//    }
     protected Vertex() {
 
+    }
+
+    public void printPath() {
+        if (this == this.previous) {
+            System.out.printf("%s", this.node);
+        } else if (this.previous == null) {
+            System.out.printf("%s(unreached)", this.node);
+        } else {
+            this.previous.printPath();
+            System.out.printf(" -> %s(%f)", this.node, this.minDistance);
+        }
+    }
+
+    public int compareTo(Vertex other) {
+        return Double.compare(minDistance, other.minDistance);
     }
 
     public Vertex(String node) {

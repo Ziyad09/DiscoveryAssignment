@@ -29,12 +29,14 @@ public class VerticesService {
         this.vertexDAO = vertexDAO;
     }
 
+    public VerticesService() {
+    }
     public Vertex getVertexByNode(String node) {
         return vertexDAO.retrieveVertex(node);
     }
 
     public List<Vertex> getVertexList() {
-        return readVerticies();
+        return readVertices();
     }
 
     public void updateVertex(Vertex vertex) {
@@ -50,7 +52,7 @@ public class VerticesService {
         vertexDAO.save(vertex);
     }
 
-    public List<Vertex> readVerticies() {
+    private List<Vertex> readVertices() {
         try {
 //            ClassLoader classLoader = this.getClass().getClassLoader();
 //            File fileEx = new File(classLoader.getResource("PlanetData.xlsx").getFile());
@@ -66,13 +68,14 @@ public class VerticesService {
                 while (cellIterator.hasNext()) {
                     String planetNode = row.getCell(0).getStringCellValue();
                     String planetName = row.getCell(1).getStringCellValue();
-                    System.out.print(planetNode + " " + planetName + "\n\n");
+//                    System.out.print(planetNode + " " + planetName + "\n\n");
                     Vertex vertex = new Vertex(planetNode);
                     vertexList.add(vertex);
+//                    persistVertex(planetNode,planetName);
 //                    vertexDAO.save(vertex);
                     break;
                 }
-                System.out.println("");
+//                System.out.println("");
             }
             file.close();
 

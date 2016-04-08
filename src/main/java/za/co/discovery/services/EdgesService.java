@@ -28,6 +28,8 @@ public class EdgesService {
         this.edgeDAO = edgeDAO;
     }
 
+    public EdgesService() {
+    }
     public List<Edge> getEdges() {
         return readEdges();
     }
@@ -49,7 +51,7 @@ public class EdgesService {
         edgeDAO.save(edge);
     }
 
-    public List<Edge> readEdges() {
+    private List<Edge> readEdges() {
         try {
 
             FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
@@ -66,13 +68,14 @@ public class EdgesService {
                     String planetDestination = r.getCell(2).getStringCellValue();
                     Double planetDistance = r.getCell(3).getNumericCellValue();
                     int routeId2 = Integer.valueOf(routeId.intValue());
-                    Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
+                    Edge edge = new Edge(planetSource, planetDestination, planetDistance);
                     edgeList.add(edge);
+//                    persistEdge(routeId2, planetSource, planetDestination, planetDistance);
 //                    edgeDAO.save(edge);
 //                    System.out.print(routeId + " " + planetSource + "\n\n");
                     break;
                 }
-                System.out.println("");
+//                System.out.println("");
             }
             file.close();
 
