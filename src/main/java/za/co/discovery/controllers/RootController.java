@@ -29,34 +29,18 @@ public class RootController {
         final List<Vertex> vertices = vertex.getVertexList();
         return edges;
     }
-//
-//        for (int i = 0; i < vertices.size(); i++) {
-//            for (int j = 0; i < edges.size(); i++) {
-//                if (vertices.get(i).getNode() == edges.get(j).getSource()) {
-//                    Vertex target = new Vertex(edges.get(j).getDestination());
-//                    double distance = edges.get(j).getDistance();
-//                    vertices.get(i).adjacency = new Edge[]{new Edge(target,distance)};
-//                    edges.get(j).getDestination();
-//                }
-//            }
-//        }
-//        ShortestPath.computePaths(source); // run Dijkstra
-////            System.out.println("Distance to " + Z + ": " + Z.minDistance);
-//        List<Vertex> path = ShortestPath.getShortestPathTo(destination);
-////            System.out.println("Path: " + path);
-//        return path;
-//    }
 
-    //    public static void main(String args[]){
+//    public static void main(String args[]) {
 //        String start = "A";
 //        String end = "X";
 //        List<Edge> edges = getPathTraveled();
 //        Graph graph = new Graph();
 //        Map<String, Vertex> map = graph.Graph(edges);
 //        ShortestPath dis = new ShortestPath();
-//        dis.dijkstra(start,map);
-//        dis.printPath(map,end);
+//        dis.dijkstra(start, map);
+//        dis.printPath(map, end);
 //    }
+
     @RequestMapping("/")
     public String home() {
         return "index";

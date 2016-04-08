@@ -33,12 +33,6 @@ public class Edge {
         this.distance = distance;
     }
 
-    public Edge(String source, String destination, double distance) {
-        this.source = source;
-        this.destination = destination;
-        this.distance = distance;
-    }
-
     public int getRouteId() {
         return routeId;
     }
@@ -50,9 +44,6 @@ public class Edge {
     public String getDestination() {
         return destination;
     }
-//    public Vertex getTarget() {
-//        return target;
-//    }
 
     public double getDistance() {
         return distance;

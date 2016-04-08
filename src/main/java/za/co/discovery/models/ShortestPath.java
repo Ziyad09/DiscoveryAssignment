@@ -59,42 +59,4 @@ public class ShortestPath {
         graph.get(endName).printPath();
         System.out.println();
     }
-
-
-
-
-
-    /*
-    public static void computePaths(Vertex source) {
-        source.minDistance = 0.;
-        PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
-        vertexQueue.add(source);
-        while (!vertexQueue.isEmpty()) {
-            Vertex sourceVertex = vertexQueue.poll();
-            for (Edge neighbourEdges : sourceVertex.adjacency)
-            {
-                Vertex v = neighbourEdges.getTarget();
-                double weight = neighbourEdges.getDistance();
-                double distanceThroughNeighbourEdges = sourceVertex.minDistance + weight;
-
-                if (distanceThroughNeighbourEdges < v.minDistance) {
-                    vertexQueue.remove(v);
-                    v.minDistance = distanceThroughNeighbourEdges ;
-                    v.previous = sourceVertex;
-                    vertexQueue.add(v);
-                }
-            }
-
-        }
-    }
-    public static List<Vertex> getShortestPathTo(Vertex target)
-    {
-        List<Vertex> path = new ArrayList<Vertex>();
-        for (Vertex vertex = target; vertex != null; vertex = vertex.previous)
-            path.add(vertex);
-
-        Collections.reverse(path);
-        return path;
-    }
-*/
 }

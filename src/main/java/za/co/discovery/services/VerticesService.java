@@ -72,7 +72,7 @@ public class VerticesService {
                     Vertex vertex = new Vertex(planetNode);
                     vertexList.add(vertex);
 //                    persistVertex(planetNode,planetName);
-//                    vertexDAO.save(vertex);
+                    vertexDAO.save(vertex);
                     break;
                 }
 //                System.out.println("");

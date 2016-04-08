@@ -68,10 +68,10 @@ public class EdgesService {
                     String planetDestination = r.getCell(2).getStringCellValue();
                     Double planetDistance = r.getCell(3).getNumericCellValue();
                     int routeId2 = Integer.valueOf(routeId.intValue());
-                    Edge edge = new Edge(planetSource, planetDestination, planetDistance);
+                    Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
                     edgeList.add(edge);
 //                    persistEdge(routeId2, planetSource, planetDestination, planetDistance);
-//                    edgeDAO.save(edge);
+                    edgeDAO.save(edge);
 //                    System.out.print(routeId + " " + planetSource + "\n\n");
                     break;
                 }

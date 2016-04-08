@@ -1,8 +1,5 @@
 package za.co.discovery.models;
 
-/**
- * Created by Ziyad.Jappie on 2016/04/08.
- */
 public class VertexBuilder {
     private String node;
     private String planetName;

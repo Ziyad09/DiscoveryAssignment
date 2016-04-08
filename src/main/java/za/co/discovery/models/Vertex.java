@@ -20,12 +20,6 @@ public class Vertex implements Comparable<Vertex> {
     @Transient
     Map<Vertex, Double> neighbours = new HashMap<>();
 
-    //    public Edge[] adjacency;
-//    public String toString() { return node; }
-//    public int compareTo(Vertex other)
-//    {
-//        return Double.compare(minDistance, other.minDistance);
-//    }
     protected Vertex() {
 
     }
