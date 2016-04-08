@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import za.co.discovery.models.Edge;
 import za.co.discovery.models.Graph;
+import za.co.discovery.models.ShortestPath;
 import za.co.discovery.models.Vertex;
 import za.co.discovery.services.EdgesService;
 import za.co.discovery.services.VerticesService;
 
 import java.util.List;
+import java.util.Map;
 
 public class RootController {
 
@@ -22,6 +24,7 @@ public class RootController {
         this.vertex = vertex;
     }
 
+    // TODO change this static when doing the webpages
     public static List<Edge> getPathTraveled() {
         EdgesService edge = new EdgesService();
         VerticesService vertex = new VerticesService();
@@ -30,16 +33,16 @@ public class RootController {
         return edges;
     }
 
-//    public static void main(String args[]) {
-//        String start = "A";
-//        String end = "X";
-//        List<Edge> edges = getPathTraveled();
-//        Graph graph = new Graph();
-//        Map<String, Vertex> map = graph.Graph(edges);
-//        ShortestPath dis = new ShortestPath();
-//        dis.dijkstra(start, map);
-//        dis.printPath(map, end);
-//    }
+    public static void main(String args[]) {
+        String start = "A";
+        String end = "X";
+        List<Edge> edges = getPathTraveled();
+        Graph graph = new Graph();
+        Map<String, Vertex> map = graph.Graph(edges);
+        ShortestPath dis = new ShortestPath();
+        dis.dijkstra(start, map);
+        dis.printPath(map, end);
+    }
 
     @RequestMapping("/")
     public String home() {

@@ -71,7 +71,7 @@ public class EdgesService {
                     Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
                     edgeList.add(edge);
 //                    persistEdge(routeId2, planetSource, planetDestination, planetDistance);
-                    edgeDAO.save(edge);
+//                    edgeDAO.save(edge);
 //                    System.out.print(routeId + " " + planetSource + "\n\n");
                     break;
                 }

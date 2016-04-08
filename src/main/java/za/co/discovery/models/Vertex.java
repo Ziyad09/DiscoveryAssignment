@@ -26,12 +26,14 @@ public class Vertex implements Comparable<Vertex> {
 
     public void printPath() {
         if (this == this.previous) {
-            System.out.printf("%s", this.node);
+//            System.out.printf("%s", this.node);
+            System.out.print(this.node + " ");
         } else if (this.previous == null) {
             System.out.printf("%s(unreached)", this.node);
         } else {
             this.previous.printPath();
-            System.out.printf(" -> %s(%f)", this.node, this.minDistance);
+//            System.out.printf(" -> %s(%f)", this.node, this.minDistance);
+            System.out.print(this.node + " ");
         }
     }
 
