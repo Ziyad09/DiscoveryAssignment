@@ -3,9 +3,12 @@ package za.co.discovery.models;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static za.co.discovery.models.EdgeBuilder.anEdge;
 
 public class ShortestPathTest {
@@ -31,7 +34,7 @@ public class ShortestPathTest {
                 .withRouteId(3)
                 .withSource("A")
                 .withDestination("C")
-                .withDistance(15)
+                .withDistance(1)
                 .build();
         edges.add(edge1);
         edges.add(edge2);
@@ -41,10 +44,8 @@ public class ShortestPathTest {
         Map<String, Vertex> map = graph.Graph(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra(start, map);
-//        TODO : Fix this test
-//        List<String> actual = map.get(end).printPath();
-//        dis.printPath(map, end);
-//        System.out.print(actual.size());
-//        assertThat(dis.printPath(map, end), is("ABC"));
+        LinkedList<String> actual = map.get(end).printPath();
+
+        assertThat(actual.size(), is(2));
     }
 }

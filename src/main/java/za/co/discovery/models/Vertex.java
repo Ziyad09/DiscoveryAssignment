@@ -2,6 +2,7 @@ package za.co.discovery.models;
 
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 @Entity(name = "Vertex")
@@ -24,17 +25,24 @@ public class Vertex implements Comparable<Vertex> {
 
     }
 
-    public void printPath() {
+    //    List<String> nodes;
+    static LinkedList<String> nodes = new LinkedList<>();
+
+    public LinkedList<String> printPath() {
+
         if (this == this.previous) {
 //            System.out.printf("%s", this.node);
-            System.out.print(this.node + " ");
+            nodes.add(this.node);
+//            System.out.print(this.node + " ");
         } else if (this.previous == null) {
-            System.out.printf("%s(unreached)", this.node);
+//            System.out.printf("%s(unreached)", this.node);
         } else {
             this.previous.printPath();
+            nodes.add(this.node);
 //            System.out.printf(" -> %s(%f)", this.node, this.minDistance);
-            System.out.print(this.node + " ");
+//            System.out.print(this.node + " ");
         }
+        return nodes;
     }
 
     public int compareTo(Vertex other) {
