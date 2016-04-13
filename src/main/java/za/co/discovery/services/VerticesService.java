@@ -53,10 +53,9 @@ public class VerticesService {
     @PostConstruct
     public void readVertices() {
         try {
-//            ClassLoader classLoader = this.getClass().getClassLoader();
-//            File fileEx = new File(classLoader.getResource("PlanetData.xlsx").getFile());
-//            FileInputStream file = new FileInputStream(fileEx);
-            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
+
+            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
+            FileInputStream file = new FileInputStream(fileName);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Planet Names");
             int rowStart = Math.min(1, 1); // 0 based not 1 based rows

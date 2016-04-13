@@ -53,8 +53,9 @@ public class EdgesService {
 
     private List<Edge> readEdges() {
         try {
-
-            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
+            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
+//            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
+            FileInputStream file = new FileInputStream(fileName);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Routes");
             int rowStart = Math.min(1, 1); // 0 based not 1 based rows
