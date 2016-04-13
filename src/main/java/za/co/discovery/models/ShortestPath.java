@@ -4,6 +4,7 @@ package za.co.discovery.models;
 //import za.co.discovery.services.*;
 //import za.co.discovery.services.Vertex;
 
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -50,13 +51,13 @@ public class ShortestPath {
         }
     }
 
-    public void printPath(Map<String, Vertex> graph, String endName) {
+    public LinkedList<String> printPath(Map<String, Vertex> graph, String endName) {
         if (!graph.containsKey(endName)) {
             System.err.printf("Graph doesn't contain end vertex \"%s\"\n", endName);
-            return;
+//            return;
         }
 
-        graph.get(endName).printPath();
-        System.out.println();
+        return graph.get(endName).printPath();
+//        System.out.println();
     }
 }

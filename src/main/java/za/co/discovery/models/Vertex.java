@@ -61,6 +61,9 @@ public class Vertex implements Comparable<Vertex> {
         return node;
     }
 
+    public void setPlanetName(String planetName) {
+        this.planetName = planetName;
+    }
     public String getPlanetName() {
         // Select planetName from 1st DB where planetName = 'planetName';
         return planetName;
