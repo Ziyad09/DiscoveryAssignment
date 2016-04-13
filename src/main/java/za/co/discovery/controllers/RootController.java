@@ -32,7 +32,6 @@ public class RootController {
         this.vertex = vertex;
     }
 
-    // TODO change this static when doing the webpages
     public List<Edge> getPathTraveled() {
         EdgesService edge = new EdgesService();
 //        VerticesService vertex = new VerticesService();
@@ -41,16 +40,6 @@ public class RootController {
         return edges;
     }
 
-//    public static void main(String args[]) {
-//        String start = "A";
-//        String end = "X";
-//        List<Edge> edges = getPathTraveled();
-//        Graph graph = new Graph();
-//        Map<String, Vertex> map = graph.Graph(edges);
-//        ShortestPath dis = new ShortestPath();
-//        dis.dijkstra(start, map);
-//        dis.printPath(map, end);
-//    }
 
     @RequestMapping("/")
     public String home() {
@@ -62,8 +51,6 @@ public class RootController {
             method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> selectPath(@PathVariable String path) {
-//        System.out.println("\n\n\n\n\n"+ path +"\n\n\n\n\n");
-
         List<Edge> edges = getPathTraveled();
         Graph graph = new Graph();
         Map<String, Vertex> map = graph.Graph(edges);
@@ -79,11 +66,7 @@ public class RootController {
         if (actual.size() > 0) {
             actual.clear();
         }
-        System.out.print("\n\n" + pathTravelled + "\n\n");
-//        String mappedPath = actual.toString();
+//        System.out.print("\n\n" + pathTravelled + "\n\n");
         return new ResponseEntity<>(pathTravelled, HttpStatus.OK);
-
     }
-
-
 }

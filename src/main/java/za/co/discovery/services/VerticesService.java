@@ -22,7 +22,7 @@ import java.util.Vector;
 public class VerticesService {
 
     private final int numberOfVertices = 37;
-    List<Vertex> vertexList = new Vector<>(numberOfVertices);
+    public List<Vertex> vertexList = new Vector<>(numberOfVertices);
     private VertexDAO vertexDAO;
 
 
@@ -33,6 +33,9 @@ public class VerticesService {
 
     public Vertex getVertexByNode(String node) {
         return vertexDAO.retrieveVertex(node);
+    }
+
+    public VerticesService() {
     }
 
     public void updateVertex(Vertex vertex) {
