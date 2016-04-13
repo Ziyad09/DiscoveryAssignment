@@ -38,7 +38,7 @@ public class VerticesServiceTest {
 
 
     @Test
-    public void testGetVertexByNode() throws Exception {
+    public void testGetVertexByNodeShouldReturnVertex() throws Exception {
         getVertex();
         verticesService.persistVertex(firstVertex);
         Vertex actualVertex = verticesService.getVertexByNode(firstVertex.getNode());
@@ -46,18 +46,27 @@ public class VerticesServiceTest {
     }
 
     @Test
-    public void testUpdateVertex() throws Exception {
-
+    public void testUpdateVertexShouldUpdateDBWithSameNode() throws Exception {
+        firstVertex = aVertex()
+                .withNode("A")
+                .withPlanetName("Earth")
+                .build();
+        verticesService.persistVertex(firstVertex);
+        Vertex expectedVertex = aVertex()
+                .withPlanetName("Pluto")
+                .withNode("A")
+                .build();
+        verticesService.updateVertex(expectedVertex);
+        Vertex actualVertex = verticesService.getVertexByNode(expectedVertex.getNode());
+        assertThat(actualVertex, is(sameBeanAs(expectedVertex)));
     }
 
     @Test
     public void testDeleteVertex() throws Exception {
-
-    }
-
-    @Test
-    public void testPersistVertex() throws Exception {
-
+        getVertex();
+        verticesService.persistVertex(firstVertex);
+        int affectedRows = verticesService.deleteVertex(firstVertex.getNode());
+        assertThat(affectedRows, is(1));
     }
 
     public void getVertex() {

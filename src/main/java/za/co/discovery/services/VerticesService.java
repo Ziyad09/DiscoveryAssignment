@@ -42,8 +42,8 @@ public class VerticesService {
         vertexDAO.update(vertex);
     }
 
-    public void deleteVertex(String node) {
-        vertexDAO.delete(node);
+    public int deleteVertex(String node) {
+        return vertexDAO.delete(node);
     }
 
     public void persistVertex(Vertex planet) {

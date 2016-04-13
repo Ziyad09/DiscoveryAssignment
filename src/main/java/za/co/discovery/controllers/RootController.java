@@ -56,7 +56,6 @@ public class RootController {
         Map<String, Vertex> map = graph.Graph(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
-
         LinkedList<String> actual = dis.printPath(map, path);
         String pathTravelled = new String("");
         for (int i = 0; i < actual.size(); i++) {

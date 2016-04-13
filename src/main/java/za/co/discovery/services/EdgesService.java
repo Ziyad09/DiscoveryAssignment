@@ -42,8 +42,8 @@ public class EdgesService {
         edgeDAO.update(edge);
     }
 
-    public void deleteEdge(int routeId) {
-        edgeDAO.delete(routeId);
+    public int deleteEdge(int routeId) {
+        return edgeDAO.delete(routeId);
     }
 
     public void persistEdge(int routeId, String sourcePlanet, String destinationPlanet, Double distance) {

@@ -22,6 +22,17 @@ public class RootControllerTest {
                 .andExpect(view().name("index"));
     }
 
+//    @Test
+//    public void testPathPrintedOutIsCorrect() throws Exception{
+//        String destination = "B";
+//
+//        String path = "Earth Moon ";
+//        mockMvc.perform(get("/selectPath").session(session)
+//                .param("path", String.valueOf(destination))
+//        );
+//        assertThat();
+//    }
+
     public void setUpFixture() {
         mockMvc = standaloneSetup(
                 new RootController(null
