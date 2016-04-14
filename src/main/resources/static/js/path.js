@@ -1,7 +1,7 @@
 function selectPath() {
     //alert('a');
     var destination = document.getElementById('selectedDestination').value;
-    alert(destination);
+    //alert(destination);
 
     $.get('/selectPath/' + destination,
         function (data, status) {
@@ -16,12 +16,6 @@ function selectPath() {
 
             responseModal.modal({backdrop: "static"}).find(".modal-title").text('path is');
             responseModal.modal({backdrop: "static"}).find(".modal-footer").html('<a href="/" type="button" class="btn btn-default">Next</a>')
-            //data.val('');
-            data = "";
-            //data.$.clear.valueOf();
-            //$('#modal-body').val('')
-
-
         });
 
 }

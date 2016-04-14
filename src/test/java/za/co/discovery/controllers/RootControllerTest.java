@@ -22,6 +22,24 @@ public class RootControllerTest {
                 .andExpect(view().name("index"));
     }
 
+    @Test
+    public void testUpdatePage() throws Exception {
+        setUpFixture();
+        mockMvc.perform(get("/update"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("update"));
+    }
+
+    @Test
+    public void testDeletePage() throws Exception {
+        setUpFixture();
+        mockMvc.perform(get("/delete"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("delete"));
+    }
+
+
+
 //    @Test
 //    public void testPathPrintedOutIsCorrect() throws Exception{
 //
