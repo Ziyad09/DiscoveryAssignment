@@ -32,10 +32,6 @@ public class TrafficService {
     public TrafficService() {
     }
 
-    public List<Traffic> getTraffic() {
-        return readTraffic();
-    }
-
     public Traffic getTrafficById(int routeId) {
         return trafficDAO.retrieveTraffic(routeId);
     }
@@ -48,13 +44,17 @@ public class TrafficService {
         return trafficDAO.delete(routeId);
     }
 
+    public List<Traffic> getTrafficList() {
+        return trafficDAO.retrieveTrafficList();
+    }
+
     public void persistTraffic(int routeId, String sourcePlanet, String destinationPlanet, Double distance) {
         Traffic traffic = new Traffic(routeId, sourcePlanet, destinationPlanet, distance);
         trafficDAO.save(traffic);
     }
 
     @PostConstruct
-    private List<Traffic> readTraffic() {
+    public void readTraffic() {
         try {
             String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
 //            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
@@ -88,6 +88,6 @@ public class TrafficService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return trafficList;
+//        return trafficList;
     }
 }

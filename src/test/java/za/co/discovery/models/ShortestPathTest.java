@@ -41,7 +41,7 @@ public class ShortestPathTest {
         edges.add(edge3);
 
         Graph graph = new Graph();
-        Map<String, Vertex> map = graph.Graph(edges);
+        Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra(start, map);
         LinkedList<String> actual = dis.printPath(map, end);

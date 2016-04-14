@@ -38,18 +38,20 @@
                     </option>
                 </select>
             </div>
-
-            <div class="row centerItems">
-                <form>
-                    New Planet Name:
-                    <input type="text" name="firstname" id="changedName">
-                    </input>
-                </form>
-            </div>
         </div>
+        <br/><br/>
+        <div class="row centerItems">
+            <form>
+                New Planet Name:
+                <input type="text" name="firstname" id="changedName">
+                </input>
+            </form>
+        </div>
+        <br/><br/>
 
-
-        <button type="button" onclick="updatePlanet()" data-toggle="modal" data-target="#myModal">Submit</button>
+        <button class="btn btn-success optionButtons" type="button" onclick="updatePlanet()" data-toggle="modal"
+                data-target="#myModal">Submit
+        </button>
         <!-- Modal -->
         <div class="container">
             <div class="modal fade" id="myModal" role="dialog">
@@ -72,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <p>Click the button to submit route</p>
+        <p>Click the button to update planet</p>
 
     </div>
 </div>

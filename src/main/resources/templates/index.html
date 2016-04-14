@@ -8,7 +8,7 @@
     <script type="text/javascript" src="/js/path.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="/static/js/css/index.css"/>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -31,7 +31,8 @@
 
         <br/><br/>
 
-        <div id="heading">Planet Routes</div>
+        <!--<div id="heading">Planet Routes</div>-->
+        <h1>Planet Routes</h1>
         <br/><br/>
         <div class="row centerItems">
             <div class="col-lg-10">
@@ -51,9 +52,11 @@
 
         <p>Click the button to submit route</p>
 
+        <button class="btn btn-success optionButtons" type="button" onclick="selectPath()">Submit (No delay)</button>
+        <button class="btn btn-success optionButtons" type="button" onclick="selectPathWithDelay()">Submit (Delay)
+        </button>
 
         <div class="container">
-            <button type="button" onclick="selectPath()">Submit</button>
             <!-- Modal -->
             <div class="modal fade" id="responseModal" role="dialog">
                 <div class="modal-dialog">

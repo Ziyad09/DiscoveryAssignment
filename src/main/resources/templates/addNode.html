@@ -31,30 +31,32 @@
         <div id="heading">Planet Routes</div>
         <br/><br/>
         <div class="row centerItems">
-            <div class="col-lg-10">
-                <h1>Select Root</h1>
-                <select id="newDestination">
-                    <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
-                    </option>
-                </select>
+            <div class="row centerItems">
+                <div class="col-lg-10">
+                    <h1>Select Root</h1>
+                    <select id="newDestination">
+                        <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br/><br/>
+
+            <div class="row centerItems">
+                <form>
+                    New Planet Name:
+                    <input type="text" name="firstname" id="changedName">
+                    </input>
+                    Distance:
+                    <input type="text" name="firstname" id="distance">
+                    </input>
+                </form>
             </div>
         </div>
 
-        <div class="row centerItems">
-            <form>
-                New Planet Name:
-                <input type="text" name="firstname" id="changedName">
-                </input>
-                Distance:
-                <input type="text" name="firstname" id="distance">
-                </input>
-
-
-            </form>
-        </div>
-
-
-        <button type="button" onclick="addPlanet()" data-toggle="modal" data-target="#myModal">Submit</button>
+        <button class="btn btn-success optionButtons" type="button" onclick="addPlanet()" data-toggle="modal"
+                data-target="#myModal">Submit
+        </button>
         <!-- Modal -->
         <div class="container">
             <div class="modal fade" id="myModal" role="dialog">
@@ -77,7 +79,7 @@
                 </div>
             </div>
         </div>
-        <p>Click the button to submit route</p>
+        <p>Click the button to add planet</p>
 
     </div>
 </div>

@@ -52,7 +52,7 @@ public class VertexRepository {
 
     public String findVertex(String name) {
         Graph graph = new Graph();
-        Map<String, Vertex> map = graph.Graph(edges);
+        Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
 

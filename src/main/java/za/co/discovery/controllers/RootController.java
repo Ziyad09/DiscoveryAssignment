@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import za.co.discovery.models.Edge;
-import za.co.discovery.models.Graph;
-import za.co.discovery.models.ShortestPath;
-import za.co.discovery.models.Vertex;
+import za.co.discovery.models.*;
 import za.co.discovery.services.EdgesService;
+import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
 import java.util.LinkedList;
@@ -27,20 +25,38 @@ public class RootController {
 
     private static EdgesService edge;
     private static VerticesService vertex;
+    private static TrafficService traffic;
     private Graph graph = null;
 
     @Autowired
-    public RootController(EdgesService edge, VerticesService vertex) {
+    public RootController(EdgesService edge, VerticesService vertex,
+                          TrafficService traffic) {
         this.edge = edge;
         this.vertex = vertex;
+        this.traffic = traffic;
     }
 
     @RequestMapping("/")
     public String home(Model model) {
         List<Vertex> vertices = vertex.getVertexList();
         model.addAttribute("vertexList", vertices);
+        List<Traffic> trafficList = traffic.getTrafficList();
+        List<Edge> edgeList = edge.getEdgeList();
+        for (int i = 0; i < trafficList.size(); i++) {
+            int id = trafficList.get(i).getRouteId();
+            String source = trafficList.get(i).getSource();
+            String destination = trafficList.get(i).getDestination();
+            double distance = edgeList.get(i).getDistance() + trafficList.get(i).getDistance();
+            Traffic lastTraffic = new Traffic(id, source, destination, distance);
+            traffic.updateTraffic(lastTraffic);
+        }
         return "index";
     }
+
+//    public static void main(String args[]){
+////        System.out.print(traffic.getTrafficList().get(0));
+//        System.out.print(edge.getEdgeList().get(0));
+//    }
 
     @RequestMapping("/update")
     public String update(Model model) {
@@ -103,6 +119,32 @@ public class RootController {
         vertex.deleteVertex(destinationToDelete);
     }
 
+    // Traffic delay
+    @RequestMapping(
+            value = "/selectDelayedPath/{delayPath}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> selectDelayedPath(@PathVariable String delayPath, Model model) {
+
+        Graph graph = new Graph();
+        List<Traffic> trafficList = traffic.getTrafficList();
+        Map<String, Vertex> mapTraffic = graph.GraphTraffic(trafficList);
+        ShortestPath disTraffic = new ShortestPath();
+        disTraffic.dijkstra("A", mapTraffic);
+        LinkedList<String> actual = disTraffic.printPath(mapTraffic, delayPath);
+
+        String pathTravelled = new String("");
+        for (int i = 0; i < actual.size(); i++) {
+            Vertex returnedV = vertex.getVertexByNode(actual.get(i));
+            pathTravelled += returnedV.getPlanetName() + " ";
+        }
+        if (actual.size() > 0) {
+            actual.clear();
+        }
+        return new ResponseEntity<>(pathTravelled, HttpStatus.OK);
+    }
+
+    // No traffic delay
     @RequestMapping(
             value = "/selectPath/{path}",
             method = RequestMethod.GET)
@@ -111,10 +153,11 @@ public class RootController {
 
         List<Edge> edges = edge.getEdgeList();
         Graph graph = new Graph();
-        Map<String, Vertex> map = graph.Graph(edges);
+        Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
         LinkedList<String> actual = dis.printPath(map, path);
+
         String pathTravelled = new String("");
         for (int i = 0; i < actual.size(); i++) {
             Vertex returnedV = vertex.getVertexByNode(actual.get(i));

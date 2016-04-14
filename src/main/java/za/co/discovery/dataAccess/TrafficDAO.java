@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import za.co.discovery.models.Traffic;
 
+import java.util.List;
+
 import static org.hibernate.criterion.Restrictions.eq;
 
 @Repository
@@ -30,6 +32,15 @@ public class TrafficDAO {
     public Traffic update(Traffic traffic) {
         Session session = sessionFactory.getCurrentSession();
         return (Traffic) session.merge(traffic);
+    }
+
+    public List<Traffic> retrieveTrafficList() {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Traffic.class);
+//        criteria.add(eq("id", id));
+        List<Traffic> newTrafficList = (List<Traffic>) criteria.list();
+        return newTrafficList;
+//        return query.list();
     }
 
     public int delete(int routeId) {
