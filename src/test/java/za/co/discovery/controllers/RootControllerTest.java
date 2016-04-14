@@ -24,10 +24,9 @@ public class RootControllerTest {
 
 //    @Test
 //    public void testPathPrintedOutIsCorrect() throws Exception{
-//        String destination = "B";
 //
-//        String path = "Earth Moon ";
-//        mockMvc.perform(get("/selectPath").session(session)
+//        String destination = "B";
+//        mockMvc.perform(get("/deleteVertex").session(session)
 //                .param("path", String.valueOf(destination))
 //        );
 //        assertThat();

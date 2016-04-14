@@ -41,8 +41,7 @@ public class VertexDAO {
     }
 
 
-
-    //    public List<Vertex> retrieveVertex() {
+    //    public List<Vertex> retrieveVertexList() {
 //        Session session = sessionFactory.getCurrentSession();
 ////        String hql =
 ////                "SELECT new za.co.discovery.models.Vertex(v.node,COUNT(*)) " +

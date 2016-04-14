@@ -1,7 +1,7 @@
 function selectPath() {
     //alert('a');
     var destination = document.getElementById('selectedDestination').value;
-    //alert(destination);
+    alert(destination);
 
     $.get('/selectPath/' + destination,
         function (data, status) {

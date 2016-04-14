@@ -46,6 +46,39 @@ public class RootController {
         return "index";
     }
 
+    @RequestMapping("/update")
+    public String update() {
+        return "update";
+    }
+
+    @RequestMapping("/delete")
+    public String delete() {
+        return "delete";
+    }
+
+    @RequestMapping(value = "/updateVertex/{vertexUpdate}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public void updateVertex(@PathVariable String vertexUpdate) {
+        String[] updated = vertexUpdate.split(",");
+        String nodeName = updated[0];
+        String newPlanetName = updated[1];
+//        Vertex oldVertex = vertex.getVertexByNode(nodeName);
+        Vertex newVertex = new Vertex(nodeName, newPlanetName);
+        vertex.updateVertex(newVertex);
+//        return "index";
+    }
+
+    @RequestMapping(value = "/deleteVertex/{destinationToDelete}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public void deleteVertex(@PathVariable String destinationToDelete) {
+        vertex.deleteVertex(destinationToDelete);
+        System.out.print(vertex.getVertexByNode(destinationToDelete));
+//        return "index";
+    }
+
+
     @RequestMapping(
             value = "/selectPath/{path}",
             method = RequestMethod.GET)

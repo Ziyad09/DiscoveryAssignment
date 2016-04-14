@@ -43,17 +43,9 @@ public class VertexRepository {
         tmpl.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-//                EdgesService edge = new EdgesService();
-//                VerticesService vertex = new VerticesService();
                 edges = edgesService.getEdges();
                 verticesService.readVertices();
                 vertexList = verticesService.vertexList;
-//                Vertex earth = new Vertex("A", "Earth");
-//                vertexList.add(earth);
-//                Vertex moon = new Vertex("B", "Moon");
-//                vertexList.add(moon);
-//                Vertex venus = new Vertex("C", "Venus");
-//                vertexList.add(venus);
             }
         });
     }
@@ -75,17 +67,6 @@ public class VertexRepository {
         }
 
         return pathTravelled;
-
-
-//        Assert.notNull(name);
-//        Vertex result = null;
-//        for (Vertex vertex : vertexList) {
-//            if (name.equals(vertex.getPlanetName())) {
-//                result = vertex;
-//            }
-//        }
-//
-//        return result;
     }
 
 }

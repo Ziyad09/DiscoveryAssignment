@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 public class DiscoveryApplication {
 
     public static void main(String[] args) {
-        System.out.print("\n\n hello \n\n");
         SpringApplication.run(DiscoveryApplication.class, args);
     }
 
