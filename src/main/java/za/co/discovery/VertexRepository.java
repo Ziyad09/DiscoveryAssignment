@@ -43,7 +43,7 @@ public class VertexRepository {
         tmpl.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
-                edges = edgesService.getEdges();
+                edges = edgesService.getEdgeList();
                 verticesService.readVertices();
                 vertexList = verticesService.vertexList;
             }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import za.co.discovery.models.Edge;
 
+import java.util.List;
+
 import static org.hibernate.criterion.Restrictions.eq;
 
 @Repository
@@ -39,11 +41,14 @@ public class EdgeDAO {
         query.setParameter("routeNumber", routeId);
         int result = query.executeUpdate();
         return result;
+    }
 
-//        String hql =
-//                "delete Edge AS e WHERE e.routeId = :routeId";
-//        Query query = session.createQuery(hql);
-//        query.setParameter("routeId", new Long(18));
+    public List<Edge> retrieveEdgeList() {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Edge.class);
+//        criteria.add(eq("id", id));
+        List<Edge> newEdgeList = (List<Edge>) criteria.list();
+        return newEdgeList;
 //        return query.list();
     }
 

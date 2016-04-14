@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class EdgesService {
     private EdgeDAO edgeDAO;
-    private final int numberOfEdges = 45;
+    private final int numberOfEdges = 60;
     List<Edge> edgeList = new ArrayList<>(numberOfEdges);
 
     @Autowired
@@ -31,8 +31,12 @@ public class EdgesService {
 
     public EdgesService() {
     }
-    public List<Edge> getEdges() {
-        return readEdges();
+//    public List<Edge> getEdges() {
+//        return readEdges();
+//    }
+
+    public List<Edge> getEdgeList() {
+        return edgeDAO.retrieveEdgeList();
     }
 
     public Edge getEdgeById(int routeId) {
@@ -46,13 +50,12 @@ public class EdgesService {
     public int deleteEdge(int routeId) {
         return edgeDAO.delete(routeId);
     }
-
     public void persistEdge(Edge edge) {
         edgeDAO.save(edge);
     }
 
     @PostConstruct
-    private List<Edge> readEdges() {
+    public void readEdges() {
         try {
             String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
 //            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
@@ -72,7 +75,7 @@ public class EdgesService {
                     int routeId2 = Integer.valueOf(routeId.intValue());
                     Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
                     edgeList.add(edge);
-                    //persistEdge(edge);
+                    persistEdge(edge);
 //                    edgeDAO.save(edge);
 //                    System.out.print(routeId + " " + planetSource + "\n\n");
                     break;
@@ -86,6 +89,6 @@ public class EdgesService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return edgeList;
+//        return edgeList;
     }
 }

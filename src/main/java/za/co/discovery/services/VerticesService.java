@@ -21,7 +21,7 @@ import java.util.Vector;
 @Service
 public class VerticesService {
 
-    private final int numberOfVertices = 37;
+    private final int numberOfVertices = 50;
     public List<Vertex> vertexList = new Vector<>(numberOfVertices);
     private VertexDAO vertexDAO;
 
@@ -48,6 +48,10 @@ public class VerticesService {
 
     public void persistVertex(Vertex planet) {
         vertexDAO.save(planet);
+    }
+
+    public List<Vertex> getVertexList() {
+        return vertexDAO.retrieveVertexList();
     }
 
     @PostConstruct

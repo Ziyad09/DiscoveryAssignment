@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Discovery</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
@@ -34,43 +34,8 @@
             <div class="col-lg-10">
                 <h1>Destination</h1>
                 <select id="newDestination">
-                    <option value="A">Earth</option>
-                    <option value="B">Moon</option>
-                    <option value="C">Jupiter</option>
-                    <option value="D">Venus</option>
-                    <option value="E">Mars</option>
-                    <option value="F">Saturn</option>
-                    <option value="G">Uranus</option>
-                    <option value="H">Pluto</option>
-                    <option value="I">Neptune</option>
-                    <option value="J">Mercury</option>
-                    <option value="K">Alpha Centauri</option>
-                    <option value="L">Luhman 16</option>
-                    <option value="M">Epsilon Eridani</option>
-                    <option value="N">Groombridge 34</option>
-                    <option value="O">Epsilon Indi</option>
-                    <option value="P">Tau Ceti</option>
-                    <option value="Q">Kapteyn's star</option>
-                    <option value="R">Gliese 687</option>
-                    <option value="S">Gliese 674</option>
-                    <option value="T">Gliese 876#</option>
-                    <option value="U">Gliese 832</option>
-                    <option value="V">Fomalhaut</option>
-                    <option value="W">Virginis</option>
-                    <option value="X">HD 102365</option>
-                    <option value="Y">Gliese 176</option>
-                    <option value="Z">Gliese 436</option>
-                    <option value="A'">Pollux</option>
-                    <option value="B'">Gliese 86</option>
-                    <option value="C'">HIP 57050</option>
-                    <option value="D'">Piscium</option>
-                    <option value="E'">GJ 1214</option>
-                    <option value="F'">Upsilon Andromedae</option>
-                    <option value="G'">Gamma Cephei</option>
-                    <option value="H'">HD 176051</option>
-                    <option value="I'">Gliese 317</option>
-                    <option value="J'">HD 38858</option>
-                    <option value="K'">Ursae Majoris</option>
+                    <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
+                    </option>
                 </select>
             </div>
 

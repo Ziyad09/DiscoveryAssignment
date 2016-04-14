@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,32 +35,31 @@ public class RootController {
         this.vertex = vertex;
     }
 
-    public List<Edge> getPathTraveled() {
-        EdgesService edge = new EdgesService();
-//        VerticesService vertex = new VerticesService();
-        final List<Edge> edges = edge.getEdges();
-//        final List<Vertex> vertices = vertex.getVertexList();
-        return edges;
-    }
-
-
     @RequestMapping("/")
-    public String home() {
+    public String home(Model model) {
+        List<Vertex> vertices = vertex.getVertexList();
+        model.addAttribute("vertexList", vertices);
         return "index";
     }
 
     @RequestMapping("/update")
-    public String update() {
+    public String update(Model model) {
+        List<Vertex> vertices = vertex.getVertexList();
+        model.addAttribute("vertexList", vertices);
         return "update";
     }
 
     @RequestMapping("/delete")
-    public String delete() {
+    public String delete(Model model) {
+        List<Vertex> vertices = vertex.getVertexList();
+        model.addAttribute("vertexList", vertices);
         return "delete";
     }
 
     @RequestMapping("/addNode")
-    public String addNode() {
+    public String addNode(Model model) {
+        List<Vertex> vertices = vertex.getVertexList();
+        model.addAttribute("vertexList", vertices);
         return "addNode";
     }
 
@@ -70,10 +70,8 @@ public class RootController {
         String[] updated = vertexUpdate.split(",");
         String nodeName = updated[0];
         String newPlanetName = updated[1];
-//        Vertex oldVertex = vertex.getVertexByNode(nodeName);
         Vertex newVertex = new Vertex(nodeName, newPlanetName);
         vertex.updateVertex(newVertex);
-//        return "index";
     }
 
     @RequestMapping(value = "/addVertex/{vertexAdded}",
@@ -86,19 +84,16 @@ public class RootController {
         double distance = Double.parseDouble(updated[2]);
         String vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
         Vertex newVertex = vertex.getVertexByNode(vertexId);
-        if (newVertex == null) {
-            newVertex = new Vertex(vertexId, newPlanetName);
-        } else {
+        while (newVertex != null) {
             vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
+            newVertex = new Vertex(vertexId, newPlanetName);
         }
-
         newVertex = new Vertex(vertexId, newPlanetName);
         vertex.persistVertex(newVertex);
         int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
         int id = randomId[3];
         Edge newEdge = new Edge(id, nodeName, newPlanetName, distance);
         edge.persistEdge(newEdge);
-//        System.out.print("\n\n"+edge.getEdgeById(id).getDestination()+"\n\n"+edge.getEdgeById(id).getSource());
     }
 
     @RequestMapping(value = "/deleteVertex/{destinationToDelete}",
@@ -106,17 +101,15 @@ public class RootController {
     @ResponseBody
     public void deleteVertex(@PathVariable String destinationToDelete) {
         vertex.deleteVertex(destinationToDelete);
-        System.out.print(vertex.getVertexByNode(destinationToDelete));
-//        return "index";
     }
-
 
     @RequestMapping(
             value = "/selectPath/{path}",
             method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> selectPath(@PathVariable String path) {
-        List<Edge> edges = getPathTraveled();
+    public ResponseEntity<String> selectPath(@PathVariable String path, Model model) {
+
+        List<Edge> edges = edge.getEdgeList();
         Graph graph = new Graph();
         Map<String, Vertex> map = graph.Graph(edges);
         ShortestPath dis = new ShortestPath();
@@ -125,12 +118,15 @@ public class RootController {
         String pathTravelled = new String("");
         for (int i = 0; i < actual.size(); i++) {
             Vertex returnedV = vertex.getVertexByNode(actual.get(i));
-            pathTravelled += returnedV.getPlanetName() + " ";
+            if (returnedV == null) {
+                pathTravelled = "Unable to determine path, Planet was destroyed";
+            } else {
+                pathTravelled += returnedV.getPlanetName() + " ";
+            }
         }
         if (actual.size() > 0) {
             actual.clear();
         }
-//        System.out.print("\n\n" + pathTravelled + "\n\n");
         return new ResponseEntity<>(pathTravelled, HttpStatus.OK);
     }
 }

@@ -1,43 +1,46 @@
 package za.co.discovery.controllers;
 
-import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 public class RootControllerTest {
     private MockHttpSession session;
     private MockMvc mockMvc;
 
-    @Test
-    public void testHome() throws Exception {
-        setUpFixture();
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"));
-    }
-
-    @Test
-    public void testUpdatePage() throws Exception {
-        setUpFixture();
-        mockMvc.perform(get("/update"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("update"));
-    }
-
-    @Test
-    public void testDeletePage() throws Exception {
-        setUpFixture();
-        mockMvc.perform(get("/delete"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("delete"));
-    }
-
+//    @Test
+//    public void testHome() throws Exception {
+//        setUpFixture();
+////        session.setAttribute("de","de");
+//        List<Vertex> newVertexList = new ArrayList<>();
+//        newVertexList.add(aVertex().build());
+//        mockMvc.perform(get("/index"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("index"))
+//                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
+//    }
+//
+//    @Test
+//    public void testUpdatePage() throws Exception {
+//        setUpFixture();
+//        List<Vertex> newVertexList = new ArrayList<>();
+//        newVertexList.add(aVertex().build());
+//        mockMvc.perform(get("/update"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("update"))
+//                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
+//    }
+//
+//    @Test
+//    public void testDeletePage() throws Exception {
+//        setUpFixture();
+//        mockMvc.perform(get("/delete"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("delete"));
+//    }
+//
 
 
 //    @Test

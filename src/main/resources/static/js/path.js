@@ -14,7 +14,7 @@ function selectPath() {
                     '</div>'
                 );
 
-            responseModal.modal({backdrop: "static"}).find(".modal-title").text('path is');
+            responseModal.modal({backdrop: "static"}).find(".modal-title").text('Calculating path ... \n Okay, here is what I found..');
             responseModal.modal({backdrop: "static"}).find(".modal-footer").html('<a href="/" type="button" class="btn btn-default">Next</a>')
         });
 

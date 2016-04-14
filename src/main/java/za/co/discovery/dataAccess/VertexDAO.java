@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import za.co.discovery.models.Vertex;
 
+import java.util.List;
+
 import static org.hibernate.criterion.Restrictions.eq;
 
 
@@ -41,17 +43,18 @@ public class VertexDAO {
     }
 
 
-    //    public List<Vertex> retrieveVertexList() {
-//        Session session = sessionFactory.getCurrentSession();
-////        String hql =
-////                "SELECT new za.co.discovery.models.Vertex(v.node,COUNT(*)) " +
-////                        "FROM Vertex v GROUP BY v.username";
-////        Query query = session.createQuery(hql);
-//        Criteria criteria = session.createCriteria(Vertex.class);
-////        criteria.add(eq("id", id));
-//        return (List<Vertex>) criteria.list();
-////        return query.list();
-//    }
+    public List<Vertex> retrieveVertexList() {
+        Session session = sessionFactory.getCurrentSession();
+//        String hql =
+//                "SELECT new za.co.discovery.models.Vertex(v.node,v.planetName) " +
+//                        "FROM Vertex v";
+//        Query query = session.createQuery(hql);
+        Criteria criteria = session.createCriteria(Vertex.class);
+//        criteria.add(eq("id", id));
+        List<Vertex> newVertexList = (List<Vertex>) criteria.list();
+        return newVertexList;
+//        return query.list();
+    }
     public Vertex retrieveVertex(String nodeId) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Vertex.class);
