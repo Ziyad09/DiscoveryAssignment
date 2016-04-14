@@ -46,14 +46,16 @@ public class EdgesServiceTest {
                 .withDestination("B")
                 .withDistance(0.4)
                 .build();
-        edgesService.persistEdge(1, "A", "B", 0.4);
+        Edge newEdge = new Edge(1, "A", "B", 0.4);
+        edgesService.persistEdge(newEdge);
         Edge actualEdge = edgesService.getEdgeById(firstEdge.getRouteId());
         assertThat(actualEdge, is(sameBeanAs(firstEdge)));
     }
 
     @Test
     public void testUpdateEdge() throws Exception {
-        edgesService.persistEdge(1, "A", "B", 0.4);
+        Edge newEdge = new Edge(1, "A", "B", 0.4);
+        edgesService.persistEdge(newEdge);
         Edge updatedEdge = anEdge()
                 .withRouteId(1)
                 .withSource("A")
@@ -67,7 +69,8 @@ public class EdgesServiceTest {
 
     @Test
     public void testDeleteEdge() throws Exception {
-        edgesService.persistEdge(1, "A", "B", 0.4);
+        Edge newEdge = new Edge(1, "A", "B", 0.4);
+        edgesService.persistEdge(newEdge);
         int affectedRows = edgesService.deleteEdge(1);
         assertThat(affectedRows, is(1));
     }

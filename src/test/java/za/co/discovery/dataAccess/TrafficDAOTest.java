@@ -14,89 +14,83 @@ import org.springframework.transaction.annotation.Transactional;
 import za.co.discovery.DAOConfig;
 import za.co.discovery.DataSourceConfig;
 import za.co.discovery.PersistenceConfig;
-import za.co.discovery.models.Edge;
+import za.co.discovery.models.Traffic;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static za.co.discovery.models.EdgeBuilder.anEdge;
+import static za.co.discovery.models.TrafficBuilder.aTraffic;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {PersistenceConfig.class, DataSourceConfig.class, DAOConfig.class, EdgeDAO.class},
+        classes = {PersistenceConfig.class, DataSourceConfig.class, DAOConfig.class, TrafficDAO.class},
         loader = AnnotationConfigContextLoader.class)
-//@ActiveProfiles("test")
-public class EdgeDAOTest {
+public class TrafficDAOTest {
+
     @Autowired
     private SessionFactory sessionFactory;
-
-    //@Autowired
-    private EdgeDAO edgeDAO;
-    private Edge firstEdge;
+    private TrafficDAO trafficDAO;
+    private Traffic firstTraffic;
 
     @Before
     public void init() {
-        edgeDAO = new EdgeDAO(sessionFactory);
+        trafficDAO = new TrafficDAO(sessionFactory);
     }
 
     @Test
     public void testSave() throws Exception {
-        // Set up Fixture
-        getEdge();
+        getTraffic();
         Session session = sessionFactory.getCurrentSession();
         // Exercise SUT
-        edgeDAO.save(firstEdge);
-        Criteria criteria = session.createCriteria(Edge.class);
-        Edge actualEdge = (Edge) criteria.uniqueResult();
+        trafficDAO.save(firstTraffic);
+        Criteria criteria = session.createCriteria(Traffic.class);
+        Traffic actualTraffic = (Traffic) criteria.uniqueResult();
         // Verify Behaviour
-        assertThat(actualEdge, is(sameBeanAs(firstEdge)
+        assertThat(actualTraffic, is(sameBeanAs(firstTraffic)
         ));
     }
 
     @Test
-    public void testUpdateEdge() throws Exception {
-        // Set up Fixture
-        getEdge();
+    public void testUpdate() throws Exception {
+        getTraffic();
         // Exercise SUT
-        edgeDAO.save(firstEdge);
-        Edge expectedEdge = anEdge()
+        trafficDAO.save(firstTraffic);
+        Traffic expectedTraffic = aTraffic()
                 .withRouteId(1)
                 .withSource("C")
                 .withDestination("D")
                 .withDistance(5.0)
                 .build();
-        edgeDAO.update(expectedEdge);
-        Edge actualEdge = edgeDAO.retrieveEdge(1);
+        trafficDAO.update(expectedTraffic);
+        Traffic actualTraffic = trafficDAO.retrieveTraffic(1);
         // Verify Behaviour
-        assertThat(actualEdge, is(sameBeanAs(expectedEdge)));
+        assertThat(actualTraffic, is(sameBeanAs(expectedTraffic)));
     }
 
     @Test
-    public void testDeleteEdge() throws Exception {
-        // Set up Fixture
-        getEdge();
+    public void testDelete() throws Exception {
+        getTraffic();
         // Exercise SUT
-        edgeDAO.save(firstEdge);
-        int result = edgeDAO.delete(firstEdge.getRouteId());
+        trafficDAO.save(firstTraffic);
+        int result = trafficDAO.delete(firstTraffic.getRouteId());
         // Verify Behaviour
         assertThat(result, is(1));
     }
 
     @Test
-    public void testRetrieveEdge() throws Exception {
+    public void testRetrieveTraffic() throws Exception {
         // Set up Fixture
-        getEdge();
+        getTraffic();
         // Exercise SUT
-        Edge returnedEdge = edgeDAO.save(firstEdge);
-        Edge actualEdge = edgeDAO.retrieveEdge(returnedEdge.getRouteId());
+        Traffic returnedTraffic = trafficDAO.save(firstTraffic);
+        Traffic actualTraffic = trafficDAO.retrieveTraffic(returnedTraffic.getRouteId());
         // Verify Behaviour
-        assertThat(actualEdge, is(sameBeanAs(firstEdge)
-                .ignoring("routeId")));
+        assertThat(actualTraffic, is(sameBeanAs(firstTraffic)));
     }
 
-    public void getEdge() {
-        firstEdge = anEdge()
+    public void getTraffic() {
+        firstTraffic = aTraffic()
                 .withRouteId(1)
                 .withSource("A")
                 .withDestination("B")

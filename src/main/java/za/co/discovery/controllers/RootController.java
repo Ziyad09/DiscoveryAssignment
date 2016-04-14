@@ -96,7 +96,8 @@ public class RootController {
         vertex.persistVertex(newVertex);
         int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
         int id = randomId[3];
-        edge.persistEdge(id, nodeName, newPlanetName, distance);
+        Edge newEdge = new Edge(id, nodeName, newPlanetName, distance);
+        edge.persistEdge(newEdge);
 //        System.out.print("\n\n"+edge.getEdgeById(id).getDestination()+"\n\n"+edge.getEdgeById(id).getSource());
     }
 
