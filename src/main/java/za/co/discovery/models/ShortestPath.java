@@ -54,10 +54,15 @@ public class ShortestPath {
     public LinkedList<String> printPath(Map<String, Vertex> graph, String endName) {
         if (!graph.containsKey(endName)) {
             System.err.printf("Graph doesn't contain end vertex \"%s\"\n", endName);
-//            return;
         }
 
-        return graph.get(endName).printPath();
-//        System.out.println();
+        LinkedList<String> pathNames = new LinkedList<>();
+        if (graph.get(endName) == null) {
+            pathNames.add("Cannot Complete request");
+            return pathNames;
+        } else {
+            pathNames = graph.get(endName).printPath();
+            return pathNames;
+        }
     }
 }

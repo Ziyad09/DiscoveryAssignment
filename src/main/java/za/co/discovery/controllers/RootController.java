@@ -95,19 +95,21 @@ public class RootController {
         String newPlanetName = updated[1];
         double distance = Double.parseDouble(updated[2]);
         String vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
-//        String vertexId = nodeName;
+
+        // Add the edge
+        int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
+        int id = randomId[3];
+        Edge newEdge = new Edge(id, nodeName, newPlanetName, distance);
+        edgesService.persistEdge(newEdge);
+
+        // Add the vertex
         Vertex newVertex = vertexService.getVertexByNode(vertexId);
         while (newVertex != null) {
             vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
             newVertex = new Vertex(vertexId, newPlanetName);
         }
         newVertex = new Vertex(vertexId, newPlanetName);
-//        System.out.print("\n\n"+newVertex.getNode()+"\n\n");
         vertexService.persistVertex(newVertex);
-        int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
-        int id = randomId[3];
-        Edge newEdge = new Edge(id, nodeName, newPlanetName, distance);
-        edgesService.persistEdge(newEdge);
     }
 
     @RequestMapping(value = "/deleteVertex/{destinationToDelete}",
@@ -134,7 +136,6 @@ public class RootController {
         String pathTravelled = new String("");
         for (int i = 0; i < actual.size(); i++) {
             Vertex returnedV = vertexService.getVertexByNode(actual.get(i));
-//            pathTravelled += returnedV.getPlanetName() + " ";
             if (returnedV == null) {
                 pathTravelled = "Unable to determine path, Planet vanished";
             } else {
@@ -155,14 +156,12 @@ public class RootController {
     public ResponseEntity<String> selectPath(@PathVariable String path) {
 
         List<Edge> edges = edgesService.getEdgeList();
-        System.out.print("\n\n" + edges.size() + "\n\n");
-        System.out.print("\n\n" + vertexService.getVertexList().size() + "\n\n");
         Graph graph = new Graph();
         Map<String, Vertex> map = graph.GraphEdge(edges);
+        System.out.print("\n\n\n\n" + map.get(path) + "\n\n\n");
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
         LinkedList<String> actual = dis.printPath(map, path);
-//        System.out.print("\n\n" +actual.get(1)+"\n\n");
         String pathTravelled = new String("");
         for (int i = 0; i < actual.size(); i++) {
             Vertex returnedV = vertexService.getVertexByNode(actual.get(i));
@@ -171,7 +170,6 @@ public class RootController {
             } else {
                 pathTravelled += returnedV.getPlanetName() + " ";
             }
-//            System.out.print("\n\n" +returnedV.getPlanetName()+"\n\n");
         }
         if (actual.size() > 0) {
             actual.clear();
