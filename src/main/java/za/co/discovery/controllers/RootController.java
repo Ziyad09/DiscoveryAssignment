@@ -23,25 +23,25 @@ import java.util.concurrent.ThreadLocalRandom;
 @Controller
 public class RootController {
 
-    private static EdgesService edge;
-    private static VerticesService vertex;
-    private static TrafficService traffic;
+    private EdgesService edgesService;
+    private VerticesService vertexService;
+    private TrafficService traffic;
     private Graph graph = null;
 
     @Autowired
-    public RootController(EdgesService edge, VerticesService vertex,
+    public RootController(EdgesService edgesService, VerticesService vertexService,
                           TrafficService traffic) {
-        this.edge = edge;
-        this.vertex = vertex;
+        this.edgesService = edgesService;
+        this.vertexService = vertexService;
         this.traffic = traffic;
     }
 
     @RequestMapping("/")
     public String home(Model model) {
-        List<Vertex> vertices = vertex.getVertexList();
+        List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
         List<Traffic> trafficList = traffic.getTrafficList();
-        List<Edge> edgeList = edge.getEdgeList();
+        List<Edge> edgeList = edgesService.getEdgeList();
         for (int i = 0; i < trafficList.size(); i++) {
             int id = trafficList.get(i).getRouteId();
             String source = trafficList.get(i).getSource();
@@ -50,31 +50,27 @@ public class RootController {
             Traffic lastTraffic = new Traffic(id, source, destination, distance);
             traffic.updateTraffic(lastTraffic);
         }
+//        System.out.print("\n\n"+vertices.get(vertices.size()-1).getNode()+"\n\n");
         return "index";
     }
 
-//    public static void main(String args[]){
-////        System.out.print(traffic.getTrafficList().get(0));
-//        System.out.print(edge.getEdgeList().get(0));
-//    }
-
     @RequestMapping("/update")
     public String update(Model model) {
-        List<Vertex> vertices = vertex.getVertexList();
+        List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
         return "update";
     }
 
     @RequestMapping("/delete")
     public String delete(Model model) {
-        List<Vertex> vertices = vertex.getVertexList();
+        List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
         return "delete";
     }
 
     @RequestMapping("/addNode")
     public String addNode(Model model) {
-        List<Vertex> vertices = vertex.getVertexList();
+        List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
         return "addNode";
     }
@@ -87,7 +83,7 @@ public class RootController {
         String nodeName = updated[0];
         String newPlanetName = updated[1];
         Vertex newVertex = new Vertex(nodeName, newPlanetName);
-        vertex.updateVertex(newVertex);
+        vertexService.updateVertex(newVertex);
     }
 
     @RequestMapping(value = "/addVertex/{vertexAdded}",
@@ -99,24 +95,26 @@ public class RootController {
         String newPlanetName = updated[1];
         double distance = Double.parseDouble(updated[2]);
         String vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
-        Vertex newVertex = vertex.getVertexByNode(vertexId);
+//        String vertexId = nodeName;
+        Vertex newVertex = vertexService.getVertexByNode(vertexId);
         while (newVertex != null) {
             vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
             newVertex = new Vertex(vertexId, newPlanetName);
         }
         newVertex = new Vertex(vertexId, newPlanetName);
-        vertex.persistVertex(newVertex);
+//        System.out.print("\n\n"+newVertex.getNode()+"\n\n");
+        vertexService.persistVertex(newVertex);
         int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
         int id = randomId[3];
         Edge newEdge = new Edge(id, nodeName, newPlanetName, distance);
-        edge.persistEdge(newEdge);
+        edgesService.persistEdge(newEdge);
     }
 
     @RequestMapping(value = "/deleteVertex/{destinationToDelete}",
             method = RequestMethod.GET)
     @ResponseBody
     public void deleteVertex(@PathVariable String destinationToDelete) {
-        vertex.deleteVertex(destinationToDelete);
+        vertexService.deleteVertex(destinationToDelete);
     }
 
     // Traffic delay
@@ -124,7 +122,7 @@ public class RootController {
             value = "/selectDelayedPath/{delayPath}",
             method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> selectDelayedPath(@PathVariable String delayPath, Model model) {
+    public ResponseEntity<String> selectDelayedPath(@PathVariable String delayPath) {
 
         Graph graph = new Graph();
         List<Traffic> trafficList = traffic.getTrafficList();
@@ -135,8 +133,13 @@ public class RootController {
 
         String pathTravelled = new String("");
         for (int i = 0; i < actual.size(); i++) {
-            Vertex returnedV = vertex.getVertexByNode(actual.get(i));
-            pathTravelled += returnedV.getPlanetName() + " ";
+            Vertex returnedV = vertexService.getVertexByNode(actual.get(i));
+//            pathTravelled += returnedV.getPlanetName() + " ";
+            if (returnedV == null) {
+                pathTravelled = "Unable to determine path, Planet vanished";
+            } else {
+                pathTravelled += returnedV.getPlanetName() + " ";
+            }
         }
         if (actual.size() > 0) {
             actual.clear();
@@ -149,23 +152,26 @@ public class RootController {
             value = "/selectPath/{path}",
             method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> selectPath(@PathVariable String path, Model model) {
+    public ResponseEntity<String> selectPath(@PathVariable String path) {
 
-        List<Edge> edges = edge.getEdgeList();
+        List<Edge> edges = edgesService.getEdgeList();
+        System.out.print("\n\n" + edges.size() + "\n\n");
+        System.out.print("\n\n" + vertexService.getVertexList().size() + "\n\n");
         Graph graph = new Graph();
         Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
         LinkedList<String> actual = dis.printPath(map, path);
-
+//        System.out.print("\n\n" +actual.get(1)+"\n\n");
         String pathTravelled = new String("");
         for (int i = 0; i < actual.size(); i++) {
-            Vertex returnedV = vertex.getVertexByNode(actual.get(i));
+            Vertex returnedV = vertexService.getVertexByNode(actual.get(i));
             if (returnedV == null) {
                 pathTravelled = "Unable to determine path, Planet was destroyed";
             } else {
                 pathTravelled += returnedV.getPlanetName() + " ";
             }
+//            System.out.print("\n\n" +returnedV.getPlanetName()+"\n\n");
         }
         if (actual.size() > 0) {
             actual.clear();

@@ -74,12 +74,12 @@
 <script>
     function deletePlanet() {
 //        alert('a');
-        var destinationToDelete = document.getElementById('newDestination').value;
+        var destinationToDelete = document.getElementById('selectedDestination').value;
 //        var newPlanetName = document.getElementById('changedName').value;
 //        var vertexdeleted = destination;
-//        alert(newPlanetName+","+destination);
+//        alert(destinationToDelete);
         $.get('/deleteVertex/' + destinationToDelete);
-        document.getElementById('changedName').val('')
+//        document.getElementById('changedName').val('')
     }
 </script>
 

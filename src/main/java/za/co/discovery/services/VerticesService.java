@@ -35,11 +35,8 @@ public class VerticesService {
         return vertexDAO.retrieveVertex(node);
     }
 
-    public VerticesService() {
-    }
-
-    public void updateVertex(Vertex vertex) {
-        vertexDAO.update(vertex);
+    public Vertex updateVertex(Vertex vertex) {
+        return vertexDAO.update(vertex);
     }
 
     public int deleteVertex(String node) {
@@ -72,7 +69,6 @@ public class VerticesService {
                     String planetName = row.getCell(1).getStringCellValue();
 //                    System.out.print(planetNode + " " + planetName + "\n\n");
                     Vertex vertex = new Vertex(planetNode, planetName);
-//                    vertex.setPlanetName(planetName);
                     vertexList.add(vertex);
                     persistVertex(vertex);
                     //vertexDAO.save(vertex);

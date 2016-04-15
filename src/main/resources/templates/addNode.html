@@ -90,11 +90,10 @@
         var root = document.getElementById('newDestination').value;
         var newPlanetName = document.getElementById('changedName').value;
         var distance = document.getElementById('distance').value;
-
         var vertexAdded = root + "," + newPlanetName + "," + distance;
-//        alert(newPlanetName+","+destination);
+//        alert(vertexAdded);
         $.get('/addVertex/' + vertexAdded);
-        document.getElementById('changedName').val('')
+//        document.getElementById('changedName').val('')
     }
 </script>
 

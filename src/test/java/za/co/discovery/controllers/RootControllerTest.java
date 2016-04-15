@@ -1,64 +1,161 @@
 package za.co.discovery.controllers;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import za.co.discovery.models.Edge;
+import za.co.discovery.models.Traffic;
+import za.co.discovery.models.Vertex;
+import za.co.discovery.services.EdgesService;
+import za.co.discovery.services.TrafficService;
+import za.co.discovery.services.VerticesService;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.ArgumentCaptor.forClass;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import static za.co.discovery.models.EdgeBuilder.anEdge;
+import static za.co.discovery.models.TrafficBuilder.aTraffic;
+import static za.co.discovery.models.VertexBuilder.aVertex;
 
+@RunWith(MockitoJUnitRunner.class)
 public class RootControllerTest {
     private MockHttpSession session;
     private MockMvc mockMvc;
 
-//    @Test
-//    public void testHome() throws Exception {
-//        setUpFixture();
-////        session.setAttribute("de","de");
-//        List<Vertex> newVertexList = new ArrayList<>();
-//        newVertexList.add(aVertex().build());
-//        mockMvc.perform(get("/index"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("index"))
-//                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
-//    }
-//
-//    @Test
-//    public void testUpdatePage() throws Exception {
-//        setUpFixture();
-//        List<Vertex> newVertexList = new ArrayList<>();
-//        newVertexList.add(aVertex().build());
-//        mockMvc.perform(get("/update"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("update"))
-//                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
-//    }
-//
-//    @Test
-//    public void testDeletePage() throws Exception {
-//        setUpFixture();
-//        mockMvc.perform(get("/delete"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("delete"));
-//    }
-//
+    @Mock
+    private VerticesService verticesService;
+    @Mock
+    private EdgesService edgeService;
+    @Mock
+    private TrafficService trafficService;
 
+    @Test
+    public void testHome() throws Exception {
+        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        Traffic traffic1 = aTraffic().withRouteId(1).withSource("A").withDestination("B").withDistance(4).build();
+        Edge edge1 = anEdge().withRouteId(1).withSource("A").withDestination("B").withDistance(4).build();
 
-//    @Test
-//    public void testPathPrintedOutIsCorrect() throws Exception{
-//
-//        String destination = "B";
-//        mockMvc.perform(get("/deleteVertex").session(session)
-//                .param("path", String.valueOf(destination))
-//        );
-//        assertThat();
-//    }
+        when(verticesService.getVertexList()).thenReturn(newVertexList);
+        when(edgeService.getEdgeList()).thenReturn(Arrays.asList(edge1));
+        when(trafficService.getTrafficList()).thenReturn(Arrays.asList(traffic1));
+        setUpFixture();
+        Traffic expectedTraffic = aTraffic().withRouteId(1).withSource("A").withDestination("B").withDistance(8).build();
+
+        mockMvc.perform(get("/"))
+                .andExpect(view().name("index"))
+                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
+        ArgumentCaptor<Traffic> trafficArgument = forClass(Traffic.class);
+        verify(trafficService).updateTraffic(trafficArgument.capture());
+        assertThat(trafficArgument.getValue(), is(sameBeanAs(expectedTraffic)));
+
+    }
+
+    @Test
+    public void testUpdatePage() throws Exception {
+        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        when(verticesService.getVertexList()).thenReturn(newVertexList);
+        setUpFixture();
+        mockMvc.perform(get("/update"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("update"))
+                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
+    }
+
+    @Test
+    public void testAddNodePage() throws Exception {
+        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        when(verticesService.getVertexList()).thenReturn(newVertexList);
+        setUpFixture();
+        mockMvc.perform(get("/addNode"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("addNode"))
+                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
+    }
+
+    @Test
+    public void testDeletePage() throws Exception {
+        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        when(verticesService.getVertexList()).thenReturn(newVertexList);
+        setUpFixture();
+        mockMvc.perform(get("/delete"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("delete"))
+                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
+    }
+
+    @Test
+    public void testVertexGetsDeleted() throws Exception {
+        setUpFixture();
+        when(verticesService.deleteVertex("A")).thenReturn(1);
+        mockMvc.perform(get("/deleteVertex/A"));
+    }
+
+    @Test
+    public void testVertexGetsUpdated() throws Exception {
+        Vertex expectedVertex = aVertex().withNode("A").withPlanetName("newEarth").build();
+        setUpFixture();
+        mockMvc.perform(get("/updateVertex/A,newEarth"));
+        ArgumentCaptor<Vertex> vertexArgument = forClass(Vertex.class);
+        verify(verticesService).updateVertex(vertexArgument.capture());
+        assertThat(vertexArgument.getValue(), is(sameBeanAs(expectedVertex)));
+    }
+
+    @Test
+    public void testPathChosenPrintsShortestPath() throws Exception {
+        Edge edge = anEdge().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
+        setUpFixture();
+        String expectedPath = "Earth Moon ";
+        when(edgeService.getEdgeList()).thenReturn(Arrays.asList(edge));
+        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
+        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
+        mockMvc.perform(get("/selectPath/B")).andExpect(content().string(expectedPath));
+    }
+
+    @Test
+    public void testTrafficChosenRoutePrintsShortestPath() throws Exception {
+        Traffic traffic = aTraffic().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
+        setUpFixture();
+        String expectedPath = "Earth Moon ";
+        when(trafficService.getTrafficList()).thenReturn(Arrays.asList(traffic));
+        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
+        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
+        mockMvc.perform(get("/selectDelayedPath/B")).andExpect(content().string(expectedPath));
+    }
+
+    @Test
+    public void testVertexGetsAddedCorrectly() throws Exception {
+        when(verticesService.getVertexByNode("A")).thenReturn(null);
+//        when(RandomStringUtils.randomAlphanumeric(3).toUpperCase()).thenReturn("A");
+        setUpFixture();
+        mockMvc.perform(get("/addVertex/A,Earth,4"));
+        ArgumentCaptor<Vertex> vertexArgument = forClass(Vertex.class);
+        verify(verticesService).persistVertex(vertexArgument.capture());
+        String nodeId = vertexArgument.getValue().getNode();
+        Vertex expectedVertex = aVertex().withNode(nodeId).withPlanetName("Earth").build();
+        assertThat(vertexArgument.getValue(), is(sameBeanAs(expectedVertex)));
+    }
 
     public void setUpFixture() {
         mockMvc = standaloneSetup(
-                new RootController(null
-                        , null, null
-                ) {
-                })
+                new RootController(edgeService,
+                        verticesService,
+                        trafficService)
+        )
                 .setViewResolvers(getInternalResourceViewResolver())
                 .build();
     }
