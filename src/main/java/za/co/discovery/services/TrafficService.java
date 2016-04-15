@@ -56,8 +56,8 @@ public class TrafficService {
     @PostConstruct
     public void readTraffic() {
         try {
-            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
-//            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
+            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetsData.xlsx";
+//            FileInputStream file = new FileInputStream(new File("C:\\PlanetsData.xlsx"));
             FileInputStream file = new FileInputStream(fileName);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Traffic");
