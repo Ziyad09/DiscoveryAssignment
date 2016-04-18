@@ -164,11 +164,11 @@ public class RootController {
         String pathTravelled = "";
         for (String anActual : actual) {
             Vertex returnedV = vertexService.getVertexByNode(anActual);
-//            if (returnedV == null) {
-//                pathTravelled = "Unable to determine path, Planet was destroyed";
-//            } else {
+            if (returnedV == null) {
+                pathTravelled = "Unable to determine path, Planet was destroyed";
+            } else {
                 pathTravelled += returnedV.getPlanetName() + " ";
-//            }
+            }
         }
         if (actual.size() > 0) {
             actual.clear();
