@@ -14,7 +14,6 @@ import za.co.discovery.services.EdgesService;
 import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
@@ -123,7 +122,7 @@ public class RootControllerTest {
         Vertex vertex2 = aVertex().withPlanetName("Moon").withNode("B").build();
         Vertex vertex1 = aVertex().withPlanetName("Earth").withNode("A").build();
 
-        when(verticesService.getVertexList()).thenReturn(Arrays.asList(vertex1, vertex2));
+//        when(verticesService.getVertexList()).thenReturn(Arrays.asList(vertex1, vertex2));
         when(verticesService.getVertexByNode("A")).thenReturn(vertex1);
         when(verticesService.getVertexByNode("B")).thenReturn(vertex2);
         mockMvc.perform(get("/selectPath/B")).andExpect(content().string(expectedPath));
@@ -137,7 +136,6 @@ public class RootControllerTest {
         Vertex vertex2 = aVertex().withPlanetName("Moon").withNode("B").build();
         Vertex vertex1 = aVertex().withPlanetName("Earth").withNode("A").build();
 
-        when(verticesService.getVertexList()).thenReturn(Arrays.asList(vertex1, vertex2));
         when(trafficService.getTrafficList()).thenReturn(singletonList(traffic));
         when(verticesService.getVertexByNode("A")).thenReturn(vertex1);
         when(verticesService.getVertexByNode("B")).thenReturn(vertex2);

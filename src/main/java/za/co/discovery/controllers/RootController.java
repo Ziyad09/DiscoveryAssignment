@@ -131,7 +131,6 @@ public class RootController {
         ShortestPath disTraffic = new ShortestPath();
         disTraffic.dijkstra("A", mapTraffic);
         LinkedList<String> actual = disTraffic.printPath(mapTraffic, delayPath);
-
         String pathTravelled = "";
         for (String anActual : actual) {
             Vertex returnedV = vertexService.getVertexByNode(anActual);
@@ -154,8 +153,8 @@ public class RootController {
     @ResponseBody
     public ResponseEntity<String> selectPath(@PathVariable String path) {
 
-        List<Edge> edges = edgesService.getEdgeList();
         Graph graph = new Graph();
+        List<Edge> edges = edgesService.getEdgeList();
         Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
