@@ -12,7 +12,6 @@ import za.co.discovery.models.Edge;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -76,16 +75,11 @@ public class EdgesService {
                     Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
                     edgeList.add(edge);
                     persistEdge(edge);
-//                    edgeDAO.save(edge);
-//                    System.out.print(routeId + " " + planetSource + "\n\n");
                     break;
                 }
-//                System.out.println("");
             }
             file.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

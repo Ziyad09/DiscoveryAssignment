@@ -28,24 +28,24 @@ public class ShortestPath {
         dijkstra(q);
     }
 
-    private void dijkstra(final NavigableSet<Vertex> q) {
-        Vertex u, v;
-        while (!q.isEmpty()) {
+    private void dijkstra(final NavigableSet<Vertex> queue) {
+        Vertex shortestDistanceVertex, vertexUnderTest;
+        while (!queue.isEmpty()) {
 
-            u = q.pollFirst(); // vertex with shortest distance (first iteration will return source)
-            if (u.minDistance == Integer.MAX_VALUE)
+            shortestDistanceVertex = queue.pollFirst(); // vertex with shortest distance (first iteration will return source)
+            if (shortestDistanceVertex.minDistance == Integer.MAX_VALUE)
                 break; // we can ignore u (and any other remaining vertices) since they are unreachable
 
             //look at distances to each neighbour
-            for (Map.Entry<Vertex, Double> a : u.neighbours.entrySet()) {
-                v = a.getKey(); //the neighbour in this iteration
+            for (Map.Entry<Vertex, Double> neighbourValues : shortestDistanceVertex.neighbours.entrySet()) {
+                vertexUnderTest = neighbourValues.getKey(); //the neighbour in this iteration
 
-                final double alternateDist = u.minDistance + a.getValue();
-                if (alternateDist < v.minDistance) { // shorter path to neighbour found
-                    q.remove(v);
-                    v.minDistance = alternateDist;
-                    v.previous = u;
-                    q.add(v);
+                final double alternateDist = shortestDistanceVertex.minDistance + neighbourValues.getValue();
+                if (alternateDist < vertexUnderTest.minDistance) { // shorter path to neighbour found
+                    queue.remove(vertexUnderTest);
+                    vertexUnderTest.minDistance = alternateDist;
+                    vertexUnderTest.previous = shortestDistanceVertex;
+                    queue.add(vertexUnderTest);
                 }
             }
         }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2437293975">
+    <data-source source="LOCAL" name="PlanetTravel" uuid="ec929ffa-b66b-4539-b455-9e2edab5f42a">
+      <driver-ref>derby.embedded</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.apache.derby.jdbc.EmbeddedDriver</jdbc-driver>
+      <jdbc-url>jdbc:derby:PlanetTravel;create=true</jdbc-url>
+    </data-source>
+  </component>
+</project>

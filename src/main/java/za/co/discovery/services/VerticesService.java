@@ -12,7 +12,6 @@ import za.co.discovery.models.Vertex;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -55,6 +54,12 @@ public class VerticesService {
     public void readVertices() {
         try {
 
+
+//            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+//            File fileEx = new File(classLoader.getResource("PlanetData.xlsx").getFile());
+//            FileInputStream file = new FileInputStream(fileEx);
+
+
             String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
             FileInputStream file = new FileInputStream(fileName);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -78,8 +83,6 @@ public class VerticesService {
             }
             file.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
