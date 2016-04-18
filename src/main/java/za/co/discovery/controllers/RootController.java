@@ -157,7 +157,6 @@ public class RootController {
         List<Edge> edges = edgesService.getEdgeList();
         Graph graph = new Graph();
         Map<String, Vertex> map = graph.GraphEdge(edges);
-        System.out.print("\n\n\n\n" + map.get(path) + "\n\n\n");
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
         LinkedList<String> actual = dis.printPath(map, path);

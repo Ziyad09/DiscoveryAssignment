@@ -14,6 +14,7 @@ import za.co.discovery.services.EdgesService;
 import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
@@ -119,8 +120,12 @@ public class RootControllerTest {
         setUpFixture();
         String expectedPath = "Earth Moon ";
         when(edgeService.getEdgeList()).thenReturn(singletonList(edge));
-        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
-        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
+        Vertex vertex2 = aVertex().withPlanetName("Moon").withNode("B").build();
+        Vertex vertex1 = aVertex().withPlanetName("Earth").withNode("A").build();
+
+        when(verticesService.getVertexList()).thenReturn(Arrays.asList(vertex1, vertex2));
+        when(verticesService.getVertexByNode("A")).thenReturn(vertex1);
+        when(verticesService.getVertexByNode("B")).thenReturn(vertex2);
         mockMvc.perform(get("/selectPath/B")).andExpect(content().string(expectedPath));
     }
 
@@ -129,9 +134,13 @@ public class RootControllerTest {
         Traffic traffic = aTraffic().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
         setUpFixture();
         String expectedPath = "Earth Moon ";
+        Vertex vertex2 = aVertex().withPlanetName("Moon").withNode("B").build();
+        Vertex vertex1 = aVertex().withPlanetName("Earth").withNode("A").build();
+
+        when(verticesService.getVertexList()).thenReturn(Arrays.asList(vertex1, vertex2));
         when(trafficService.getTrafficList()).thenReturn(singletonList(traffic));
-        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
-        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
+        when(verticesService.getVertexByNode("A")).thenReturn(vertex1);
+        when(verticesService.getVertexByNode("B")).thenReturn(vertex2);
         mockMvc.perform(get("/selectDelayedPath/B")).andExpect(content().string(expectedPath));
     }
 
