@@ -9,10 +9,7 @@ import javax.persistence.Table;
 @Table
 public class Edge {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-//    private int edgeId;
-//    @Column
     private int routeId;
     @Column
     private String source;
@@ -20,10 +17,7 @@ public class Edge {
     private String destination;
     @Column
     private double distance;
-
-    //    private Vertex target;
     protected Edge() {
-
     }
 
     public Edge(int routeId, String source, String destination, double distance) {
@@ -48,6 +42,4 @@ public class Edge {
     public double getDistance() {
         return distance;
     }
-
-
 }

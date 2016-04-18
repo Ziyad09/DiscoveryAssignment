@@ -26,7 +26,6 @@ public class RootController {
     private EdgesService edgesService;
     private VerticesService vertexService;
     private TrafficService traffic;
-    private Graph graph = null;
 
     @Autowired
     public RootController(EdgesService edgesService, VerticesService vertexService,
@@ -133,9 +132,9 @@ public class RootController {
         disTraffic.dijkstra("A", mapTraffic);
         LinkedList<String> actual = disTraffic.printPath(mapTraffic, delayPath);
 
-        String pathTravelled = new String("");
-        for (int i = 0; i < actual.size(); i++) {
-            Vertex returnedV = vertexService.getVertexByNode(actual.get(i));
+        String pathTravelled = "";
+        for (String anActual : actual) {
+            Vertex returnedV = vertexService.getVertexByNode(anActual);
             if (returnedV == null) {
                 pathTravelled = "Unable to determine path, Planet vanished";
             } else {
@@ -162,9 +161,9 @@ public class RootController {
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
         LinkedList<String> actual = dis.printPath(map, path);
-        String pathTravelled = new String("");
-        for (int i = 0; i < actual.size(); i++) {
-            Vertex returnedV = vertexService.getVertexByNode(actual.get(i));
+        String pathTravelled = "";
+        for (String anActual : actual) {
+            Vertex returnedV = vertexService.getVertexByNode(anActual);
             if (returnedV == null) {
                 pathTravelled = "Unable to determine path, Planet was destroyed";
             } else {

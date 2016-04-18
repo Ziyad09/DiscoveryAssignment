@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import za.co.discovery.models.Edge;
@@ -15,10 +14,10 @@ import za.co.discovery.services.EdgesService;
 import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -34,7 +33,6 @@ import static za.co.discovery.models.VertexBuilder.aVertex;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RootControllerTest {
-    private MockHttpSession session;
     private MockMvc mockMvc;
 
     @Mock
@@ -46,13 +44,13 @@ public class RootControllerTest {
 
     @Test
     public void testHome() throws Exception {
-        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        List<Vertex> newVertexList = singletonList(aVertex().build());
         Traffic traffic1 = aTraffic().withRouteId(1).withSource("A").withDestination("B").withDistance(4).build();
         Edge edge1 = anEdge().withRouteId(1).withSource("A").withDestination("B").withDistance(4).build();
 
         when(verticesService.getVertexList()).thenReturn(newVertexList);
-        when(edgeService.getEdgeList()).thenReturn(Arrays.asList(edge1));
-        when(trafficService.getTrafficList()).thenReturn(Arrays.asList(traffic1));
+        when(edgeService.getEdgeList()).thenReturn(singletonList(edge1));
+        when(trafficService.getTrafficList()).thenReturn(singletonList(traffic1));
         setUpFixture();
         Traffic expectedTraffic = aTraffic().withRouteId(1).withSource("A").withDestination("B").withDistance(8).build();
 
@@ -67,7 +65,7 @@ public class RootControllerTest {
 
     @Test
     public void testUpdatePage() throws Exception {
-        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        List<Vertex> newVertexList = singletonList(aVertex().build());
         when(verticesService.getVertexList()).thenReturn(newVertexList);
         setUpFixture();
         mockMvc.perform(get("/update"))
@@ -78,7 +76,7 @@ public class RootControllerTest {
 
     @Test
     public void testAddNodePage() throws Exception {
-        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        List<Vertex> newVertexList = singletonList(aVertex().build());
         when(verticesService.getVertexList()).thenReturn(newVertexList);
         setUpFixture();
         mockMvc.perform(get("/addNode"))
@@ -89,7 +87,7 @@ public class RootControllerTest {
 
     @Test
     public void testDeletePage() throws Exception {
-        List<Vertex> newVertexList = Arrays.asList(aVertex().build());
+        List<Vertex> newVertexList = singletonList(aVertex().build());
         when(verticesService.getVertexList()).thenReturn(newVertexList);
         setUpFixture();
         mockMvc.perform(get("/delete"))
@@ -120,7 +118,7 @@ public class RootControllerTest {
         Edge edge = anEdge().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
         setUpFixture();
         String expectedPath = "Earth Moon ";
-        when(edgeService.getEdgeList()).thenReturn(Arrays.asList(edge));
+        when(edgeService.getEdgeList()).thenReturn(singletonList(edge));
         when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
         when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
         mockMvc.perform(get("/selectPath/B")).andExpect(content().string(expectedPath));
@@ -131,7 +129,7 @@ public class RootControllerTest {
         Traffic traffic = aTraffic().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
         setUpFixture();
         String expectedPath = "Earth Moon ";
-        when(trafficService.getTrafficList()).thenReturn(Arrays.asList(traffic));
+        when(trafficService.getTrafficList()).thenReturn(singletonList(traffic));
         when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
         when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
         mockMvc.perform(get("/selectDelayedPath/B")).andExpect(content().string(expectedPath));
@@ -140,7 +138,6 @@ public class RootControllerTest {
     @Test
     public void testVertexGetsAddedCorrectly() throws Exception {
         when(verticesService.getVertexByNode("A")).thenReturn(null);
-//        when(RandomStringUtils.randomAlphanumeric(3).toUpperCase()).thenReturn("A");
         setUpFixture();
         mockMvc.perform(get("/addVertex/A,Earth,4"));
         ArgumentCaptor<Vertex> vertexArgument = forClass(Vertex.class);

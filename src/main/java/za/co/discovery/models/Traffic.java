@@ -19,7 +19,6 @@ public class Traffic {
     private double distance;
 
     protected Traffic() {
-
     }
 
     public Traffic(int routeId, String source, String destination, double distance) {
@@ -44,6 +43,4 @@ public class Traffic {
     public double getDistance() {
         return distance;
     }
-
-
 }

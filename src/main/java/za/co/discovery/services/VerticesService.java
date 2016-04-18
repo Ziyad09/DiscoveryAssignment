@@ -24,7 +24,6 @@ public class VerticesService {
     public List<Vertex> vertexList = new Vector<>(numberOfVertices);
     private VertexDAO vertexDAO;
 
-
     @Autowired
     public VerticesService(VertexDAO vertexDAO) {
         this.vertexDAO = vertexDAO;
@@ -53,13 +52,9 @@ public class VerticesService {
     @PostConstruct
     public void readVertices() {
         try {
-
-
 //            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 //            File fileEx = new File(classLoader.getResource("PlanetData.xlsx").getFile());
 //            FileInputStream file = new FileInputStream(fileEx);
-
-
             String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
             FileInputStream file = new FileInputStream(fileName);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -72,21 +67,17 @@ public class VerticesService {
                 while (cellIterator.hasNext()) {
                     String planetNode = row.getCell(0).getStringCellValue();
                     String planetName = row.getCell(1).getStringCellValue();
-//                    System.out.print(planetNode + " " + planetName + "\n\n");
                     Vertex vertex = new Vertex(planetNode, planetName);
                     vertexList.add(vertex);
                     persistVertex(vertex);
-                    //vertexDAO.save(vertex);
                     break;
                 }
-//                System.out.println("");
             }
             file.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        return vertexList;
     }
 
 }

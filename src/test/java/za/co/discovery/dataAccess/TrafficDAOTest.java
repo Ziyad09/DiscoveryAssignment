@@ -40,20 +40,26 @@ public class TrafficDAOTest {
 
     @Test
     public void testSave() throws Exception {
+
+        // Set up Fixture
         getTraffic();
         Session session = sessionFactory.getCurrentSession();
+
         // Exercise SUT
         trafficDAO.save(firstTraffic);
         Criteria criteria = session.createCriteria(Traffic.class);
         Traffic actualTraffic = (Traffic) criteria.uniqueResult();
+
         // Verify Behaviour
-        assertThat(actualTraffic, is(sameBeanAs(firstTraffic)
-        ));
+        assertThat(actualTraffic, is(sameBeanAs(firstTraffic)));
     }
 
     @Test
     public void testUpdate() throws Exception {
+
+        // Set up Fixture
         getTraffic();
+
         // Exercise SUT
         trafficDAO.save(firstTraffic);
         Traffic expectedTraffic = aTraffic()
@@ -64,27 +70,35 @@ public class TrafficDAOTest {
                 .build();
         trafficDAO.update(expectedTraffic);
         Traffic actualTraffic = trafficDAO.retrieveTraffic(1);
+
         // Verify Behaviour
         assertThat(actualTraffic, is(sameBeanAs(expectedTraffic)));
     }
 
     @Test
     public void testDelete() throws Exception {
+
+        // Set up Fixture
         getTraffic();
+
         // Exercise SUT
         trafficDAO.save(firstTraffic);
         int result = trafficDAO.delete(firstTraffic.getRouteId());
+
         // Verify Behaviour
         assertThat(result, is(1));
     }
 
     @Test
     public void testRetrieveTraffic() throws Exception {
+
         // Set up Fixture
         getTraffic();
+
         // Exercise SUT
         Traffic returnedTraffic = trafficDAO.save(firstTraffic);
         Traffic actualTraffic = trafficDAO.retrieveTraffic(returnedTraffic.getRouteId());
+
         // Verify Behaviour
         assertThat(actualTraffic, is(sameBeanAs(firstTraffic)));
     }

@@ -39,16 +39,14 @@ public class EdgeDAO {
 //        session.delete(edge);
         Query query = session.createQuery("delete Edge AS e where e.routeId = :routeNumber");
         query.setParameter("routeNumber", routeId);
-        int result = query.executeUpdate();
-        return result;
+        return query.executeUpdate();
     }
 
     public List<Edge> retrieveEdgeList() {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Edge.class);
 //        criteria.add(eq("id", id));
-        List<Edge> newEdgeList = (List<Edge>) criteria.list();
-        return newEdgeList;
+        return (List<Edge>) criteria.list();
 //        return query.list();
     }
 

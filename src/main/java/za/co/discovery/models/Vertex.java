@@ -13,7 +13,6 @@ public class Vertex implements Comparable<Vertex> {
     private String node;
     @Column
     private String planetName;
-
     @Transient
     public double minDistance = 1000000;//Double.POSITIVE_INFINITY;
     @Transient
@@ -22,10 +21,8 @@ public class Vertex implements Comparable<Vertex> {
     Map<Vertex, Double> neighbours = new HashMap<>();
 
     protected Vertex() {
-
     }
 
-    //    List<String> nodes;
     static LinkedList<String> nodes = new LinkedList<>();
 
     public LinkedList<String> printPath() {

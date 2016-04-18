@@ -26,12 +26,9 @@ import static za.co.discovery.models.EdgeBuilder.anEdge;
 @ContextConfiguration(
         classes = {PersistenceConfig.class, DataSourceConfig.class, DAOConfig.class, EdgeDAO.class},
         loader = AnnotationConfigContextLoader.class)
-//@ActiveProfiles("test")
 public class EdgeDAOTest {
     @Autowired
     private SessionFactory sessionFactory;
-
-    //@Autowired
     private EdgeDAO edgeDAO;
     private Edge firstEdge;
 
@@ -42,22 +39,26 @@ public class EdgeDAOTest {
 
     @Test
     public void testSave() throws Exception {
+
         // Set up Fixture
         getEdge();
         Session session = sessionFactory.getCurrentSession();
+
         // Exercise SUT
         edgeDAO.save(firstEdge);
         Criteria criteria = session.createCriteria(Edge.class);
         Edge actualEdge = (Edge) criteria.uniqueResult();
+
         // Verify Behaviour
-        assertThat(actualEdge, is(sameBeanAs(firstEdge)
-        ));
+        assertThat(actualEdge, is(sameBeanAs(firstEdge)));
     }
 
     @Test
     public void testUpdateEdge() throws Exception {
+
         // Set up Fixture
         getEdge();
+
         // Exercise SUT
         edgeDAO.save(firstEdge);
         Edge expectedEdge = anEdge()
@@ -68,28 +69,35 @@ public class EdgeDAOTest {
                 .build();
         edgeDAO.update(expectedEdge);
         Edge actualEdge = edgeDAO.retrieveEdge(1);
+
         // Verify Behaviour
         assertThat(actualEdge, is(sameBeanAs(expectedEdge)));
     }
 
     @Test
     public void testDeleteEdge() throws Exception {
+
         // Set up Fixture
         getEdge();
+
         // Exercise SUT
         edgeDAO.save(firstEdge);
         int result = edgeDAO.delete(firstEdge.getRouteId());
+
         // Verify Behaviour
         assertThat(result, is(1));
     }
 
     @Test
     public void testRetrieveEdge() throws Exception {
+
         // Set up Fixture
         getEdge();
+
         // Exercise SUT
         Edge returnedEdge = edgeDAO.save(firstEdge);
         Edge actualEdge = edgeDAO.retrieveEdge(returnedEdge.getRouteId());
+
         // Verify Behaviour
         assertThat(actualEdge, is(sameBeanAs(firstEdge)
                 .ignoring("routeId")));

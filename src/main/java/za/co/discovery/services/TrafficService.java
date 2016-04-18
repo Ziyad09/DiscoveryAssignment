@@ -12,7 +12,6 @@ import za.co.discovery.models.Traffic;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -71,20 +70,15 @@ public class TrafficService {
                     String planetSource = r.getCell(1).getStringCellValue();
                     String planetDestination = r.getCell(2).getStringCellValue();
                     Double planetDistance = r.getCell(3).getNumericCellValue();
-                    int routeId2 = Integer.valueOf(routeId.intValue());
+                    int routeId2 = routeId.intValue();
                     Traffic traffic = new Traffic(routeId2, planetSource, planetDestination, planetDistance);
                     trafficList.add(traffic);
                     persistTraffic(routeId2, planetSource, planetDestination, planetDistance);
-//                    edgeDAO.save(edge);
-//                    System.out.print(routeId + " " + planetSource + "\n\n");
                     break;
                 }
-//                System.out.println("");
             }
             file.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

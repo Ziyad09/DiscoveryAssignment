@@ -26,11 +26,7 @@ import static za.co.discovery.models.EdgeBuilder.anEdge;
 public class EdgesServiceTest {
 
     @Autowired
-//    private SessionFactory sessionFactory;
-
-    //@Autowired
     private EdgeDAO edgeDAO;
-    private Edge firstEdge;
     private EdgesService edgesService;
 
     @Before
@@ -40,7 +36,7 @@ public class EdgesServiceTest {
 
     @Test
     public void testGetEdgeById() throws Exception {
-        firstEdge = anEdge()
+        Edge firstEdge = anEdge()
                 .withRouteId(1)
                 .withSource("A")
                 .withDestination("B")

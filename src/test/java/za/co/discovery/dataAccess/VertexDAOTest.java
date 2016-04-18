@@ -29,7 +29,6 @@ public class VertexDAOTest {
 
     @Autowired
     private SessionFactory sessionFactory;
-
     private VertexDAO vertexDAO;
     private Vertex firstVertex;
 
@@ -56,18 +55,20 @@ public class VertexDAOTest {
         Session session = sessionFactory.getCurrentSession();
         vertexDAO.save(firstVertex);
         Criteria criteria = session.createCriteria(Vertex.class);
-
         Vertex actualEdge = (Vertex) criteria.uniqueResult();
         assertThat(actualEdge, is(sameBeanAs(firstVertex)));
     }
 
     @Test
     public void testDeleteVertex() throws Exception {
+
         // Set up Fixture
         getVertex();
+
         // Exercise SUT
         vertexDAO.save(firstVertex);
         int result = vertexDAO.delete(firstVertex.getNode());
+
         // Verify Behaviour
         assertThat(result, is(1));
     }

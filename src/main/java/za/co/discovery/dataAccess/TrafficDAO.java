@@ -38,8 +38,7 @@ public class TrafficDAO {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Traffic.class);
 //        criteria.add(eq("id", id));
-        List<Traffic> newTrafficList = (List<Traffic>) criteria.list();
-        return newTrafficList;
+        return (List<Traffic>) criteria.list();
 //        return query.list();
     }
 
@@ -47,8 +46,7 @@ public class TrafficDAO {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("delete Traffic AS e where e.routeId = :routeNumber");
         query.setParameter("routeNumber", routeId);
-        int result = query.executeUpdate();
-        return result;
+        return query.executeUpdate();
     }
 
     public Traffic retrieveTraffic(int routeId) {

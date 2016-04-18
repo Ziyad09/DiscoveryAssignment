@@ -38,8 +38,7 @@ public class VertexDAO {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("delete Vertex AS v where v.node = :nodeS");
         query.setParameter("nodeS", node);
-        int result = query.executeUpdate();
-        return result;
+        return query.executeUpdate();
     }
 
 
@@ -51,8 +50,7 @@ public class VertexDAO {
 //        Query query = session.createQuery(hql);
         Criteria criteria = session.createCriteria(Vertex.class);
 //        criteria.add(eq("id", id));
-        List<Vertex> newVertexList = (List<Vertex>) criteria.list();
-        return newVertexList;
+        return (List<Vertex>) criteria.list();
 //        return query.list();
     }
     public Vertex retrieveVertex(String nodeId) {

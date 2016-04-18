@@ -71,7 +71,7 @@ public class EdgesService {
                     String planetSource = r.getCell(1).getStringCellValue();
                     String planetDestination = r.getCell(2).getStringCellValue();
                     Double planetDistance = r.getCell(3).getNumericCellValue();
-                    int routeId2 = Integer.valueOf(routeId.intValue());
+                    int routeId2 = routeId.intValue();
                     Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
                     edgeList.add(edge);
                     persistEdge(edge);

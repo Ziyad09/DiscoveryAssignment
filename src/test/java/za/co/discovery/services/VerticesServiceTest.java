@@ -25,8 +25,6 @@ import static za.co.discovery.models.VertexBuilder.aVertex;
         loader = AnnotationConfigContextLoader.class)
 public class VerticesServiceTest {
     @Autowired
-//    private SessionFactory sessionFactory;
-
     private VertexDAO vertexDAO;
     private Vertex firstVertex;
     private VerticesService verticesService;
@@ -35,7 +33,6 @@ public class VerticesServiceTest {
     public void init() {
         verticesService = new VerticesService(vertexDAO);
     }
-
 
     @Test
     public void testGetVertexByNodeShouldReturnVertex() throws Exception {

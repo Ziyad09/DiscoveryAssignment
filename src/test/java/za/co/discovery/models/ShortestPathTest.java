@@ -45,8 +45,6 @@ public class ShortestPathTest {
         ShortestPath dis = new ShortestPath();
         dis.dijkstra(start, map);
         LinkedList<String> actual = dis.printPath(map, end);
-        System.out.print(actual.toString());
-//        System.out.print(actual.get(0));
         assertThat(actual.toString(), is("[A, C]"));
     }
 }
