@@ -113,27 +113,27 @@ public class RootControllerTest {
         assertThat(vertexArgument.getValue(), is(sameBeanAs(expectedVertex)));
     }
 
-//    @Test
-//    public void testPathChosenPrintsShortestPath() throws Exception {
-//        Edge edge = anEdge().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
-//        setUpFixture();
-//        String expectedPath = "Earth Moon ";
-//        when(edgeService.getEdgeList()).thenReturn(singletonList(edge));
-//        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
-//        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
-//        mockMvc.perform(get("/selectPath/B")).andExpect(content().string(expectedPath));
-//    }
-//
-//    @Test
-//    public void testTrafficChosenRoutePrintsShortestPath() throws Exception {
-//        Traffic traffic = aTraffic().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
-//        setUpFixture();
-//        String expectedPath = "Earth Moon ";
-//        when(trafficService.getTrafficList()).thenReturn(singletonList(traffic));
-//        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
-//        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
-//        mockMvc.perform(get("/selectDelayedPath/B")).andExpect(content().string(expectedPath));
-//    }
+    @Test
+    public void testPathChosenPrintsShortestPath() throws Exception {
+        Edge edge = anEdge().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
+        setUpFixture();
+        String expectedPath = "Earth Moon ";
+        when(edgeService.getEdgeList()).thenReturn(singletonList(edge));
+        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
+        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
+        mockMvc.perform(get("/selectPath/B")).andExpect(content().string(expectedPath));
+    }
+
+    @Test
+    public void testTrafficChosenRoutePrintsShortestPath() throws Exception {
+        Traffic traffic = aTraffic().withSource("A").withDestination("B").withRouteId(1).withDistance(1).build();
+        setUpFixture();
+        String expectedPath = "Earth Moon ";
+        when(trafficService.getTrafficList()).thenReturn(singletonList(traffic));
+        when(verticesService.getVertexByNode("A")).thenReturn(aVertex().withPlanetName("Earth").withNode("A").build());
+        when(verticesService.getVertexByNode("B")).thenReturn(aVertex().withPlanetName("Moon").withNode("B").build());
+        mockMvc.perform(get("/selectDelayedPath/B")).andExpect(content().string(expectedPath));
+    }
 
     @Test
     public void testVertexGetsAddedCorrectly() throws Exception {

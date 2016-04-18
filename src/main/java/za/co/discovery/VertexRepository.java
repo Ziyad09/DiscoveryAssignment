@@ -57,9 +57,9 @@ public class VertexRepository {
         dis.dijkstra("A", map);
 
         LinkedList<String> actual = dis.printPath(map, name);
-        String pathTravelled = new String("");
-        for (int i = 0; i < actual.size(); i++) {
-            Vertex returnedV = verticesService.getVertexByNode(actual.get(i));
+        String pathTravelled = "";
+        for (String anActual : actual) {
+            Vertex returnedV = verticesService.getVertexByNode(anActual);
             pathTravelled += returnedV.getPlanetName() + " ";
         }
         if (actual.size() > 0) {
