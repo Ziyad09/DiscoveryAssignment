@@ -55,7 +55,7 @@ public class VerticesService {
     public void readVertices() {
         try {
 
-            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetsData.xlsx";
+            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
             FileInputStream file = new FileInputStream(fileName);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Planet Names");
