@@ -18,7 +18,6 @@ import za.co.discovery.services.VerticesService;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 public class RootController {
@@ -57,13 +56,18 @@ public class RootController {
     public String update(Model model) {
         List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
+        List<Edge> edgesL = edgesService.getEdgeList();
+        model.addAttribute("edgeList", edgesL);
         return "update";
     }
 
     @RequestMapping("/delete")
     public String delete(Model model) {
+        List<Edge> edgesL = edgesService.getEdgeList();
+        model.addAttribute("edgeList", edgesL);
         List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
+
         return "delete";
     }
 
@@ -85,29 +89,48 @@ public class RootController {
         vertexService.updateVertex(newVertex);
     }
 
+    @RequestMapping(value = "/updateRoute/{routeUpdate}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public void updateRoute(@PathVariable String routeUpdate) {
+        String[] updated = routeUpdate.split(",");
+        int routeId = Integer.parseInt(updated[0]);
+        String source = updated[1];
+        String destination = updated[2];
+        double distance = Double.parseDouble(updated[3]);
+        Edge newEdge = new Edge(routeId, source, destination, distance);
+        edgesService.updateEdge(newEdge);
+    }
+
+    @RequestMapping(value = "/addEdge/{edgeAdded}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public void addEdge(@PathVariable String edgeAdded) {
+        String[] updated = edgeAdded.split(",");
+        String source = updated[0];
+        String destination = updated[1];
+        double distance = Double.parseDouble(updated[2]);
+
+        // Add the edge
+        int routeId = edgesService.getEdgeList().size() + 1;
+//        int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
+//        int id = randomId[3];
+        Edge newEdge = new Edge(routeId, source, destination, distance);
+        edgesService.persistEdge(newEdge);
+    }
+
     @RequestMapping(value = "/addVertex/{vertexAdded}",
             method = RequestMethod.GET)
     @ResponseBody
     public void addVertex(@PathVariable String vertexAdded) {
-        String[] updated = vertexAdded.split(",");
-        String nodeName = updated[0];
-        String newPlanetName = updated[1];
-        double distance = Double.parseDouble(updated[2]);
         String vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
-
-        // Add the edge
-        int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
-        int id = randomId[3];
-        Edge newEdge = new Edge(id, nodeName, newPlanetName, distance);
-        edgesService.persistEdge(newEdge);
-
         // Add the vertex
         Vertex newVertex = vertexService.getVertexByNode(vertexId);
         while (newVertex != null) {
             vertexId = RandomStringUtils.randomAlphanumeric(3).toUpperCase();
-            newVertex = new Vertex(vertexId, newPlanetName);
+            newVertex = new Vertex(vertexId, vertexAdded);
         }
-        newVertex = new Vertex(vertexId, newPlanetName);
+        newVertex = new Vertex(vertexId, vertexAdded);
         vertexService.persistVertex(newVertex);
     }
 
@@ -116,6 +139,15 @@ public class RootController {
     @ResponseBody
     public void deleteVertex(@PathVariable String destinationToDelete) {
         vertexService.deleteVertex(destinationToDelete);
+    }
+
+    @RequestMapping(value = "/deleteRoute/{routeToDelete}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public void deleteRoute(@PathVariable String routeToDelete) {
+        int routeId = Integer.parseInt(routeToDelete);
+        edgesService.deleteEdge(routeId);
+        traffic.deleteTraffic(routeId);
     }
 
     // Traffic delay

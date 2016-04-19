@@ -33,30 +33,48 @@
         <div class="row centerItems">
             <div class="row centerItems">
                 <div class="col-lg-10">
-                    <h1>Select Root</h1>
+                    <h1>Select route</h1>
+                    <br/>
+                    Source:
+                    <select id="Source">
+                        <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
+                        </option>
+                    </select>
+                    Destination:
                     <select id="newDestination">
                         <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
                         </option>
                     </select>
+                    <br/>
+                    <form>
+                        Distance:
+                        <input type="text" name="firstname" id="distance">
+                        </input>
+                    </form>
                 </div>
             </div>
-            <br/><br/>
+            <br/>
+            <button class="btn btn-success optionButtons" type="button" onclick="addRoute()" data-toggle="modal"
+                    data-target="#myModal">Submit new Route
+            </button>
 
+            <br/><br/>
+        </div>
+
+        <br/><br/><br/><br/>
+        <div class="container">
             <div class="row centerItems">
                 <form>
                     New Planet Name:
                     <input type="text" name="firstname" id="changedName">
                     </input>
-                    Distance:
-                    <input type="text" name="firstname" id="distance">
-                    </input>
                 </form>
+                <br/>
             </div>
+            <button class="btn btn-success optionButtons" type="button" onclick="addPlanet()" data-toggle="modal"
+                    data-target="#myModal">Submit new Planet
+            </button>
         </div>
-
-        <button class="btn btn-success optionButtons" type="button" onclick="addPlanet()" data-toggle="modal"
-                data-target="#myModal">Submit
-        </button>
         <!-- Modal -->
         <div class="container">
             <div class="modal fade" id="myModal" role="dialog">
@@ -89,14 +107,25 @@
 <script>
     function addPlanet() {
 //        alert('a');
-        var root = document.getElementById('newDestination').value;
+//        var root = document.getElementById('newDestination').value;
         var newPlanetName = document.getElementById('changedName').value;
-        var distance = document.getElementById('distance').value;
-        var vertexAdded = root + "," + newPlanetName + "," + distance;
+//        var distance = document.getElementById('distance').value;
+//        var vertexAdded = root + "," + newPlanetName + "," + distance;
 //        alert(vertexAdded);
-        $.get('/addVertex/' + vertexAdded);
+        $.get('/addVertex/' + newPlanetName);
 //        document.getElementById('changedName').val('')
     }
+    function addRoute() {
+//        alert('a');
+        var destination = document.getElementById('newDestination').value;
+        var root = document.getElementById('Source').value;
+        var distance = document.getElementById('distance').value;
+        var vertexAdded = root + "," + destination + "," + distance;
+//        alert(vertexAdded);
+        $.get('/addEdge/' + vertexAdded);
+//        document.getElementById('changedName').val('')
+    }
+
 </script>
 
 

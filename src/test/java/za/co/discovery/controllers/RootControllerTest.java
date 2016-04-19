@@ -104,6 +104,13 @@ public class RootControllerTest {
     }
 
     @Test
+    public void testEdgeGetsDeleted() throws Exception {
+        setUpFixture();
+        when(edgeService.deleteEdge(1)).thenReturn(1);
+        mockMvc.perform(get("/deleteRoute/1"));
+    }
+
+    @Test
     public void testVertexGetsUpdated() throws Exception {
         Vertex expectedVertex = aVertex().withNode("A").withPlanetName("newEarth").build();
         setUpFixture();
@@ -111,6 +118,16 @@ public class RootControllerTest {
         ArgumentCaptor<Vertex> vertexArgument = forClass(Vertex.class);
         verify(verticesService).updateVertex(vertexArgument.capture());
         assertThat(vertexArgument.getValue(), is(sameBeanAs(expectedVertex)));
+    }
+
+    @Test
+    public void testEdgeGetsUpdated() throws Exception {
+        Edge expectedEdge = anEdge().withRouteId(1).withSource("A").withDestination("B").withDistance(4).build();
+        setUpFixture();
+        mockMvc.perform(get("/updateRoute/1,A,B,4"));
+        ArgumentCaptor<Edge> edgeArgument = forClass(Edge.class);
+        verify(edgeService).updateEdge(edgeArgument.capture());
+        assertThat(edgeArgument.getValue(), is(sameBeanAs(expectedEdge)));
     }
 
     @Test
@@ -146,12 +163,24 @@ public class RootControllerTest {
     public void testVertexGetsAddedCorrectly() throws Exception {
         when(verticesService.getVertexByNode("A")).thenReturn(null);
         setUpFixture();
-        mockMvc.perform(get("/addVertex/A,Earth,4"));
+        mockMvc.perform(get("/addVertex/Earth"));
         ArgumentCaptor<Vertex> vertexArgument = forClass(Vertex.class);
         verify(verticesService).persistVertex(vertexArgument.capture());
         String nodeId = vertexArgument.getValue().getNode();
         Vertex expectedVertex = aVertex().withNode(nodeId).withPlanetName("Earth").build();
         assertThat(vertexArgument.getValue(), is(sameBeanAs(expectedVertex)));
+    }
+
+    @Test
+    public void testEdgeGetsAddedCorrectly() throws Exception {
+//        when(verticesService.getVertexByNode("A")).thenReturn(null);
+        setUpFixture();
+        mockMvc.perform(get("/addEdge/LI,KI,4"));
+        ArgumentCaptor<Edge> edgeArgument = forClass(Edge.class);
+        verify(edgeService).persistEdge(edgeArgument.capture());
+        int edgeId = edgeArgument.getValue().getRouteId();
+        Edge expectedEdge = anEdge().withRouteId(edgeId).withSource("LI").withDestination("KI").withDistance(4).build();
+        assertThat(edgeArgument.getValue(), is(sameBeanAs(expectedEdge)));
     }
 
     public void setUpFixture() {

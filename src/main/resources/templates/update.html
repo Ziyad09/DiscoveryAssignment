@@ -32,25 +32,53 @@
         <br/><br/>
         <div class="row centerItems">
             <div class="col-lg-10">
-                <h1>Destination</h1>
+                <h1>Update Planet</h1>
                 <select id="newDestination">
                     <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
                     </option>
                 </select>
+                <form>
+                    New Planet Name:
+                    <input type="text" required="" name="firstname" id="changedName">
+                    </input>
+                </form>
+                <br/>
+                <button class="btn btn-success optionButtons" type="button" onclick="updatePlanet()" data-toggle="modal"
+                        data-target="#myModal">Submit Planet
+                </button>
             </div>
+            <!--<div class="col-lg-2">-->
+
+            <!--</div>-->
         </div>
         <br/><br/>
         <div class="row centerItems">
+            <h1>Selected route to alter</h1>
+            <select id="selectedRoute">
+                <option th:each="r,iterationStatus  : ${edgeList}" th:value="${iterationStatus.count}">
+                    <td th:text="${r.source}">001</td>
+                    <td th:text="${r.destination}">001</td>
+                    <td th:text="${r.distance}">001</td>
+                </option>
+            </select>
+
             <form>
-                New Planet Name:
-                <input type="text" required="" name="firstname" id="changedName">
+                Source:
+                <input type="text" required="" name="firstname" id="source">
+                </input>
+                Destination:
+                <input type="text" required="" name="firstname" id="destination">
+                </input>
+                Distance:
+                <input type="text" required="" name="firstname" id="distance">
                 </input>
             </form>
         </div>
         <br/><br/>
 
-        <button class="btn btn-success optionButtons" type="button" onclick="updatePlanet()" data-toggle="modal"
-                data-target="#myModal">Submit
+
+        <button class="btn btn-success optionButtons" type="button" onclick="updateRoute()" data-toggle="modal"
+                data-target="#myModal">Submit Route
         </button>
         <!-- Modal -->
         <div class="container">
@@ -83,13 +111,18 @@
 
 <script>
     function updatePlanet() {
-//        alert('a');
         var destination = document.getElementById('newDestination').value;
         var newPlanetName = document.getElementById('changedName').value;
         var vertexUpdate = destination + "," + newPlanetName;
-//        alert(newPlanetName+","+destination);
         $.get('/updateVertex/' + vertexUpdate);
-//        document.getElementById('changedName').val('')
+    }
+    function updateRoute() {
+        var routeId = document.getElementById('selectedRoute').value;
+        var source = document.getElementById('source').value;
+        var destination = document.getElementById('destination').value;
+        var distance = document.getElementById('distance').value;
+        var routeUpdate = routeId + "," + source + "," + destination + "," + distance;
+        $.get('/updateRoute/' + routeUpdate);
     }
 </script>
 
