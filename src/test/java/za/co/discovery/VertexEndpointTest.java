@@ -16,6 +16,7 @@ import za.co.discovery.services.VerticesService;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,6 +36,6 @@ public class VertexEndpointTest {
         GetPathResponse expectedResponse = new GetPathResponse();
         expectedResponse.setPath("Earth Moon ");
         GetPathResponse actualResponse = vertexEndpoint.getPathResponse(pathRequest);
-        assertThat(actualResponse, sameBeanAs(expectedResponse));
+        assertThat(actualResponse, is(sameBeanAs(expectedResponse)));
     }
 }
