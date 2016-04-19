@@ -44,8 +44,7 @@ public class VertexRepository {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 edges = edgesService.getEdgeList();
-                verticesService.readVertices();
-                vertexList = verticesService.vertexList;
+                vertexList = verticesService.getVertexList();
             }
         });
     }

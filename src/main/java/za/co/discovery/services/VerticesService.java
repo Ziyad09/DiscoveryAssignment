@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -23,6 +25,7 @@ public class VerticesService {
     private final int numberOfVertices = 50;
     public List<Vertex> vertexList = new Vector<>(numberOfVertices);
     private VertexDAO vertexDAO;
+
 
     @Autowired
     public VerticesService(VertexDAO vertexDAO) {
@@ -52,11 +55,10 @@ public class VerticesService {
     @PostConstruct
     public void readVertices() {
         try {
-//            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//            File fileEx = new File(classLoader.getResource("PlanetData.xlsx").getFile());
-//            FileInputStream file = new FileInputStream(fileEx);
-            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
-            FileInputStream file = new FileInputStream(fileName);
+            String EXCEL_FILENAME = "/PlanetData.xlsx";
+            URL resource = getClass().getResource(EXCEL_FILENAME);
+            File file1 = new File(resource.toURI());
+            FileInputStream file = new FileInputStream(file1);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Planet Names");
             int rowStart = Math.min(1, 1); // 0 based not 1 based rows
@@ -75,7 +77,7 @@ public class VerticesService {
             }
             file.close();
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }

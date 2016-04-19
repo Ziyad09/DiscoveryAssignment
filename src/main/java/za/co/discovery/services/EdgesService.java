@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -56,9 +58,12 @@ public class EdgesService {
     @PostConstruct
     public void readEdges() {
         try {
-            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
+            String EXCEL_FILENAME = "/PlanetData.xlsx";
+            URL resource = getClass().getResource(EXCEL_FILENAME);
+            File file1 = new File(resource.toURI());
+//            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
 //            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
-            FileInputStream file = new FileInputStream(fileName);
+            FileInputStream file = new FileInputStream(file1);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Routes");
             int rowStart = Math.min(1, 1); // 0 based not 1 based rows
@@ -80,7 +85,7 @@ public class EdgesService {
             }
             file.close();
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 //        return edgeList;
