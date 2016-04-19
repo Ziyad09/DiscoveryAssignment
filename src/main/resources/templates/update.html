@@ -28,7 +28,8 @@
 
         <br/><br/>
 
-        <div id="heading">Planet Routes</div>
+        <!--<div id="heading">Planet Routes</div>-->
+        <h1>Update planets/routes</h1>
         <br/><br/>
         <div class="row centerItems">
             <div class="col-lg-10">
@@ -37,6 +38,7 @@
                     <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
                     </option>
                 </select>
+                <br/><br/>
                 <form>
                     New Planet Name:
                     <input type="text" required="" name="firstname" id="changedName">
@@ -48,12 +50,14 @@
                 </button>
             </div>
             <!--<div class="col-lg-2">-->
-
-            <!--</div>-->
         </div>
-        <br/><br/>
-        <div class="row centerItems">
-            <h1>Selected route to alter</h1>
+        <!--</div>-->
+    </div>
+    <br/><br/>
+    <div class="row centerItems">
+        <h1>Update Route</h1>
+        <div class="col-lg-2">
+            Route to alter:
             <select id="selectedRoute">
                 <option th:each="r,iterationStatus  : ${edgeList}" th:value="${iterationStatus.count}">
                     <td th:text="${r.source}">001</td>
@@ -61,7 +65,8 @@
                     <td th:text="${r.distance}">001</td>
                 </option>
             </select>
-
+        </div>
+        <div class="col-lg-8">
             <form>
                 Source:
                 <input type="text" required="" name="firstname" id="source">
@@ -74,39 +79,41 @@
                 </input>
             </form>
         </div>
-        <br/><br/>
-
 
         <button class="btn btn-success optionButtons" type="button" onclick="updateRoute()" data-toggle="modal"
                 data-target="#myModal">Submit Route
         </button>
-        <!-- Modal -->
-        <div class="container">
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
+    </div>
+    <br/><br/>
 
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Update Complete</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Your planet name has been changed</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                    onclick="window.location.href='/'">Close
-                            </button>
-                        </div>
+
+    <!-- Modal -->
+    <div class="container">
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Complete</h4>
                     </div>
-
+                    <div class="modal-body">
+                        <p>Your planet name has been changed</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="window.location.href='/'">Close
+                        </button>
+                    </div>
                 </div>
+
             </div>
         </div>
-        <p>Click the button to update planet</p>
-
     </div>
+    <!--<p>Click the button to update planet</p>-->
+
+
 </div>
 
 <script>

@@ -28,40 +28,48 @@
 
         <br/><br/>
         <div class="row centerItems">
-            <div id="heading">Planet Routes</div>
+            <!--<div id="heading">Planet Routes</div>-->
+            <h1>Delete planets/routes</h1>
             <br/><br/>
             <div class="row centerItems">
-                <div class="col-lg-10">
-                    <h1>Destination</h1>
+                <div class="col-lg-2">
+                    <h1>Planets</h1>
                     <select id="selectedDestination">
                         <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
                         </option>
                     </select>
                 </div>
 
-            </div>
-            <button class="btn btn-success optionButtons" type="button" onclick="deletePlanet()" data-toggle="modal"
-                    data-target="#myModal">Delete planet
-            </button>
+                <div class="col-lg-2">
+                    <button class="btn btn-success optionButtons" type="button" onclick="deletePlanet()"
+                            data-toggle="modal"
+                            data-target="#myModal">Delete planet
+                    </button>
+                </div>
 
-            <br/><br/>
+            </div>
+            <br/><br/><br/><br/><br/><br/>
 
             <div class="row centerItems">
 
-                <select id="selectedRoute">
-                    <option th:each="r,iterationStatus  : ${edgeList}" th:value="${iterationStatus.count}">
-                        <td th:text="${r.source}">001</td>
-                        <td th:text="${r.destination}">001</td>
-                        <td th:text="${r.distance}">001</td>
-
-                    </option>
-                </select>
+                <div class="col-lg-2">
+                    <h1>Routes</h1>
+                    <select id="selectedRoute">
+                        <option th:each="r,iterationStatus  : ${edgeList}" th:value="${iterationStatus.count}">
+                            <td th:text="${r.source}">001</td>
+                            <td th:text="${r.destination}">001</td>
+                            <td th:text="${r.distance}">001</td>
+                        </option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-success optionButtons" type="button" onclick="deleteRoute()"
+                            data-toggle="modal"
+                            data-target="#myModal">Delete route
+                    </button>
+                </div>
             </div>
 
-
-            <button class="btn btn-success optionButtons" type="button" onclick="deleteRoute()" data-toggle="modal"
-                    data-target="#myModal">Delete route
-            </button>
             <!-- Modal -->
             <div class="container">
                 <div class="modal fade" id="myModal" role="dialog">
@@ -86,7 +94,7 @@
                     </div>
                 </div>
             </div>
-            <p>Click the button to delete node</p>
+            <!--<p>Click the button to delete node</p>-->
         </div>
     </div>
 </div>
