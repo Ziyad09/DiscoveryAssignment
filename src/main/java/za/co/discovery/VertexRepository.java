@@ -56,16 +56,17 @@ public class VertexRepository {
         dis.dijkstra("A", map);
 
         LinkedList<String> actual = dis.printPath(map, name);
-        String pathTravelled = new String("");
+        map.clear();
+        String pathTravelledSoap = new String("");
         for (String anActual : actual) {
             Vertex returnedV = verticesService.getVertexByNode(anActual);
-            pathTravelled += returnedV.getPlanetName() + " ";
+            pathTravelledSoap += returnedV.getPlanetName() + " ";
         }
         if (actual.size() > 0) {
             actual.clear();
         }
 
-        return pathTravelled;
+        return pathTravelledSoap;
     }
 
 }
