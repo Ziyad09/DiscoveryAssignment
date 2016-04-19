@@ -29,55 +29,53 @@
 <div class="container">
     <div class="text-center">
 
-        <br/><br/>
-
-        <!--<div id="heading">Planet Routes</div>-->
         <h1>Planet Routes</h1>
         <br/><br/>
-        <div class="row centerItems">
-            <div class="col-lg-10">
-                <h1>Source</h1>
-                <select id="selectedSource">
-                    <option value="A">Earth</option>
-                </select>
-            </div>
-            <div class="col-lg-10">
-                <h1>Destination</h1>
-                <select id="selectedDestination">
-                    <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
-                    </option>
-                </select>
-            </div>
+
+    </div>
+    <!--<div id="heading">Planet Routes</div>-->
+    <div class="row centerItems">
+        <div class="col-lg-5">
+            <h1>Source</h1>
+            <select id="selectedSource">
+                <option value="A">Earth</option>
+            </select>
         </div>
-
-        <p>Click the button to submit route</p>
-
+        <div class="col-lg-5">
+            <h1>Destination</h1>
+            <select id="selectedDestination">
+                <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
+                </option>
+            </select>
+        </div>
         <button class="btn btn-success optionButtons" type="button" onclick="selectPath()">Submit (No delay)</button>
+        <br/><br/>
         <button class="btn btn-success optionButtons" type="button" onclick="selectPathWithDelay()">Submit (Delay)
         </button>
+    </div>
 
-        <div class="container">
-            <!-- Modal -->
-            <div class="modal fade" id="responseModal" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title text-center"></h4>
-                        </div>
-                        <div class="modal-body text-center">
 
-                        </div>
-                        <div class="modal-footer">
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="responseModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center"></h4>
+                    </div>
+                    <div class="modal-body text-center">
 
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
 </body>
 </html>
 

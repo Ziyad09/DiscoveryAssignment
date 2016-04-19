@@ -25,82 +25,76 @@
 </nav>
 <div class="container">
     <div class="text-center">
-
-        <br/><br/>
-
-        <!--<div id="heading">Planet Routes</div>-->
         <h1>Add planets/routes</h1>
         <br/><br/>
-        <div class="row centerItems">
-            <div class="row centerItems">
-                <div class="col-lg-10">
-                    <h1>Select route</h1>
-                    <br/>
-                    Source:
-                    <select id="Source">
-                        <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
-                        </option>
-                    </select>
-                    Destination:
-                    <select id="newDestination">
-                        <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
-                        </option>
-                    </select>
-                    <br/>
-                    <form>
-                        Distance:
-                        <input type="text" name="firstname" id="distance">
-                        </input>
-                    </form>
-                </div>
-            </div>
-            <br/>
-            <button class="btn btn-success optionButtons" type="button" onclick="addRoute()" data-toggle="modal"
-                    data-target="#myModal">Submit new Route
-            </button>
-
-            <br/><br/>
-        </div>
-
-        <br/><br/><br/><br/>
-            <div class="row centerItems">
-                <form>
-                    New Planet Name:
-                    <input type="text" name="firstname" id="changedName">
-                    </input>
-                </form>
-                <br/>
-            </div>
-            <button class="btn btn-success optionButtons" type="button" onclick="addPlanet()" data-toggle="modal"
-                    data-target="#myModal">Submit new Planet
-            </button>
-        <!-- Modal -->
-        <div class="container">
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Add Complete</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Your planet has been added</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                    onclick="window.location.href='/'">Close
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <p>Click the button to add planet</p>
-
     </div>
+    <h1>Select route</h1>
+    <div class="row centerItems">
+        <div class="col-lg-3">
+            Source:
+            <select id="Source">
+                <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
+                </option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            Destination:
+            <select id="newDestination">
+                <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
+                </option>
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <form>
+                Distance:
+                <input type="text" name="firstname" id="distance">
+                </input>
+            </form>
+        </div>
+        <button class="btn btn-success optionButtons" type="button" onclick="addRoute()" data-toggle="modal"
+                data-target="#myModal">Submit new Route
+        </button>
+    </div>
+
+    <br/><br/><br/><br/>
+    <div class="row centerItems">
+        <h1>Add new planet</h1>
+        <div class="col-lg-10">
+            <form>
+                New Planet Name:
+                <input type="text" name="firstname" id="changedName">
+                </input>
+            </form>
+        </div>
+        <button class="btn btn-success optionButtons" type="button" onclick="addPlanet()" data-toggle="modal"
+                data-target="#myModal">Submit new Planet
+        </button>
+    </div>
+    <!-- Modal -->
+    <div class="container">
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Complete</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Your planet has been added</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="window.location.href='/'">Close
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>

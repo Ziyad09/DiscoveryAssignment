@@ -22,6 +22,7 @@ import java.util.Map;
 @Controller
 public class RootController {
 
+    private static int count = 0;
     private EdgesService edgesService;
     private VerticesService vertexService;
     private TrafficService traffic;
@@ -38,19 +39,23 @@ public class RootController {
     public String home(Model model) {
         List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
-        List<Traffic> trafficList = traffic.getTrafficList();
-        List<Edge> edgeList = edgesService.getEdgeList();
-        for (int i = 0; i < trafficList.size(); i++) {
-            int id = trafficList.get(i).getRouteId();
-            String source = trafficList.get(i).getSource();
-            String destination = trafficList.get(i).getDestination();
-            double distance = edgeList.get(i).getDistance() + trafficList.get(i).getDistance();
-            Traffic lastTraffic = new Traffic(id, source, destination, distance);
-            traffic.updateTraffic(lastTraffic);
+//        int count = 0;
+        if (count == 0) {
+            count++;
+            List<Traffic> trafficList = traffic.getTrafficList();
+            List<Edge> edgeList = edgesService.getEdgeList();
+            for (int i = 0; i < trafficList.size(); i++) {
+                int id = trafficList.get(i).getRouteId();
+                String source = trafficList.get(i).getSource();
+                String destination = trafficList.get(i).getDestination();
+                double distance = edgeList.get(i).getDistance() + trafficList.get(i).getDistance();
+                Traffic lastTraffic = new Traffic(id, source, destination, distance);
+                traffic.updateTraffic(lastTraffic);
+            }
         }
-//        System.out.print("\n\n"+vertices.get(vertices.size()-1).getNode()+"\n\n");
         return "index";
     }
+
 
     @RequestMapping("/update")
     public String update(Model model) {
@@ -58,6 +63,8 @@ public class RootController {
         model.addAttribute("vertexList", vertices);
         List<Edge> edgesL = edgesService.getEdgeList();
         model.addAttribute("edgeList", edgesL);
+        List<Traffic> trafficL = traffic.getTrafficList();
+        model.addAttribute("trafficList", trafficL);
         return "update";
     }
 
@@ -102,6 +109,19 @@ public class RootController {
         edgesService.updateEdge(newEdge);
     }
 
+    @RequestMapping(value = "/updateTraffic/{trafficUpdate}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public void updateTraffic(@PathVariable String trafficUpdate) {
+        String[] updated = trafficUpdate.split(",");
+        int routeId = Integer.parseInt(updated[0]);
+        Traffic returnedTraffic = traffic.getTrafficById(routeId);
+        double distance = Double.parseDouble(updated[1]);
+
+        Traffic newTraffic = new Traffic(routeId, returnedTraffic.getSource(), returnedTraffic.getDestination(), distance);
+        traffic.updateTraffic(newTraffic);
+    }
+
     @RequestMapping(value = "/addEdge/{edgeAdded}",
             method = RequestMethod.GET)
     @ResponseBody
@@ -117,6 +137,7 @@ public class RootController {
 //        int id = randomId[3];
         Edge newEdge = new Edge(routeId, source, destination, distance);
         edgesService.persistEdge(newEdge);
+        traffic.persistTraffic(routeId, source, destination, 0D);
     }
 
     @RequestMapping(value = "/addVertex/{vertexAdded}",

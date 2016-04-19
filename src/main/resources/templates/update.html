@@ -25,34 +25,30 @@
 </nav>
 <div class="container">
     <div class="text-center">
-
-        <br/><br/>
-
-        <!--<div id="heading">Planet Routes</div>-->
         <h1>Update planets/routes</h1>
+    </div>
         <br/><br/>
+
         <div class="row centerItems">
-            <div class="col-lg-10">
-                <h1>Update Planet</h1>
+            <h1>Update planet</h1>
+            <div class="col-lg-4">
                 <select id="newDestination">
                     <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
                     </option>
                 </select>
-                <br/><br/>
+            </div>
+            <div class="col-lg-6">
                 <form>
                     New Planet Name:
                     <input type="text" required="" name="firstname" id="changedName">
                     </input>
                 </form>
-                <br/>
-                <button class="btn btn-success optionButtons" type="button" onclick="updatePlanet()" data-toggle="modal"
-                        data-target="#myModal">Submit Planet
-                </button>
             </div>
-            <!--<div class="col-lg-2">-->
+            <button class="btn btn-success optionButtons" type="button" onclick="updatePlanet()" data-toggle="modal"
+                    data-target="#myModal">Submit Planet
+            </button>
         </div>
-        <!--</div>-->
-    </div>
+
     <br/><br/>
     <div class="row centerItems">
         <h1>Update Route</h1>
@@ -84,6 +80,34 @@
                 data-target="#myModal">Submit Route
         </button>
     </div>
+    <br/><br/>
+
+    <div class="row centerItems">
+        <h1>Update Traffic</h1>
+        <div class="col-lg-4">
+            Route to alter:
+            <select id="selectedTraffic">
+                <option th:each="r,iterationStatus  : ${trafficList}" th:value="${iterationStatus.count}">
+                    <td th:text="${r.source}">001</td>
+                    <td th:text="${r.destination}">001</td>
+                    <td th:text="${r.distance}">001</td>
+                </option>
+            </select>
+        </div>
+        <div class="col-lg-6">
+            <form>
+                Distance:
+                <input type="text" required="" name="firstname" id="newTrafficDistance">
+                </input>
+            </form>
+        </div>
+
+        <button class="btn btn-success optionButtons" type="button" onclick="updateTraffic()" data-toggle="modal"
+                data-target="#myModal">Submit Traffic
+        </button>
+    </div>
+
+
     <br/><br/>
 
 
@@ -130,6 +154,12 @@
         var distance = document.getElementById('distance').value;
         var routeUpdate = routeId + "," + source + "," + destination + "," + distance;
         $.get('/updateRoute/' + routeUpdate);
+    }
+    function updateTraffic() {
+        var routeId = document.getElementById('selectedTraffic').value;
+        var distance = document.getElementById('newTrafficDistance').value;
+        var routeUpdate = routeId + "," + distance;
+        $.get('/updateTraffic/' + routeUpdate);
     }
 </script>
 

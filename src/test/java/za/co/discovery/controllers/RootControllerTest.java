@@ -66,11 +66,17 @@ public class RootControllerTest {
     @Test
     public void testUpdatePage() throws Exception {
         List<Vertex> newVertexList = singletonList(aVertex().build());
+        List<Edge> newEdgeList = singletonList(anEdge().build());
+        List<Traffic> newTrafficList = singletonList(aTraffic().build());
         when(verticesService.getVertexList()).thenReturn(newVertexList);
+        when(edgeService.getEdgeList()).thenReturn(newEdgeList);
+        when(trafficService.getTrafficList()).thenReturn(newTrafficList);
         setUpFixture();
         mockMvc.perform(get("/update"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("update"))
+                .andExpect(model().attribute("edgeList", equalTo(newEdgeList)))
+                .andExpect(model().attribute("trafficList", equalTo(newTrafficList)))
                 .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
     }
 
@@ -89,10 +95,13 @@ public class RootControllerTest {
     public void testDeletePage() throws Exception {
         List<Vertex> newVertexList = singletonList(aVertex().build());
         when(verticesService.getVertexList()).thenReturn(newVertexList);
+        List<Edge> newEdgeList = singletonList(anEdge().build());
+        when(edgeService.getEdgeList()).thenReturn(newEdgeList);
         setUpFixture();
         mockMvc.perform(get("/delete"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("delete"))
+                .andExpect(model().attribute("edgeList", equalTo(newEdgeList)))
                 .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
     }
 
@@ -118,6 +127,23 @@ public class RootControllerTest {
         ArgumentCaptor<Vertex> vertexArgument = forClass(Vertex.class);
         verify(verticesService).updateVertex(vertexArgument.capture());
         assertThat(vertexArgument.getValue(), is(sameBeanAs(expectedVertex)));
+    }
+
+    @Test
+    public void testTrafficGetsUpdated() throws Exception {
+        Traffic expectedTraffic = aTraffic()
+                .withRouteId(1)
+                .withSource("A")
+                .withDestination("B")
+                .withDistance(2)
+                .build();
+        setUpFixture();
+        when(trafficService.getTrafficById(1)).thenReturn(expectedTraffic);
+
+        mockMvc.perform(get("/updateTraffic/1,2"));
+        ArgumentCaptor<Traffic> trafficArgument = forClass(Traffic.class);
+        verify(trafficService).updateTraffic(trafficArgument.capture());
+        assertThat(trafficArgument.getValue(), is(sameBeanAs(expectedTraffic)));
     }
 
     @Test
