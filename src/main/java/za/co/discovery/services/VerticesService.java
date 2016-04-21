@@ -22,10 +22,7 @@ import java.util.Vector;
 @Service
 public class VerticesService {
 
-    private final int numberOfVertices = 50;
-    public List<Vertex> vertexList = new Vector<>(numberOfVertices);
     private VertexDAO vertexDAO;
-
 
     @Autowired
     public VerticesService(VertexDAO vertexDAO) {
@@ -65,15 +62,11 @@ public class VerticesService {
             int rowEnd = Math.max(12, sheet.getLastRowNum());
             for (int rowNum = rowStart; rowNum < rowEnd + 1; rowNum++) {
                 Row row = sheet.getRow(rowNum);
-                Iterator<Cell> cellIterator = row.cellIterator();
-                while (cellIterator.hasNext()) {
-                    String planetNode = row.getCell(0).getStringCellValue();
+                String planetNode = row.getCell(0).getStringCellValue();
                     String planetName = row.getCell(1).getStringCellValue();
                     Vertex vertex = new Vertex(planetNode, planetName);
-                    vertexList.add(vertex);
+//                    vertexList.add(vertex);
                     persistVertex(vertex);
-                    break;
-                }
             }
             file.close();
 

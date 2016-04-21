@@ -22,19 +22,13 @@ import java.util.List;
 @Service
 public class EdgesService {
     private EdgeDAO edgeDAO;
-    private final int numberOfEdges = 60;
-    List<Edge> edgeList = new ArrayList<>(numberOfEdges);
+//    private final int numberOfEdges = 60;
+//    List<Edge> edgeList = new ArrayList<>(numberOfEdges);
 
     @Autowired
     public EdgesService(EdgeDAO edgeDAO) {
         this.edgeDAO = edgeDAO;
     }
-
-    public EdgesService() {
-    }
-//    public List<Edge> getEdges() {
-//        return readEdges();
-//    }
 
     public List<Edge> getEdgeList() {
         return edgeDAO.retrieveEdgeList();
@@ -70,18 +64,14 @@ public class EdgesService {
             int rowEnd = Math.max(12, sheet.getLastRowNum());
             for (int rowNum = rowStart; rowNum < rowEnd + 1; rowNum++) {
                 Row r = sheet.getRow(rowNum);
-                Iterator<Cell> cellIterator = r.cellIterator();
-                while (cellIterator.hasNext()) {
                     Double routeId = r.getCell(0).getNumericCellValue();
                     String planetSource = r.getCell(1).getStringCellValue();
                     String planetDestination = r.getCell(2).getStringCellValue();
                     Double planetDistance = r.getCell(3).getNumericCellValue();
                     int routeId2 = routeId.intValue();
                     Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
-                    edgeList.add(edge);
+//                    edgeList.add(edge);
                     persistEdge(edge);
-                    break;
-                }
             }
             file.close();
 

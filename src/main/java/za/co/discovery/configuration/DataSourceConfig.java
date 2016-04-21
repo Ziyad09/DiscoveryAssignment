@@ -1,4 +1,4 @@
-package za.co.discovery;
+package za.co.discovery.configuration;
 
 
 import org.apache.derby.jdbc.BasicEmbeddedDataSource40;

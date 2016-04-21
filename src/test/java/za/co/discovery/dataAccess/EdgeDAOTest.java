@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 import za.co.discovery.DAOConfig;
-import za.co.discovery.DataSourceConfig;
-import za.co.discovery.PersistenceConfig;
+import za.co.discovery.configuration.DataSourceConfig;
+import za.co.discovery.configuration.PersistenceConfig;
 import za.co.discovery.models.Edge;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;

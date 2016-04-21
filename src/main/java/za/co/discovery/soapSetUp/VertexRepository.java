@@ -1,4 +1,4 @@
-package za.co.discovery;
+package za.co.discovery.soapSetUp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,7 +57,7 @@ public class VertexRepository {
 
         LinkedList<String> actual = dis.printPath(map, name);
         map.clear();
-        String pathTravelledSoap = new String("");
+        String pathTravelledSoap = "";
         for (String anActual : actual) {
             Vertex returnedV = verticesService.getVertexByNode(anActual);
             pathTravelledSoap += returnedV.getPlanetName() + " ";

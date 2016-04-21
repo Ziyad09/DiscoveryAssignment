@@ -1,4 +1,4 @@
-package za.co.discovery;
+package za.co.discovery.configuration;
 
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;

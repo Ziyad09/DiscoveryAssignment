@@ -10,10 +10,14 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 import za.co.discovery.assignment.GetPathRequest;
 import za.co.discovery.assignment.GetPathResponse;
+import za.co.discovery.configuration.DataSourceConfig;
+import za.co.discovery.configuration.PersistenceConfig;
 import za.co.discovery.dataAccess.EdgeDAO;
 import za.co.discovery.dataAccess.VertexDAO;
 import za.co.discovery.services.EdgesService;
 import za.co.discovery.services.VerticesService;
+import za.co.discovery.soapSetUp.VertexEndpoint;
+import za.co.discovery.soapSetUp.VertexRepository;
 
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -8,8 +8,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
-import za.co.discovery.DataSourceConfig;
-import za.co.discovery.PersistenceConfig;
+import za.co.discovery.configuration.DataSourceConfig;
+import za.co.discovery.configuration.PersistenceConfig;
 import za.co.discovery.dataAccess.TrafficDAO;
 import za.co.discovery.models.Traffic;
 

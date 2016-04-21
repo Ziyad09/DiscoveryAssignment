@@ -16,25 +16,25 @@ public class ShortestPath {
             return;
         }
         Vertex source = graph.get(startName);
-        NavigableSet<Vertex> q = new TreeSet<>();
+        NavigableSet<Vertex> setQueues = new TreeSet<>();
 
         // set-up vertices
         for (Vertex v : graph.values()) {
             v.previous = v == source ? source : null;
             v.minDistance = v == source ? 0 : Double.POSITIVE_INFINITY;
-            q.add(v);
+            setQueues.add(v);
         }
 
-        dijkstra(q);
+        dijkstra(setQueues);
     }
 
     private void dijkstra(final NavigableSet<Vertex> queue) {
         Vertex shortestDistanceVertex, vertexUnderTest;
         while (!queue.isEmpty()) {
 
-            shortestDistanceVertex = queue.pollFirst(); // vertex with shortest distance (first iteration will return source)
+            shortestDistanceVertex = queue.pollFirst(); // vertex with shortest distance
             if (shortestDistanceVertex.minDistance == Integer.MAX_VALUE)
-                break; // we can ignore u (and any other remaining vertices) since they are unreachable
+                break; // we can ignore shortestDistanceVertex (and any other remaining vertices) since they are unreachable
 
             //look at distances to each neighbour
             for (Map.Entry<Vertex, Double> neighbourValues : shortestDistanceVertex.neighbours.entrySet()) {

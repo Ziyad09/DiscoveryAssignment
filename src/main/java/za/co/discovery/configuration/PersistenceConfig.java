@@ -1,4 +1,4 @@
-package za.co.discovery;
+package za.co.discovery.configuration;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

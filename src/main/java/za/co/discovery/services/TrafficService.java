@@ -1,6 +1,5 @@
 package za.co.discovery.services;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,22 +14,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
 public class TrafficService {
     private TrafficDAO trafficDAO;
-    private final int numberOfEdges = 45;
-    List<Traffic> trafficList = new ArrayList<>(numberOfEdges);
+//    private final int numberOfEdges = 45;
+//    List<Traffic> trafficList = new ArrayList<>(numberOfEdges);
 
     @Autowired
     public TrafficService(TrafficDAO trafficDAO) {
         this.trafficDAO = trafficDAO;
-    }
-
-    public TrafficService() {
     }
 
     public Traffic getTrafficById(int routeId) {
@@ -69,24 +63,19 @@ public class TrafficService {
             int rowEnd = Math.max(12, sheet.getLastRowNum());
             for (int rowNum = rowStart; rowNum < rowEnd + 1; rowNum++) {
                 Row r = sheet.getRow(rowNum);
-                Iterator<Cell> cellIterator = r.cellIterator();
-                while (cellIterator.hasNext()) {
                     Double routeId = r.getCell(0).getNumericCellValue();
                     String planetSource = r.getCell(1).getStringCellValue();
                     String planetDestination = r.getCell(2).getStringCellValue();
                     Double planetDistance = r.getCell(3).getNumericCellValue();
                     int routeId2 = routeId.intValue();
                     Traffic traffic = new Traffic(routeId2, planetSource, planetDestination, planetDistance);
-                    trafficList.add(traffic);
+//                    trafficList.add(traffic);
                     persistTraffic(routeId2, planetSource, planetDestination, planetDistance);
-                    break;
-                }
             }
             file.close();
 
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
-//        return trafficList;
     }
 }

@@ -1,4 +1,4 @@
-package za.co.discovery;
+package za.co.discovery.soapSetUp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -7,9 +7,6 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import za.co.discovery.assignment.GetPathRequest;
 import za.co.discovery.assignment.GetPathResponse;
-
-//import io.spring.guides.gs_producing_web_service.GetCountryRequest;
-//import io.spring.guides.gs_producing_web_service.GetCountryResponse;
 
 @Endpoint
 public class VertexEndpoint {
