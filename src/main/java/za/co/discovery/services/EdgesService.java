@@ -55,8 +55,6 @@ public class EdgesService {
             String EXCEL_FILENAME = "/PlanetData.xlsx";
             URL resource = getClass().getResource(EXCEL_FILENAME);
             File file1 = new File(resource.toURI());
-//            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
-//            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
             FileInputStream file = new FileInputStream(file1);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Routes");
@@ -70,7 +68,6 @@ public class EdgesService {
                     Double planetDistance = r.getCell(3).getNumericCellValue();
                     int routeId2 = routeId.intValue();
                     Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
-//                    edgeList.add(edge);
                     persistEdge(edge);
             }
             file.close();
@@ -78,6 +75,5 @@ public class EdgesService {
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
-//        return edgeList;
     }
 }

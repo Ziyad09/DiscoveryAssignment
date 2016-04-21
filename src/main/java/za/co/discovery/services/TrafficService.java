@@ -19,8 +19,6 @@ import java.util.List;
 @Service
 public class TrafficService {
     private TrafficDAO trafficDAO;
-//    private final int numberOfEdges = 45;
-//    List<Traffic> trafficList = new ArrayList<>(numberOfEdges);
 
     @Autowired
     public TrafficService(TrafficDAO trafficDAO) {
@@ -54,8 +52,6 @@ public class TrafficService {
             String EXCEL_FILENAME = "/PlanetData.xlsx";
             URL resource = getClass().getResource(EXCEL_FILENAME);
             File file1 = new File(resource.toURI());
-//            String fileName = new File("./").getCanonicalPath() + "\\src\\main\\resources\\PlanetData.xlsx";
-//            FileInputStream file = new FileInputStream(new File("C:\\PlanetData.xlsx"));
             FileInputStream file = new FileInputStream(file1);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet("Traffic");
@@ -68,8 +64,6 @@ public class TrafficService {
                     String planetDestination = r.getCell(2).getStringCellValue();
                     Double planetDistance = r.getCell(3).getNumericCellValue();
                     int routeId2 = routeId.intValue();
-                    Traffic traffic = new Traffic(routeId2, planetSource, planetDestination, planetDistance);
-//                    trafficList.add(traffic);
                     persistTraffic(routeId2, planetSource, planetDestination, planetDistance);
             }
             file.close();

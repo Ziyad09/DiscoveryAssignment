@@ -1,6 +1,5 @@
 package za.co.discovery.services;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,9 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 @Service
 public class VerticesService {
@@ -65,7 +62,6 @@ public class VerticesService {
                 String planetNode = row.getCell(0).getStringCellValue();
                     String planetName = row.getCell(1).getStringCellValue();
                     Vertex vertex = new Vertex(planetNode, planetName);
-//                    vertexList.add(vertex);
                     persistVertex(vertex);
             }
             file.close();
