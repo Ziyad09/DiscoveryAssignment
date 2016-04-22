@@ -42,7 +42,7 @@ public class RootController {
     public String home(Model model) {
         List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
-        int count = 0;
+
         if (count == 0) {
             count++;
             List<Traffic> trafficList = traffic.getTrafficList();
