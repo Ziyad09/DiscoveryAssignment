@@ -2,8 +2,8 @@ package za.co.discovery.models;
 
 public class TrafficBuilder {
     private int routeId;
-    private String source;
-    private String destination;
+    private Vertex source;
+    private Vertex destination;
     private double distance;
 
     private TrafficBuilder() {
@@ -18,12 +18,12 @@ public class TrafficBuilder {
         return this;
     }
 
-    public TrafficBuilder withSource(String source) {
+    public TrafficBuilder withSource(Vertex source) {
         this.source = source;
         return this;
     }
 
-    public TrafficBuilder withDestination(String destination) {
+    public TrafficBuilder withDestination(Vertex destination) {
         this.destination = destination;
         return this;
     }

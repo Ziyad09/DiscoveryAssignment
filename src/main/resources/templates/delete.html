@@ -50,8 +50,8 @@
             <h1>Routes</h1>
             <select id="selectedRoute">
                 <option th:each="r,iterationStatus  : ${edgeList}" th:value="${iterationStatus.count}">
-                    <td th:text="${r.source}">001</td>
-                    <td th:text="${r.destination}">001</td>
+                    <td th:text="${r.source.planetName}">001</td>
+                    <td th:text="${r.destination.planetName}">001</td>
                     <td th:text="${r.distance}">001</td>
                 </option>
             </select>

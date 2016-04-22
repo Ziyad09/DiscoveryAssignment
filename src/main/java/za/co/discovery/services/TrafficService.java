@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.co.discovery.dataAccess.TrafficDAO;
 import za.co.discovery.models.Traffic;
+import za.co.discovery.models.Vertex;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -41,35 +42,8 @@ public class TrafficService {
         return trafficDAO.retrieveTrafficList();
     }
 
-    public void persistTraffic(int routeId, String sourcePlanet, String destinationPlanet, Double distance) {
+    public void persistTraffic(int routeId, Vertex sourcePlanet, Vertex destinationPlanet, Double distance) {
         Traffic traffic = new Traffic(routeId, sourcePlanet, destinationPlanet, distance);
         trafficDAO.save(traffic);
-    }
-
-    @PostConstruct
-    public void readTraffic() {
-        try {
-            String EXCEL_FILENAME = "/PlanetData.xlsx";
-            URL resource = getClass().getResource(EXCEL_FILENAME);
-            File file1 = new File(resource.toURI());
-            FileInputStream file = new FileInputStream(file1);
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-            XSSFSheet sheet = workbook.getSheet("Traffic");
-            int rowStart = Math.min(1, 1); // 0 based not 1 based rows
-            int rowEnd = Math.max(12, sheet.getLastRowNum());
-            for (int rowNum = rowStart; rowNum < rowEnd + 1; rowNum++) {
-                Row r = sheet.getRow(rowNum);
-                    Double routeId = r.getCell(0).getNumericCellValue();
-                    String planetSource = r.getCell(1).getStringCellValue();
-                    String planetDestination = r.getCell(2).getStringCellValue();
-                    Double planetDistance = r.getCell(3).getNumericCellValue();
-                    int routeId2 = routeId.intValue();
-                    persistTraffic(routeId2, planetSource, planetDestination, planetDistance);
-            }
-            file.close();
-
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
 }

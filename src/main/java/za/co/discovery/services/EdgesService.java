@@ -22,8 +22,6 @@ import java.util.List;
 @Service
 public class EdgesService {
     private EdgeDAO edgeDAO;
-//    private final int numberOfEdges = 60;
-//    List<Edge> edgeList = new ArrayList<>(numberOfEdges);
 
     @Autowired
     public EdgesService(EdgeDAO edgeDAO) {
@@ -47,33 +45,5 @@ public class EdgesService {
     }
     public void persistEdge(Edge edge) {
         edgeDAO.save(edge);
-    }
-
-    @PostConstruct
-    public void readEdges() {
-        try {
-            String EXCEL_FILENAME = "/PlanetData.xlsx";
-            URL resource = getClass().getResource(EXCEL_FILENAME);
-            File file1 = new File(resource.toURI());
-            FileInputStream file = new FileInputStream(file1);
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-            XSSFSheet sheet = workbook.getSheet("Routes");
-            int rowStart = Math.min(1, 1); // 0 based not 1 based rows
-            int rowEnd = Math.max(12, sheet.getLastRowNum());
-            for (int rowNum = rowStart; rowNum < rowEnd + 1; rowNum++) {
-                Row r = sheet.getRow(rowNum);
-                    Double routeId = r.getCell(0).getNumericCellValue();
-                    String planetSource = r.getCell(1).getStringCellValue();
-                    String planetDestination = r.getCell(2).getStringCellValue();
-                    Double planetDistance = r.getCell(3).getNumericCellValue();
-                    int routeId2 = routeId.intValue();
-                    Edge edge = new Edge(routeId2, planetSource, planetDestination, planetDistance);
-                    persistEdge(edge);
-            }
-            file.close();
-
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
 }

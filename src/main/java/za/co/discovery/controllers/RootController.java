@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import za.co.discovery.models.*;
 import za.co.discovery.services.EdgesService;
+import za.co.discovery.services.FileReaderService;
 import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
@@ -26,30 +27,37 @@ public class RootController {
     private EdgesService edgesService;
     private VerticesService vertexService;
     private TrafficService traffic;
+    private FileReaderService fileReaderService;
 
     @Autowired
     public RootController(EdgesService edgesService, VerticesService vertexService,
-                          TrafficService traffic) {
+                          TrafficService traffic, FileReaderService fileReaderService) {
         this.edgesService = edgesService;
         this.vertexService = vertexService;
         this.traffic = traffic;
+        this.fileReaderService = fileReaderService;
     }
 
     @RequestMapping("/")
     public String home(Model model) {
         List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
-//        int count = 0;
+        int count = 0;
         if (count == 0) {
             count++;
             List<Traffic> trafficList = traffic.getTrafficList();
             List<Edge> edgeList = edgesService.getEdgeList();
             for (int i = 0; i < trafficList.size(); i++) {
                 int id = trafficList.get(i).getRouteId();
-                String source = trafficList.get(i).getSource();
-                String destination = trafficList.get(i).getDestination();
+
+                String source = trafficList.get(i).getSource().getNode();
+                String destination = trafficList.get(i).getDestination().getNode();
+
+                Vertex sourceVertex = vertexService.getVertexByNode(source);
+                Vertex destinationVertex = vertexService.getVertexByNode(destination);
+
                 double distance = edgeList.get(i).getDistance() + trafficList.get(i).getDistance();
-                Traffic lastTraffic = new Traffic(id, source, destination, distance);
+                Traffic lastTraffic = new Traffic(id, sourceVertex, destinationVertex, distance);
                 traffic.updateTraffic(lastTraffic);
             }
         }
@@ -105,8 +113,13 @@ public class RootController {
         String source = updated[1];
         String destination = updated[2];
         double distance = Double.parseDouble(updated[3]);
-        Edge newEdge = new Edge(routeId, source, destination, distance);
+
+        Vertex sourceVertex = vertexService.getVertexByPlanetName(source);
+        Vertex destinationVertex = vertexService.getVertexByPlanetName(destination);
+
+        Edge newEdge = new Edge(routeId, sourceVertex, destinationVertex, distance);
         edgesService.updateEdge(newEdge);
+        System.out.print("\n\n\n" + edgesService.getEdgeById(routeId).getDistance() + "\n\n\n");
     }
 
     @RequestMapping(value = "/updateTraffic/{trafficUpdate}",
@@ -135,9 +148,12 @@ public class RootController {
         int routeId = edgesService.getEdgeList().size() + 1;
 //        int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
 //        int id = randomId[3];
-        Edge newEdge = new Edge(routeId, source, destination, distance);
+        Vertex sourceVertex = vertexService.getVertexByNode(source);
+        Vertex destinationVertex = vertexService.getVertexByNode(destination);
+
+        Edge newEdge = new Edge(routeId, sourceVertex, destinationVertex, distance);
         edgesService.persistEdge(newEdge);
-        traffic.persistTraffic(routeId, source, destination, 0D);
+        traffic.persistTraffic(routeId, sourceVertex, destinationVertex, 0D);
     }
 
     @RequestMapping(value = "/addVertex/{vertexAdded}",

@@ -1,9 +1,6 @@
 package za.co.discovery.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "Edge")
 @Table
@@ -11,16 +8,16 @@ public class Edge {
     @Id
     @Column(nullable = false)
     private int routeId;
-    @Column
-    private String source;
-    @Column
-    private String destination;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Vertex source;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Vertex destination;
     @Column
     private double distance;
     protected Edge() {
     }
 
-    public Edge(int routeId, String source, String destination, double distance) {
+    public Edge(int routeId, Vertex source, Vertex destination, double distance) {
         this.routeId = routeId;
         this.source = source;
         this.destination = destination;
@@ -31,11 +28,11 @@ public class Edge {
         return routeId;
     }
 
-    public String getSource() {
+    public Vertex getSource() {
         return source;
     }
 
-    public String getDestination() {
+    public Vertex getDestination() {
         return destination;
     }
 

@@ -5,8 +5,8 @@ package za.co.discovery.models;
  */
 public class EdgeBuilder {
     private int routeId;
-    private String source;
-    private String destination;
+    private Vertex source;
+    private Vertex destination;
     private double distance;
 
     private EdgeBuilder() {
@@ -21,12 +21,12 @@ public class EdgeBuilder {
         return this;
     }
 
-    public EdgeBuilder withSource(String source) {
+    public EdgeBuilder withSource(Vertex source) {
         this.source = source;
         return this;
     }
 
-    public EdgeBuilder withDestination(String destination) {
+    public EdgeBuilder withDestination(Vertex destination) {
         this.destination = destination;
         return this;
     }

@@ -56,20 +56,28 @@
             Route to alter:
             <select id="selectedRoute">
                 <option th:each="r,iterationStatus  : ${edgeList}" th:value="${iterationStatus.count}">
-                    <td th:text="${r.source}">001</td>
-                    <td th:text="${r.destination}">001</td>
+                    <td th:text="${r.source.planetName}">001</td>
+                    <td th:text="${r.destination.planetName}">001</td>
                     <td th:text="${r.distance}">001</td>
                 </option>
             </select>
         </div>
         <div class="col-lg-8">
+            <select id="source">
+                <option th:each="v : ${vertexList}" th:value="${v.planetName}" th:text="${v.planetName}">
+                </option>
+            </select>
+            <select id="destination">
+                <option th:each="v : ${vertexList}" th:value="${v.planetName}" th:text="${v.planetName}">
+                </option>
+            </select>
             <form>
-                Source:
-                <input type="text" required="" name="firstname" id="source">
-                </input>
-                Destination:
-                <input type="text" required="" name="firstname" id="destination">
-                </input>
+                <!--Source:-->
+                <!--<input type="text" required="" name="firstname" id="source">-->
+                <!--</input>-->
+                <!--Destination:-->
+                <!--<input type="text" required="" name="firstname" id="destination">-->
+                <!--</input>-->
                 Distance:
                 <input type="text" required="" name="firstname" id="distance">
                 </input>
@@ -88,8 +96,8 @@
             Route to alter:
             <select id="selectedTraffic">
                 <option th:each="r,iterationStatus  : ${trafficList}" th:value="${iterationStatus.count}">
-                    <td th:text="${r.source}">001</td>
-                    <td th:text="${r.destination}">001</td>
+                    <td th:text="${r.source.planetName}">001</td>
+                    <td th:text="${r.destination.planetName}">001</td>
                     <td th:text="${r.distance}">001</td>
                 </option>
             </select>
@@ -153,6 +161,7 @@
         var destination = document.getElementById('destination').value;
         var distance = document.getElementById('distance').value;
         var routeUpdate = routeId + "," + source + "," + destination + "," + distance;
+        alert(routeUpdate);
         $.get('/updateRoute/' + routeUpdate);
     }
     function updateTraffic() {

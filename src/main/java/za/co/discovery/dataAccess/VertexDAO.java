@@ -59,4 +59,11 @@ public class VertexDAO {
         criteria.add(eq("node", nodeId));
         return (Vertex) criteria.uniqueResult();
     }
+
+    public Vertex retrieveVertexByName(String planetName) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Vertex.class);
+        criteria.add(eq("planetName", planetName));
+        return (Vertex) criteria.uniqueResult();
+    }
 }
