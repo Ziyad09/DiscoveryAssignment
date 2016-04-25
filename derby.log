@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Mon Apr 25 11:27:03 CAT 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0154-4cbe-5919-000003c11c50 
-on database directory D:\Users\ziyad.jappie\My Documents\DiscoveryProject\PlanetTravel with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Mon Apr 25 13:53:23 CAT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0154-4d44-51c8-00000541dcd8 
+on database directory D:\Users\ziyad.jappie\My Documents\DiscoveryProject\PlanetTravel with class loader sun.misc.Launcher$AppClassLoader@6d06d69c 
 Loaded from file:/C:/Users/ziyad.jappie/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_74-b02

@@ -23,7 +23,7 @@ public class VertexEndpoint {
     @ResponsePayload
     public GetPathResponse getPathResponse(@RequestPayload GetPathRequest request) {
         GetPathResponse response = new GetPathResponse();
-        response.setPath(vertexRepository.findVertex(request.getName()));
+        response.setPath(vertexRepository.findVertex(request.getName()).toString());
 
         return response;
     }

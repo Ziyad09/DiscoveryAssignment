@@ -24,7 +24,7 @@ public class VertexRepository {
     private static List<Vertex> vertexList = new ArrayList<Vertex>();
     private VerticesService verticesService;
     private EdgesService edgesService;
-    private List<Edge> edges;
+    //    private List<Edge> edges;
     private FileReaderService fileReaderService;
     private TrafficService trafficService;
 
@@ -49,26 +49,26 @@ public class VertexRepository {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 fileReaderService.readVertices();
-                edges = edgesService.getEdgeList();
+//                edges = edgesService.getEdgeList();
                 vertexList = verticesService.getVertexList();
             }
         });
     }
 
 
-    public String findVertex(String name) {
+    public StringBuilder findVertex(String name) {
         Graph graph = new Graph();
-        // TODO don't keep state variables on a service (could be outdated)
-        Map<String, Vertex> map = graph.GraphEdge(edges);
+        Map<String, Vertex> map = graph.GraphEdge(edgesService.getEdgeList());
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
 
         List<String> actual = dis.printPath(map, name);
         map.clear();
-        String pathTravelledSoap = new String("");
+        StringBuilder pathTravelledSoap = new StringBuilder();
         for (String anActual : actual) {
             Vertex returnedV = verticesService.getVertexByNode(anActual);
-            pathTravelledSoap += returnedV.getPlanetName() + " ";
+            pathTravelledSoap.append(returnedV.getPlanetName());
+            pathTravelledSoap.append(" ");
         }
 
         return pathTravelledSoap;
