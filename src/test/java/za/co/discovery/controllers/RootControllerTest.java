@@ -8,6 +8,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import za.co.discovery.models.Edge;
+import za.co.discovery.models.ShortestPath;
 import za.co.discovery.models.Traffic;
 import za.co.discovery.models.Vertex;
 import za.co.discovery.services.EdgesService;
@@ -43,7 +44,7 @@ public class RootControllerTest {
     @Mock
     private TrafficService trafficService;
     @Mock
-    private FileReaderService fileReaderService;
+    private ShortestPath shortestPath;
 
     @Test
     public void testHome() throws Exception {
@@ -219,7 +220,7 @@ public class RootControllerTest {
         mockMvc = standaloneSetup(
                 new RootController(edgeService,
                         verticesService,
-                        trafficService, fileReaderService)
+                        trafficService)
         )
                 .setViewResolvers(getInternalResourceViewResolver())
                 .build();

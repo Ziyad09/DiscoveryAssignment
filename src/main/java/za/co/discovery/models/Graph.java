@@ -1,11 +1,13 @@
 package za.co.discovery.models;
 
+import com.sun.xml.internal.ws.developer.Serialization;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Graph {
-    // this is a service not a model. name better
     public Map<String, Vertex> buildGraphWithEdges(List<Edge> edges) {
         final Map<String, Vertex> graph;
         graph = new HashMap<>(edges.size());

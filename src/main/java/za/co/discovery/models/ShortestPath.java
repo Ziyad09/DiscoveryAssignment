@@ -4,9 +4,11 @@ package za.co.discovery.models;
 //import za.co.discovery.services.*;
 //import za.co.discovery.services.Vertex;
 
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 
-// Service not a model
+@Service
 public class ShortestPath {
     public void dijkstra(String startName, Map<String, Vertex> graph) {
         if (!graph.containsKey(startName)) {

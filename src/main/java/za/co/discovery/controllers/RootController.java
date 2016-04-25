@@ -25,15 +25,13 @@ public class RootController {
     private EdgesService edgesService;
     private VerticesService vertexService;
     private TrafficService traffic;
-    private FileReaderService fileReaderService;
 
     @Autowired
     public RootController(EdgesService edgesService, VerticesService vertexService,
-                          TrafficService traffic, FileReaderService fileReaderService) {
+                          TrafficService traffic) {
         this.edgesService = edgesService;
         this.vertexService = vertexService;
         this.traffic = traffic;
-        this.fileReaderService = fileReaderService;
     }
 
     @RequestMapping("/")

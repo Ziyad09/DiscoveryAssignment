@@ -52,7 +52,6 @@ public class Vertex implements Comparable<Vertex> {
         if (this == this.previous) {
             return thisNode;
         } else if (this.previous == null) {
-//            System.out.printf("%s(unreached)", this.node);
             thisNode.add("");
             return thisNode;
         } else {
@@ -60,7 +59,6 @@ public class Vertex implements Comparable<Vertex> {
             pathToHere.add(this.node);
             return pathToHere;
         }
-//        return thisNode;
     }
 
     public int compareTo(Vertex other) {
