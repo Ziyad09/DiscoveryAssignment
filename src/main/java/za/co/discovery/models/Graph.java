@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Graph {
+    // this is a service not a model. name better
     public Map<String, Vertex> GraphEdge(List<Edge> edges) {
         final Map<String, Vertex> graph;
         graph = new HashMap<>(edges.size());
@@ -16,6 +17,7 @@ public class Graph {
         }
 
         //another pass to set neighbouring vertices
+        // TODO try enforce encap for neighbours.
         for (Edge e : edges) {
             graph.get(e.getSource().getNode()).neighbours.put(graph.get(e.getDestination().getNode()), e.getDistance());
             //graph.get(e.v2).neighbours.put(graph.get(e.v1), e.dist); // also do this for an undirected graph

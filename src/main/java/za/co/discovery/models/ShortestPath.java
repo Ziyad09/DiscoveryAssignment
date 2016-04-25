@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
+// Service not a model
 public class ShortestPath {
     public void dijkstra(String startName, Map<String, Vertex> graph) {
         if (!graph.containsKey(startName)) {
@@ -51,6 +52,7 @@ public class ShortestPath {
         }
     }
 
+    // TODO return Lists not linkedList
     public LinkedList<String> printPath(Map<String, Vertex> graph, String endName) {
         if (!graph.containsKey(endName)) {
             System.err.printf("Graph doesn't contain end vertex \"%s\"\n", endName);

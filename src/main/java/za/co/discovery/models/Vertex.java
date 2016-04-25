@@ -1,13 +1,14 @@
 package za.co.discovery.models;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.Collections.singletonList;
 
 @Entity(name = "Vertex")
 @Table
 public class Vertex implements Comparable<Vertex> {
+    // TODO create tests of vertex and edge and see if the behaviour is correct
     @Id
     @Column(nullable = false)
     private String node;
@@ -40,6 +41,16 @@ public class Vertex implements Comparable<Vertex> {
 //            System.out.print(this.node + " ");
         }
         return nodes;
+    }
+
+    private List<String> printPathX() {
+        if (this == this.previous) {
+            return new LinkedList<>(singletonList(this.node));
+        } else {
+            List<String> pathToHere = this.previous.printPathX();
+            pathToHere.add(this.node);
+            return pathToHere;
+        }
     }
 
     public int compareTo(Vertex other) {

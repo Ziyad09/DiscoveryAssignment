@@ -45,6 +45,7 @@ public class RootController {
 
         if (count == 0) {
             count++;
+            // TODO update traffic when reading excel file
             List<Traffic> trafficList = traffic.getTrafficList();
             List<Edge> edgeList = edgesService.getEdgeList();
             for (int i = 0; i < trafficList.size(); i++) {
@@ -145,6 +146,7 @@ public class RootController {
         double distance = Double.parseDouble(updated[2]);
 
         // Add the edge
+        // TODO let database add id
         int routeId = edgesService.getEdgeList().size() + 1;
 //        int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
 //        int id = randomId[3];

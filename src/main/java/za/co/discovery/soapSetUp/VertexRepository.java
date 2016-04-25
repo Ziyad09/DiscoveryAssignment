@@ -49,15 +49,18 @@ public class VertexRepository {
         });
     }
 
+
     public String findVertex(String name) {
         Graph graph = new Graph();
+        // TODO don't keep state variables on a service (could be outdated)
         Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
 
-        LinkedList<String> actual = dis.printPath(map, name);
+        List<String> actual = dis.printPath(map, name);
         map.clear();
         String pathTravelledSoap = "";
+        // TODO use string builder
         for (String anActual : actual) {
             Vertex returnedV = verticesService.getVertexByNode(anActual);
             pathTravelledSoap += returnedV.getPlanetName() + " ";
