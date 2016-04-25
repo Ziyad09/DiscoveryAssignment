@@ -16,7 +16,6 @@ import za.co.discovery.services.FileReaderService;
 import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -164,7 +163,7 @@ public class RootController {
 
         Graph graph = new Graph();
         List<Traffic> trafficList = traffic.getTrafficList();
-        Map<String, Vertex> mapTraffic = graph.GraphTraffic(trafficList);
+        Map<String, Vertex> mapTraffic = graph.buildGraphWithTraffic(trafficList);
         ShortestPath disTraffic = new ShortestPath();
         disTraffic.dijkstra("A", mapTraffic);
         List<String> actual = disTraffic.printPath(mapTraffic, delayPath);
@@ -189,7 +188,7 @@ public class RootController {
 
         Graph graph = new Graph();
         List<Edge> edges = edgesService.getEdgeList();
-        Map<String, Vertex> map = graph.GraphEdge(edges);
+        Map<String, Vertex> map = graph.buildGraphWithEdges(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
         List<String> actual = dis.printPath(map, path);

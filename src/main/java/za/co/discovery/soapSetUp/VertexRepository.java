@@ -15,7 +15,6 @@ import za.co.discovery.services.VerticesService;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +57,7 @@ public class VertexRepository {
 
     public StringBuilder findVertex(String name) {
         Graph graph = new Graph();
-        Map<String, Vertex> map = graph.GraphEdge(edgesService.getEdgeList());
+        Map<String, Vertex> map = graph.buildGraphWithEdges(edgesService.getEdgeList());
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
 

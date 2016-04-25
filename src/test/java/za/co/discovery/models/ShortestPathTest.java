@@ -1,18 +1,8 @@
 package za.co.discovery.models;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.transaction.annotation.Transactional;
-import za.co.discovery.configuration.DataSourceConfig;
-import za.co.discovery.configuration.PersistenceConfig;
-import za.co.discovery.dataAccess.EdgeDAO;
-import za.co.discovery.dataAccess.VertexDAO;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +51,7 @@ public class ShortestPathTest {
         edges.add(edge3);
 
         Graph graph = new Graph();
-        Map<String, Vertex> map = graph.GraphEdge(edges);
+        Map<String, Vertex> map = graph.buildGraphWithEdges(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra(start, map);
         List<String> actual = dis.printPath(map, end);
