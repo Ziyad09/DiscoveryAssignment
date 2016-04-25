@@ -88,7 +88,19 @@ public class FileReaderService {
                 if (source != null && destination != null) {
                     trafficService.persistTraffic(routeId2, source, destination, planetDistance);
                 }
+            }
 
+            List<Traffic> trafficList = trafficService.getTrafficList();
+            List<Edge> edgeList = edgesService.getEdgeList();
+            for (int i = 0; i < trafficList.size(); i++) {
+                int id = trafficList.get(i).getRouteId();
+                String source = trafficList.get(i).getSource().getNode();
+                String destination = trafficList.get(i).getDestination().getNode();
+                Vertex sourceVertex = verticesService.getVertexByNode(source);
+                Vertex destinationVertex = verticesService.getVertexByNode(destination);
+                double distance = edgeList.get(i).getDistance() + trafficList.get(i).getDistance();
+                Traffic lastTraffic = new Traffic(id, sourceVertex, destinationVertex, distance);
+                trafficService.updateTraffic(lastTraffic);
             }
 
 

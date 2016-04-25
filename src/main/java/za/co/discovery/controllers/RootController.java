@@ -23,7 +23,6 @@ import java.util.Map;
 @Controller
 public class RootController {
 
-    private static int count = 0;
     private EdgesService edgesService;
     private VerticesService vertexService;
     private TrafficService traffic;
@@ -42,26 +41,6 @@ public class RootController {
     public String home(Model model) {
         List<Vertex> vertices = vertexService.getVertexList();
         model.addAttribute("vertexList", vertices);
-
-        if (count == 0) {
-            count++;
-            // TODO update traffic when reading excel file
-            List<Traffic> trafficList = traffic.getTrafficList();
-            List<Edge> edgeList = edgesService.getEdgeList();
-            for (int i = 0; i < trafficList.size(); i++) {
-                int id = trafficList.get(i).getRouteId();
-
-                String source = trafficList.get(i).getSource().getNode();
-                String destination = trafficList.get(i).getDestination().getNode();
-
-                Vertex sourceVertex = vertexService.getVertexByNode(source);
-                Vertex destinationVertex = vertexService.getVertexByNode(destination);
-
-                double distance = edgeList.get(i).getDistance() + trafficList.get(i).getDistance();
-                Traffic lastTraffic = new Traffic(id, sourceVertex, destinationVertex, distance);
-                traffic.updateTraffic(lastTraffic);
-            }
-        }
         return "index";
     }
 

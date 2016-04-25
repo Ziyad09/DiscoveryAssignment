@@ -48,32 +48,11 @@ public class RootControllerTest {
     @Test
     public void testHome() throws Exception {
         List<Vertex> newVertexList = singletonList(aVertex().build());
-
-        Vertex vertexSource = aVertex().withNode("A").withPlanetName("Earth").build();
-        Vertex vertexDestination = aVertex().withNode("B").withPlanetName("Moon").build();
-
-//        verticesService.persistVertex(vertexSource);
-//        verticesService.persistVertex(vertexDestination);
-
-        Traffic traffic1 = aTraffic().withRouteId(1).withSource(vertexSource).withDestination(vertexDestination).withDistance(4).build();
-        Edge edge1 = anEdge().withRouteId(1).withSource(vertexSource).withDestination(vertexDestination).withDistance(4).build();
-
         when(verticesService.getVertexList()).thenReturn(newVertexList);
-        when(edgeService.getEdgeList()).thenReturn(singletonList(edge1));
-        when(trafficService.getTrafficList()).thenReturn(singletonList(traffic1));
-        when(verticesService.getVertexByNode("A")).thenReturn(vertexSource);
-        when(verticesService.getVertexByNode("B")).thenReturn(vertexDestination);
-
         setUpFixture();
-        Traffic expectedTraffic = aTraffic().withRouteId(1).withSource(vertexSource).withDestination(vertexDestination).withDistance(8).build();
-
         mockMvc.perform(get("/"))
                 .andExpect(view().name("index"))
                 .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
-        ArgumentCaptor<Traffic> trafficArgument = forClass(Traffic.class);
-        verify(trafficService).updateTraffic(trafficArgument.capture());
-        assertThat(trafficArgument.getValue(), is(sameBeanAs(expectedTraffic)));
-
     }
 
     @Test
@@ -117,13 +96,6 @@ public class RootControllerTest {
                 .andExpect(model().attribute("edgeList", equalTo(newEdgeList)))
                 .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
     }
-
-//    @Test
-//    public void testVertexGetsDeleted() throws Exception {
-//        setUpFixture();
-//        when(verticesService.deleteVertex("A")).thenReturn(1);
-//        mockMvc.perform(get("/deleteVertex/A"));
-//    }
 
     @Test
     public void testEdgeGetsDeleted() throws Exception {
