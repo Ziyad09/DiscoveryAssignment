@@ -119,7 +119,7 @@ public class RootController {
 
         Edge newEdge = new Edge(routeId, sourceVertex, destinationVertex, distance);
         edgesService.updateEdge(newEdge);
-        System.out.print("\n\n\n" + edgesService.getEdgeById(routeId).getDistance() + "\n\n\n");
+//        System.out.print("\n\n\n" + edgesService.getEdgeById(routeId).getDistance() + "\n\n\n");
     }
 
     @RequestMapping(value = "/updateTraffic/{trafficUpdate}",
