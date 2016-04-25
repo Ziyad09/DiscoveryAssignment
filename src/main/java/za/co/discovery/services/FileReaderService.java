@@ -88,6 +88,7 @@ public class FileReaderService {
                 if (source != null && destination != null) {
                     trafficService.persistTraffic(routeId2, source, destination, planetDistance);
                 }
+
             }
 
 

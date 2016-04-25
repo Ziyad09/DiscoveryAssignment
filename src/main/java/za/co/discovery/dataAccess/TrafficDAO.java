@@ -37,9 +37,7 @@ public class TrafficDAO {
     public List<Traffic> retrieveTrafficList() {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Traffic.class);
-//        criteria.add(eq("id", id));
         return (List<Traffic>) criteria.list();
-//        return query.list();
     }
 
     public int delete(int routeId) {

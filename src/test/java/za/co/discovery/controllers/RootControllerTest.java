@@ -118,12 +118,12 @@ public class RootControllerTest {
                 .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
     }
 
-    @Test
-    public void testVertexGetsDeleted() throws Exception {
-        setUpFixture();
-        when(verticesService.deleteVertex("A")).thenReturn(1);
-        mockMvc.perform(get("/deleteVertex/A"));
-    }
+//    @Test
+//    public void testVertexGetsDeleted() throws Exception {
+//        setUpFixture();
+//        when(verticesService.deleteVertex("A")).thenReturn(1);
+//        mockMvc.perform(get("/deleteVertex/A"));
+//    }
 
     @Test
     public void testEdgeGetsDeleted() throws Exception {

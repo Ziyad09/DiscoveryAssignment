@@ -15,6 +15,8 @@ import za.co.discovery.configuration.PersistenceConfig;
 import za.co.discovery.dataAccess.EdgeDAO;
 import za.co.discovery.dataAccess.VertexDAO;
 import za.co.discovery.services.EdgesService;
+import za.co.discovery.services.FileReaderService;
+import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 import za.co.discovery.soapSetUp.VertexEndpoint;
 import za.co.discovery.soapSetUp.VertexRepository;
@@ -26,7 +28,7 @@ import static org.hamcrest.core.Is.is;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {PersistenceConfig.class, VertexRepository.class, VertexEndpoint.class, DataSourceConfig.class, DAOConfig.class, VerticesService.class, EdgesService.class, EdgeDAO.class, VertexDAO.class},
+        classes = {PersistenceConfig.class, FileReaderService.class, VertexRepository.class, VertexEndpoint.class, DataSourceConfig.class, DAOConfig.class, VerticesService.class, EdgesService.class, TrafficService.class, EdgeDAO.class, VertexDAO.class},
         loader = AnnotationConfigContextLoader.class)
 public class VertexEndpointTest {
 

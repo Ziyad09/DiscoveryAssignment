@@ -3,7 +3,6 @@
 <head>
     <title>Discovery</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
-    <!--<link rel="stylesheet" href="../static/js/path.js"/>-->
     <script type="text/javascript" src="/js/update.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -25,23 +24,10 @@
 </nav>
 <div class="container">
     <div class="text-center">
-        <h1>Delete planets/routes</h1>
+        <h1>Delete routes</h1>
         <br/><br/>
     </div>
         <br/><br/>
-        <div class="row centerItems">
-            <div class="col-lg-4">
-                <h1>Planets</h1>
-                <select id="selectedDestination">
-                    <option th:each="v : ${vertexList}" th:value="${v.node}" th:text="${v.planetName}">
-                    </option>
-                </select>
-            </div>
-            <button class="btn btn-success optionButtons" type="button" onclick="deletePlanet()"
-                    data-toggle="modal"
-                    data-target="#myModal">Delete planet
-            </button>
-        </div>
 
     <br/><br/><br/><br/><br/><br/>
 
@@ -86,18 +72,8 @@
                 </div>
             </div>
         </div>
-    <!--<p>Click the button to delete node</p>-->
 </div>
 <script>
-    function deletePlanet() {
-//        alert('a');
-        var destinationToDelete = document.getElementById('selectedDestination').value;
-//        var newPlanetName = document.getElementById('changedName').value;
-//        var vertexdeleted = destination;
-//        alert(destinationToDelete);
-        $.get('/deleteVertex/' + destinationToDelete);
-//        document.getElementById('changedName').val('')
-    }
     function deleteRoute() {
         var destinationToDelete = document.getElementById('selectedRoute').value;
         $.get('/deleteRoute/' + destinationToDelete);

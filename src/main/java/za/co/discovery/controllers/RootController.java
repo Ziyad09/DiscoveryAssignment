@@ -120,7 +120,6 @@ public class RootController {
 
         Edge newEdge = new Edge(routeId, sourceVertex, destinationVertex, distance);
         edgesService.updateEdge(newEdge);
-//        System.out.print("\n\n\n" + edgesService.getEdgeById(routeId).getDistance() + "\n\n\n");
     }
 
     @RequestMapping(value = "/updateTraffic/{trafficUpdate}",
@@ -166,13 +165,6 @@ public class RootController {
         }
         newVertex = new Vertex(vertexId, vertexAdded);
         vertexService.persistVertex(newVertex);
-    }
-
-    @RequestMapping(value = "/deleteVertex/{destinationToDelete}",
-            method = RequestMethod.GET)
-    @ResponseBody
-    public void deleteVertex(@PathVariable String destinationToDelete) {
-        vertexService.deleteVertex(destinationToDelete);
     }
 
     @RequestMapping(value = "/deleteRoute/{routeToDelete}",

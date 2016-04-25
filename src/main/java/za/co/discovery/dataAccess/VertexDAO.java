@@ -44,14 +44,8 @@ public class VertexDAO {
 
     public List<Vertex> retrieveVertexList() {
         Session session = sessionFactory.getCurrentSession();
-//        String hql =
-//                "SELECT new za.co.discovery.models.Vertex(v.node,v.planetName) " +
-//                        "FROM Vertex v";
-//        Query query = session.createQuery(hql);
         Criteria criteria = session.createCriteria(Vertex.class);
-//        criteria.add(eq("id", id));
         return (List<Vertex>) criteria.list();
-//        return query.list();
     }
     public Vertex retrieveVertex(String nodeId) {
         Session session = sessionFactory.getCurrentSession();
