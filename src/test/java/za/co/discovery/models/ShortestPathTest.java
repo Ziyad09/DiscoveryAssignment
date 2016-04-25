@@ -64,7 +64,7 @@ public class ShortestPathTest {
         Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra(start, map);
-        LinkedList<String> actual = dis.printPath(map, end);
+        List<String> actual = dis.printPath(map, end);
         assertThat(actual.toString(), is("[A, C]"));
     }
 }

@@ -25,6 +25,12 @@ public class Traffic {
         this.distance = distance;
     }
 
+    public Traffic(Vertex source, Vertex destination, double distance) {
+        this.source = source;
+        this.destination = destination;
+        this.distance = distance;
+    }
+
     public int getRouteId() {
         return routeId;
     }

@@ -145,17 +145,12 @@ public class RootController {
         String destination = updated[1];
         double distance = Double.parseDouble(updated[2]);
 
-        // Add the edge
-        // TODO let database add id
-        int routeId = edgesService.getEdgeList().size() + 1;
-//        int[] randomId = ThreadLocalRandom.current().ints(50, 100).distinct().limit(5).toArray();
-//        int id = randomId[3];
         Vertex sourceVertex = vertexService.getVertexByNode(source);
         Vertex destinationVertex = vertexService.getVertexByNode(destination);
 
-        Edge newEdge = new Edge(routeId, sourceVertex, destinationVertex, distance);
+        Edge newEdge = new Edge(sourceVertex, destinationVertex, distance);
         edgesService.persistEdge(newEdge);
-        traffic.persistTraffic(routeId, sourceVertex, destinationVertex, 0D);
+        traffic.persistTrafficWithoutId(sourceVertex, destinationVertex, 0D);
     }
 
     @RequestMapping(value = "/addVertex/{vertexAdded}",
@@ -201,7 +196,7 @@ public class RootController {
         Map<String, Vertex> mapTraffic = graph.GraphTraffic(trafficList);
         ShortestPath disTraffic = new ShortestPath();
         disTraffic.dijkstra("A", mapTraffic);
-        LinkedList<String> actual = disTraffic.printPath(mapTraffic, delayPath);
+        List<String> actual = disTraffic.printPath(mapTraffic, delayPath);
         String pathTravelled = "";
         for (String anActual : actual) {
             Vertex returnedV = vertexService.getVertexByNode(anActual);
@@ -210,9 +205,6 @@ public class RootController {
             } else {
                 pathTravelled += returnedV.getPlanetName() + " ";
             }
-        }
-        if (actual.size() > 0) {
-            actual.clear();
         }
         return new ResponseEntity<>(pathTravelled, HttpStatus.OK);
     }
@@ -229,7 +221,7 @@ public class RootController {
         Map<String, Vertex> map = graph.GraphEdge(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
-        LinkedList<String> actual = dis.printPath(map, path);
+        List<String> actual = dis.printPath(map, path);
         String pathTravelled = "";
         for (String anActual : actual) {
             Vertex returnedV = vertexService.getVertexByNode(anActual);
@@ -238,9 +230,6 @@ public class RootController {
             } else {
                 pathTravelled += returnedV.getPlanetName() + " ";
             }
-        }
-        if (actual.size() > 0) {
-            actual.clear();
         }
         return new ResponseEntity<>(pathTravelled, HttpStatus.OK);
     }

@@ -4,10 +4,7 @@ package za.co.discovery.models;
 //import za.co.discovery.services.*;
 //import za.co.discovery.services.Vertex;
 
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.NavigableSet;
-import java.util.TreeSet;
+import java.util.*;
 
 // Service not a model
 public class ShortestPath {
@@ -52,13 +49,12 @@ public class ShortestPath {
         }
     }
 
-    // TODO return Lists not linkedList
-    public LinkedList<String> printPath(Map<String, Vertex> graph, String endName) {
+    public List<String> printPath(Map<String, Vertex> graph, String endName) {
         if (!graph.containsKey(endName)) {
             System.err.printf("Graph doesn't contain end vertex \"%s\"\n", endName);
         }
 
-        LinkedList<String> pathNames = new LinkedList<>();
+        List<String> pathNames = new LinkedList<>();
         if (graph.get(endName) == null) {
             pathNames.add("Cannot Complete request");
             return pathNames;

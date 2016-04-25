@@ -24,6 +24,12 @@ public class Edge {
         this.distance = distance;
     }
 
+    public Edge(Vertex source, Vertex destination, double distance) {
+        this.source = source;
+        this.destination = destination;
+        this.distance = distance;
+    }
+
     public int getRouteId() {
         return routeId;
     }

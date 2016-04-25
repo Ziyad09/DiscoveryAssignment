@@ -26,28 +26,29 @@ public class Vertex implements Comparable<Vertex> {
 
     static LinkedList<String> nodes = new LinkedList<>();
 
-    public LinkedList<String> printPath() {
+//    public LinkedList<String> printPath() {
+//
+//        if (this == this.previous) {
+////            System.out.printf("%s", this.node);
+//            nodes.add(this.node);
+////            System.out.print(this.node + " ");
+//        } else if (this.previous == null) {
+////            System.out.printf("%s(unreached)", this.node);
+//        } else {
+//            this.previous.printPath();
+//            nodes.add(this.node);
+////            System.out.printf(" -> %s(%f)", this.node, this.minDistance);
+////            System.out.print(this.node + " ");
+//        }
+//        return nodes;
+//    }
 
+    public List<String> printPath() {
+        List<String> thisNode = new LinkedList<>(singletonList(this.node));
         if (this == this.previous) {
-//            System.out.printf("%s", this.node);
-            nodes.add(this.node);
-//            System.out.print(this.node + " ");
-        } else if (this.previous == null) {
-//            System.out.printf("%s(unreached)", this.node);
+            return thisNode;
         } else {
-            this.previous.printPath();
-            nodes.add(this.node);
-//            System.out.printf(" -> %s(%f)", this.node, this.minDistance);
-//            System.out.print(this.node + " ");
-        }
-        return nodes;
-    }
-
-    private List<String> printPathX() {
-        if (this == this.previous) {
-            return new LinkedList<>(singletonList(this.node));
-        } else {
-            List<String> pathToHere = this.previous.printPathX();
+            List<String> pathToHere = this.previous.printPath();
             pathToHere.add(this.node);
             return pathToHere;
         }
@@ -60,6 +61,7 @@ public class Vertex implements Comparable<Vertex> {
     public Vertex(String node) {
         this.node = node;
     }
+
     public Vertex(String node, String planetName) {
         this.node = node;
         this.planetName = planetName;

@@ -46,4 +46,9 @@ public class TrafficService {
         Traffic traffic = new Traffic(routeId, sourcePlanet, destinationPlanet, distance);
         trafficDAO.save(traffic);
     }
+
+    public void persistTrafficWithoutId(Vertex sourcePlanet, Vertex destinationPlanet, Double distance) {
+        Traffic traffic = new Traffic(sourcePlanet, destinationPlanet, distance);
+        trafficDAO.save(traffic);
+    }
 }
