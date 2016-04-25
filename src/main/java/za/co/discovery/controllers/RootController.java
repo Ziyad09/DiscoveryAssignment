@@ -171,7 +171,7 @@ public class RootController {
         for (String anActual : actual) {
             Vertex returnedV = vertexService.getVertexByNode(anActual);
             if (returnedV == null) {
-                pathTravelled = "Unable to determine path, Planet vanished";
+                pathTravelled = "Unable to determine path";
             } else {
                 pathTravelled += returnedV.getPlanetName() + " ";
             }
@@ -196,7 +196,7 @@ public class RootController {
         for (String anActual : actual) {
             Vertex returnedV = vertexService.getVertexByNode(anActual);
             if (returnedV == null) {
-                pathTravelled = "Unable to determine path, Planet was destroyed";
+                pathTravelled = "Unable to determine path, no route";
             } else {
                 pathTravelled += returnedV.getPlanetName() + " ";
             }

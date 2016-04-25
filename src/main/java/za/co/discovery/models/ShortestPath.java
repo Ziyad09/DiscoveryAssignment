@@ -18,8 +18,11 @@ public class ShortestPath {
 
         // set-up vertices
         for (Vertex v : graph.values()) {
-            v.previous = v == source ? source : null;
-            v.minDistance = v == source ? 0 : Double.POSITIVE_INFINITY;
+            if (v == source) v.setPrevious(source);
+            else v.setPrevious(null);
+
+            if (v == source) v.setMinDistance(0);
+            else v.setMinDistance(Double.POSITIVE_INFINITY);
             setQueues.add(v);
         }
 
@@ -31,23 +34,24 @@ public class ShortestPath {
         while (!queue.isEmpty()) {
 
             shortestDistanceVertex = queue.pollFirst(); // vertex with shortest distance
-            if (shortestDistanceVertex.minDistance == Integer.MAX_VALUE)
+            if (shortestDistanceVertex.getMinDistance() == Integer.MAX_VALUE)
                 break; // we can ignore shortestDistanceVertex (and any other remaining vertices) since they are unreachable
 
             //look at distances to each neighbour
-            for (Map.Entry<Vertex, Double> neighbourValues : shortestDistanceVertex.neighbours.entrySet()) {
+            for (Map.Entry<Vertex, Double> neighbourValues : shortestDistanceVertex.getNeighbours().entrySet()) {
                 vertexUnderTest = neighbourValues.getKey(); //the neighbour in this iteration
 
-                final double alternateDist = shortestDistanceVertex.minDistance + neighbourValues.getValue();
-                if (alternateDist < vertexUnderTest.minDistance) { // shorter path to neighbour found
+                final double alternateDist = shortestDistanceVertex.getMinDistance() + neighbourValues.getValue();
+                if (alternateDist < vertexUnderTest.getMinDistance()) { // shorter path to neighbour found
                     queue.remove(vertexUnderTest);
-                    vertexUnderTest.minDistance = alternateDist;
-                    vertexUnderTest.previous = shortestDistanceVertex;
+                    vertexUnderTest.setMinDistance(alternateDist);
+                    vertexUnderTest.setPrevious(shortestDistanceVertex);
                     queue.add(vertexUnderTest);
                 }
             }
         }
     }
+
 
     public List<String> printPath(Map<String, Vertex> graph, String endName) {
         if (!graph.containsKey(endName)) {

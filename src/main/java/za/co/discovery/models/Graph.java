@@ -17,9 +17,12 @@ public class Graph {
         }
 
         //another pass to set neighbouring vertices
-        // TODO try enforce encap for neighbours.
         for (Edge e : edges) {
-            graph.get(e.getSource().getNode()).neighbours.put(graph.get(e.getDestination().getNode()), e.getDistance());
+            Vertex vertexNeighboursDestination = graph.get(e.getDestination().getNode());
+            double distanceCalculated = e.getDistance();
+//            graph.get(e.getSource().getNode()).neighbours.put(vertexNeighbours, distanceCalculated);
+            String sourceNode = e.getSource().getNode();
+            graph.get(sourceNode).setNeighbours(vertexNeighboursDestination, distanceCalculated);
         }
         return graph;
     }
@@ -36,8 +39,11 @@ public class Graph {
 
         //another pass to set neighbouring vertices
         for (Traffic e : traffic) {
-            graph.get(e.getSource().getNode()).neighbours.put(graph.get(e.getDestination().getNode()), e.getDistance());
-            //graph.get(e.v2).neighbours.put(graph.get(e.v1), e.dist); // also do this for an undirected graph
+            String sourceNode = e.getSource().getNode();
+            double distance = e.getDistance();
+//            graph.get(sourceNode).neighbours.put(graph.get(destinationNode), distance);
+            Vertex destinationNeighbours = graph.get(e.getDestination().getNode());
+            graph.get(sourceNode).setNeighbours(destinationNeighbours, distance);
         }
         return graph;
     }
