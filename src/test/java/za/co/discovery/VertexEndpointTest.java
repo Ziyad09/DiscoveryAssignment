@@ -28,7 +28,7 @@ import static org.hamcrest.core.Is.is;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {PersistenceConfig.class, FileReaderService.class, VertexRepository.class, VertexEndpoint.class, DataSourceConfig.class, DAOConfig.class, VerticesService.class, EdgesService.class, TrafficService.class, EdgeDAO.class, VertexDAO.class},
+        classes = {PersistenceConfig.class, FileReaderService.class, VertexRepository.class, VertexEndpoint.class, DataSourceConfig.class, DAOConfig.class, VerticesService.class, EdgesService.class, TrafficService.class, EdgeDAO.class, VertexDAO.class, DiscoveryApplication.class},
         loader = AnnotationConfigContextLoader.class)
 public class VertexEndpointTest {
 

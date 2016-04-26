@@ -10,11 +10,8 @@ import za.co.discovery.models.Traffic;
 import za.co.discovery.models.Vertex;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -22,24 +19,23 @@ public class FileReaderService {
     private VerticesService verticesService;
     private EdgesService edgesService;
     private TrafficService trafficService;
+    private InputStream file;
 
     @Autowired
-    public FileReaderService(VerticesService verticesService, EdgesService edgesService, TrafficService trafficService) {
+    public FileReaderService(VerticesService verticesService, EdgesService edgesService, TrafficService trafficService, InputStream file) {
         this.verticesService = verticesService;
         this.edgesService = edgesService;
         this.trafficService = trafficService;
+        this.file = file;
+
     }
 
     @PostConstruct
     public void readVertices() {
         try {
-            String EXCEL_FILENAME = "/PlanetData.xlsx";
-            URL resource = getClass().getResource(EXCEL_FILENAME);
-            File file1 = new File(resource.toURI());
-            FileInputStream file = new FileInputStream(file1);
+//            FileInputStream file = new FileInputStream(file1);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
-            // TODO Mixing implementation and config!! Try Resource Bean, will be in config, in discovery app
             XSSFSheet sheetVertex = workbook.getSheet("Planet Names");
             int rowStartVertex = Math.min(1, 1); // 0 based not 1 based rows
             int rowEndVertex = Math.max(12, sheetVertex.getLastRowNum());
@@ -90,6 +86,8 @@ public class FileReaderService {
                 }
             }
 
+            file.close();
+
             List<Traffic> trafficList = trafficService.getTrafficList();
             List<Edge> edgeList = edgesService.getEdgeList();
             for (int i = 0; i < trafficList.size(); i++) {
@@ -104,9 +102,7 @@ public class FileReaderService {
             }
 
 
-            file.close();
-
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

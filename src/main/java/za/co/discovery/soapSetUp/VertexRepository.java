@@ -12,41 +12,48 @@ import za.co.discovery.models.Vertex;
 import za.co.discovery.services.*;
 
 import javax.annotation.PostConstruct;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class VertexRepository {
-    private static List<Vertex> vertexList = new ArrayList<Vertex>();
+    private static List<Vertex> vertexList = new ArrayList<>();
     private VerticesService verticesService;
     private EdgesService edgesService;
-    //    private List<Edge> edges;
     private FileReaderService fileReaderService;
     private TrafficService trafficService;
+
+    //    @Autowired
+    private InputStream file;
 
     @Autowired
     @Qualifier("transactionManager")
     protected PlatformTransactionManager platformTransactionManager;
 
+
     @Autowired
-    public VertexRepository(EdgesService edgesService, VerticesService verticesService, FileReaderService fileReaderService
-            , TrafficService trafficService) {
+    public VertexRepository(EdgesService edgesService,
+                            VerticesService verticesService, FileReaderService fileReaderService
+            , InputStream file, TrafficService trafficService) {
         this.edgesService = edgesService;
         this.verticesService = verticesService;
         this.fileReaderService = fileReaderService;
         this.trafficService = trafficService;
+        this.file = file;
     }
 
     @PostConstruct
-    public void initData() {
+    public void initData() throws URISyntaxException {
 
         TransactionTemplate tmpl = new TransactionTemplate(platformTransactionManager);
         tmpl.execute(new TransactionCallbackWithoutResult() {
+
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 fileReaderService.readVertices();
-//                edges = edgesService.getEdgeList();
                 vertexList = verticesService.getVertexList();
             }
         });
