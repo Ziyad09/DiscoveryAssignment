@@ -1,10 +1,16 @@
-package za.co.discovery.models;
+package za.co.discovery.services;
+
+import org.springframework.stereotype.Service;
+import za.co.discovery.models.Edge;
+import za.co.discovery.models.Traffic;
+import za.co.discovery.models.Vertex;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Graph {
+@Service
+public class GraphService {
     public Map<String, Vertex> buildGraphWithEdges(List<Edge> edges) {
         final Map<String, Vertex> graph;
         graph = new HashMap<>(edges.size());

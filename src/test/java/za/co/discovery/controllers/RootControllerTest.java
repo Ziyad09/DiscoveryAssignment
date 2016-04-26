@@ -8,11 +8,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import za.co.discovery.models.Edge;
-import za.co.discovery.models.ShortestPath;
 import za.co.discovery.models.Traffic;
 import za.co.discovery.models.Vertex;
 import za.co.discovery.services.EdgesService;
-import za.co.discovery.services.FileReaderService;
+import za.co.discovery.services.GraphService;
 import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
@@ -43,17 +42,25 @@ public class RootControllerTest {
     private EdgesService edgeService;
     @Mock
     private TrafficService trafficService;
+    //    @Mock
+//    private ShortestPath shortestPath;
     @Mock
-    private ShortestPath shortestPath;
+    private GraphService graphService;
+    private GraphService graphService1;
 
     @Test
     public void testHome() throws Exception {
-        List<Vertex> newVertexList = singletonList(aVertex().build());
+        Vertex vertex = aVertex().withNode("A").withPlanetName("String").build();
+        List<Vertex> newVertexList = singletonList(vertex);
+
         when(verticesService.getVertexList()).thenReturn(newVertexList);
+        when(verticesService.getVertexByNode("A")).thenReturn(vertex);
+
         setUpFixture();
         mockMvc.perform(get("/"))
                 .andExpect(view().name("index"))
-                .andExpect(model().attribute("vertexList", equalTo(newVertexList)));
+                .andExpect(model().attribute("vertexList", equalTo(newVertexList)))
+                .andExpect(model().attribute("sourcePlanet", equalTo("String")));
     }
 
     @Test
@@ -160,6 +167,9 @@ public class RootControllerTest {
         setUpFixture();
         String expectedPath = "Earth Moon ";
         when(edgeService.getEdgeList()).thenReturn(singletonList(edge));
+
+        when(graphService.buildGraphWithEdges(singletonList(edge))).thenReturn(graphService1.buildGraphWithEdges(singletonList(edge)));
+
         Vertex vertex2 = aVertex().withPlanetName("Moon").withNode("B").build();
         Vertex vertex1 = aVertex().withPlanetName("Earth").withNode("A").build();
 
@@ -180,6 +190,7 @@ public class RootControllerTest {
         Vertex vertex2 = aVertex().withPlanetName("Moon").withNode("B").build();
         Vertex vertex1 = aVertex().withPlanetName("Earth").withNode("A").build();
 
+        when(graphService.buildGraphWithTraffic(singletonList(traffic))).thenReturn(graphService1.buildGraphWithTraffic(singletonList(traffic)));
         when(trafficService.getTrafficList()).thenReturn(singletonList(traffic));
         when(verticesService.getVertexByNode("A")).thenReturn(vertex1);
         when(verticesService.getVertexByNode("B")).thenReturn(vertex2);
@@ -217,10 +228,11 @@ public class RootControllerTest {
     }
 
     public void setUpFixture() {
+        graphService1 = new GraphService();
         mockMvc = standaloneSetup(
                 new RootController(edgeService,
                         verticesService,
-                        trafficService)
+                        trafficService, graphService)
         )
                 .setViewResolvers(getInternalResourceViewResolver())
                 .build();

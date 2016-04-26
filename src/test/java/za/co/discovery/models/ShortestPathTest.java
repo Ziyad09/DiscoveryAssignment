@@ -1,6 +1,7 @@
 package za.co.discovery.models;
 
 import org.junit.Test;
+import za.co.discovery.services.GraphService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +51,8 @@ public class ShortestPathTest {
         edges.add(edge2);
         edges.add(edge3);
 
-        Graph graph = new Graph();
-        Map<String, Vertex> map = graph.buildGraphWithEdges(edges);
+        GraphService graphService = new GraphService();
+        Map<String, Vertex> map = graphService.buildGraphWithEdges(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra(start, map);
         List<String> actual = dis.printPath(map, end);

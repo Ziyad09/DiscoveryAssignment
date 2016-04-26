@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import za.co.discovery.models.*;
+import za.co.discovery.models.Edge;
+import za.co.discovery.models.ShortestPath;
+import za.co.discovery.models.Traffic;
+import za.co.discovery.models.Vertex;
 import za.co.discovery.services.EdgesService;
-import za.co.discovery.services.FileReaderService;
+import za.co.discovery.services.GraphService;
 import za.co.discovery.services.TrafficService;
 import za.co.discovery.services.VerticesService;
 
@@ -25,19 +28,25 @@ public class RootController {
     private EdgesService edgesService;
     private VerticesService vertexService;
     private TrafficService traffic;
+    private GraphService graphService;
 
     @Autowired
     public RootController(EdgesService edgesService, VerticesService vertexService,
-                          TrafficService traffic) {
+                          TrafficService traffic,
+                          GraphService graphService) {
         this.edgesService = edgesService;
         this.vertexService = vertexService;
         this.traffic = traffic;
+        this.graphService = graphService;
     }
 
     @RequestMapping("/")
     public String home(Model model) {
         List<Vertex> vertices = vertexService.getVertexList();
+        Vertex vertexSource = vertexService.getVertexByNode("A");
+        String source = vertexSource.getPlanetName();
         model.addAttribute("vertexList", vertices);
+        model.addAttribute("sourcePlanet", source);
         return "index";
     }
 
@@ -159,9 +168,9 @@ public class RootController {
     @ResponseBody
     public ResponseEntity<String> selectDelayedPath(@PathVariable String delayPath) {
 
-        Graph graph = new Graph();
+//        Graph graph = new Graph();
         List<Traffic> trafficList = traffic.getTrafficList();
-        Map<String, Vertex> mapTraffic = graph.buildGraphWithTraffic(trafficList);
+        Map<String, Vertex> mapTraffic = graphService.buildGraphWithTraffic(trafficList);
         ShortestPath disTraffic = new ShortestPath();
         disTraffic.dijkstra("A", mapTraffic);
         List<String> actual = disTraffic.printPath(mapTraffic, delayPath);
@@ -184,9 +193,9 @@ public class RootController {
     @ResponseBody
     public ResponseEntity<String> selectPath(@PathVariable String path) {
 
-        Graph graph = new Graph();
+//        Graph graph = new Graph();
         List<Edge> edges = edgesService.getEdgeList();
-        Map<String, Vertex> map = graph.buildGraphWithEdges(edges);
+        Map<String, Vertex> map = graphService.buildGraphWithEdges(edges);
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
         List<String> actual = dis.printPath(map, path);

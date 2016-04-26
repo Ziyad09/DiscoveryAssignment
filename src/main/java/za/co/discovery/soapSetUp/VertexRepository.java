@@ -7,11 +7,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
-import za.co.discovery.models.*;
-import za.co.discovery.services.EdgesService;
-import za.co.discovery.services.FileReaderService;
-import za.co.discovery.services.TrafficService;
-import za.co.discovery.services.VerticesService;
+import za.co.discovery.models.ShortestPath;
+import za.co.discovery.models.Vertex;
+import za.co.discovery.services.*;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -56,8 +54,8 @@ public class VertexRepository {
 
 
     public StringBuilder findVertex(String name) {
-        Graph graph = new Graph();
-        Map<String, Vertex> map = graph.buildGraphWithEdges(edgesService.getEdgeList());
+        GraphService graphService = new GraphService();
+        Map<String, Vertex> map = graphService.buildGraphWithEdges(edgesService.getEdgeList());
         ShortestPath dis = new ShortestPath();
         dis.dijkstra("A", map);
 
