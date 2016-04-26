@@ -12,6 +12,7 @@ import za.co.discovery.assignment.GetPathRequest;
 import za.co.discovery.assignment.GetPathResponse;
 import za.co.discovery.configuration.DataSourceConfig;
 import za.co.discovery.configuration.PersistenceConfig;
+import za.co.discovery.configuration.ResourceExcelFile;
 import za.co.discovery.dataAccess.EdgeDAO;
 import za.co.discovery.dataAccess.VertexDAO;
 import za.co.discovery.services.EdgesService;
@@ -28,7 +29,12 @@ import static org.hamcrest.core.Is.is;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {PersistenceConfig.class, FileReaderService.class, VertexRepository.class, VertexEndpoint.class, DataSourceConfig.class, DAOConfig.class, VerticesService.class, EdgesService.class, TrafficService.class, EdgeDAO.class, VertexDAO.class, DiscoveryApplication.class},
+        classes = {PersistenceConfig.class,
+//                DiscoveryApplication.class,
+                ResourceExcelFile.class,
+                FileReaderService.class, VertexRepository.class, VertexEndpoint.class,
+                DataSourceConfig.class, DAOConfig.class, VerticesService.class,
+                EdgesService.class, TrafficService.class, EdgeDAO.class, VertexDAO.class},
         loader = AnnotationConfigContextLoader.class)
 public class VertexEndpointTest {
 

@@ -33,7 +33,6 @@ public class FileReaderService {
     @PostConstruct
     public void readVertices() {
         try {
-//            FileInputStream file = new FileInputStream(file1);
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             XSSFSheet sheetVertex = workbook.getSheet("Planet Names");
@@ -101,6 +100,7 @@ public class FileReaderService {
                 trafficService.updateTraffic(lastTraffic);
             }
 
+            file.close();
 
         } catch (IOException e) {
             e.printStackTrace();
