@@ -163,7 +163,6 @@
         var destination = document.getElementById('destination').value;
         var distance = document.getElementById('distance').value;
         var routeUpdate = routeId + "," + source + "," + destination + "," + distance;
-        alert(routeUpdate);
         $.get('/updateRoute/' + routeUpdate);
     }
     function updateTraffic() {

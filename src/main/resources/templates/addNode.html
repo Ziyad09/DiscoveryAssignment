@@ -99,24 +99,15 @@
 
 <script>
     function addPlanet() {
-//        alert('a');
-//        var root = document.getElementById('newDestination').value;
         var newPlanetName = document.getElementById('changedName').value;
-//        var distance = document.getElementById('distance').value;
-//        var vertexAdded = root + "," + newPlanetName + "," + distance;
-//        alert(vertexAdded);
         $.get('/addVertex/' + newPlanetName);
-//        document.getElementById('changedName').val('')
     }
     function addRoute() {
-//        alert('a');
         var destination = document.getElementById('newDestination').value;
         var root = document.getElementById('Source').value;
         var distance = document.getElementById('distance').value;
         var vertexAdded = root + "," + destination + "," + distance;
-//        alert(vertexAdded);
         $.get('/addEdge/' + vertexAdded);
-//        document.getElementById('changedName').val('')
     }
 
 </script>
